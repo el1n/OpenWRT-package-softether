@@ -22,7 +22,6 @@ define Package/utvpn
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=VPN
-  DEPENDS:=+ncurse +openssl +libreadline +libiconv-full
   TITLE:=Open source solution as for PacketiX VPN
   URL:=http://utvpn.tsukuba.ac.jp/
 endef
@@ -48,7 +47,7 @@ endef
 define Package/utvpn/install
 	mkdir -p $(PKG_INSTALL_DIR)/etc/init.d
 	mkdir -p $(PKG_INSTALL_DIR)/usr/bin
-	$(CP) $(PKG_BUILD_DIR)/rc/openwrt $(PKG_INSTALL_DIR)/etc/init.d
+	$(CP) $(PKG_BUILD_DIR)/rc/openwrt $(PKG_INSTALL_DIR)/etc/init.d/utvpn
 	$(CP) $(PKG_BUILD_DIR)/output/utvpnserver/* $(PKG_INSTALL_DIR)/usr/bin
 	$(INSTALL_DIR) $(1)
 	$(CP) $(PKG_INSTALL_DIR)/* $(1)
