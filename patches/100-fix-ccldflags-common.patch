@@ -1,0 +1,2520 @@
+diff -ruN a/makefiles/freebsd_32bit_ja.mak b/makefiles/freebsd_32bit_ja.mak
+--- a/makefiles/freebsd_32bit_ja.mak	2010-06-27 02:43:58.000000000 -0700
++++ b/makefiles/freebsd_32bit_ja.mak	2012-08-13 13:00:52.222147861 -0700
+@@ -25,13 +25,13 @@
+ # Variables
+ CC=gcc
+ 
+-OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_BSD -DBRIDGE_BPF -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char
++OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_BSD -DBRIDGE_BPF -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char $(CCFLAGS)
+ 
+-OPTIONS_LINK_DEBUG=-g -fsigned-char -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_DEBUG=-g -fsigned-char -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+-OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_BSD -DBRIDGE_BPF -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char
++OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_BSD -DBRIDGE_BPF -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char $(CCFLAGS)
+ 
+-OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+ INSTALL_BINDIR=/usr/bin/
+ INSTALL_UTVPNSERVER_DIR=/usr/utvpnserver/
+@@ -39,11 +39,11 @@
+ INSTALL_UTVPNCMD_DIR=/usr/utvpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+-	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG) $(LDFLAGS)
+ else
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE)
+-	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE) $(LDFLAGS)
+ endif
+ 
+ # Files
+@@ -69,171 +69,171 @@
+ 	@mkdir -p output/utvpnserver/
+ 	@mkdir -p output/utvpnclient/
+ 	@mkdir -p output/utvpncmd/
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Encrypt.o: src/Mayaqua/Encrypt.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/FileIO.o: src/Mayaqua/FileIO.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Internat.o: src/Mayaqua/Internat.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Kernel.o: src/Mayaqua/Kernel.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Mayaqua.o: src/Mayaqua/Mayaqua.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Object.o: src/Mayaqua/Object.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/OS.o: src/Mayaqua/OS.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Pack.o: src/Mayaqua/Pack.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Secure.o: src/Mayaqua/Secure.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Str.o: src/Mayaqua/Str.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Table.o: src/Mayaqua/Table.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tick64.o: src/Mayaqua/Tick64.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tracking.o: src/Mayaqua/Tracking.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o $(CCFLAGS)
+ 
+ # Cedar Communication Module Code
+ tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Admin.o: src/Cedar/Admin.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Bridge.o: src/Cedar/Bridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) src/Cedar/BridgeUnix.c
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CedarPch.o: src/Cedar/CedarPch.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Connection.o: src/Cedar/Connection.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Console.o: src/Cedar/Console.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Database.o: src/Cedar/Database.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Hub.o: src/Cedar/Hub.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Layer3.o: src/Cedar/Layer3.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Link.o: src/Cedar/Link.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Listener.o: src/Cedar/Listener.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Logging.o: src/Cedar/Logging.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Nat.o: src/Cedar/Nat.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Protocol.o: src/Cedar/Protocol.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Remote.o: src/Cedar/Remote.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Sam.o: src/Cedar/Sam.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SecureNAT.o: src/Cedar/SecureNAT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Server.o: src/Cedar/Server.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/TcpIp.o: src/Cedar/TcpIp.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLan.o: src/Cedar/VLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o $(CCFLAGS)
+ 
+ # Ham
+ output/ham/ham: tmp/as/Ham.a output/ham/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham
++	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham $(LDFLAGS)
+ 
+ tmp/as/Ham.a: tmp/objs/Ham.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/Ham.a
+@@ -244,11 +244,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/ham/hamcore.utvpn
+ 
+ tmp/objs/Ham.o: src/Ham/Ham.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o $(CCFLAGS)
+ 
+ # utvpnserver
+ output/utvpnserver/utvpnserver: tmp/as/utvpnserver.a output/utvpnserver/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver
++	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver $(LDFLAGS)
+ 
+ tmp/as/utvpnserver.a: tmp/objs/utvpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnserver.a
+@@ -259,11 +259,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnserver/hamcore.utvpn
+ 
+ tmp/objs/utvpnserver.o: src/utvpnserver/utvpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o $(CCFLAGS)
+ 
+ # utvpnclient
+ output/utvpnclient/utvpnclient: tmp/as/utvpnclient.a output/utvpnclient/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient
++	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient $(LDFLAGS)
+ 
+ tmp/as/utvpnclient.a: tmp/objs/utvpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnclient.a
+@@ -274,11 +274,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnclient/hamcore.utvpn
+ 
+ tmp/objs/utvpnclient.o: src/utvpnclient/utvpnclient.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o $(CCFLAGS)
+ 
+ # utvpncmd
+ output/utvpncmd/utvpncmd: tmp/as/utvpncmd.a output/utvpncmd/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd
++	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd $(LDFLAGS)
+ 
+ tmp/as/utvpncmd.a: tmp/objs/utvpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpncmd.a
+@@ -289,7 +289,7 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpncmd/hamcore.utvpn
+ 
+ tmp/objs/utvpncmd.o: src/utvpncmd/utvpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o $(CCFLAGS)
+ 
+ # Install
+ install: $(INSTALL_BINDIR)utvpnserver $(INSTALL_BINDIR)utvpnclient $(INSTALL_BINDIR)utvpncmd
+diff -ruN a/makefiles/freebsd_64bit_ja.mak b/makefiles/freebsd_64bit_ja.mak
+--- a/makefiles/freebsd_64bit_ja.mak	2010-06-27 02:43:58.000000000 -0700
++++ b/makefiles/freebsd_64bit_ja.mak	2012-08-13 13:00:52.222147861 -0700
+@@ -25,13 +25,13 @@
+ # Variables
+ CC=gcc
+ 
+-OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_BSD -DBRIDGE_BPF -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char -m64
++OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_BSD -DBRIDGE_BPF -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char -m64 $(CCFLAGS)
+ 
+-OPTIONS_LINK_DEBUG=-g -fsigned-char -m64 -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_DEBUG=-g -fsigned-char -m64 -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+-OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_BSD -DBRIDGE_BPF -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char -m64
++OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_BSD -DBRIDGE_BPF -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char -m64 $(CCFLAGS)
+ 
+-OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+ INSTALL_BINDIR=/usr/bin/
+ INSTALL_UTVPNSERVER_DIR=/usr/utvpnserver/
+@@ -39,11 +39,11 @@
+ INSTALL_UTVPNCMD_DIR=/usr/utvpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+-	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG) $(LDFLAGS)
+ else
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE)
+-	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE) $(LDFLAGS)
+ endif
+ 
+ # Files
+@@ -69,171 +69,171 @@
+ 	@mkdir -p output/utvpnserver/
+ 	@mkdir -p output/utvpnclient/
+ 	@mkdir -p output/utvpncmd/
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Encrypt.o: src/Mayaqua/Encrypt.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/FileIO.o: src/Mayaqua/FileIO.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Internat.o: src/Mayaqua/Internat.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Kernel.o: src/Mayaqua/Kernel.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Mayaqua.o: src/Mayaqua/Mayaqua.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Object.o: src/Mayaqua/Object.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/OS.o: src/Mayaqua/OS.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Pack.o: src/Mayaqua/Pack.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Secure.o: src/Mayaqua/Secure.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Str.o: src/Mayaqua/Str.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Table.o: src/Mayaqua/Table.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tick64.o: src/Mayaqua/Tick64.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tracking.o: src/Mayaqua/Tracking.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o $(CCFLAGS)
+ 
+ # Cedar Communication Module Code
+ tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Admin.o: src/Cedar/Admin.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Bridge.o: src/Cedar/Bridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) src/Cedar/BridgeUnix.c
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CedarPch.o: src/Cedar/CedarPch.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Connection.o: src/Cedar/Connection.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Console.o: src/Cedar/Console.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Database.o: src/Cedar/Database.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Hub.o: src/Cedar/Hub.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Layer3.o: src/Cedar/Layer3.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Link.o: src/Cedar/Link.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Listener.o: src/Cedar/Listener.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Logging.o: src/Cedar/Logging.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Nat.o: src/Cedar/Nat.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Protocol.o: src/Cedar/Protocol.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Remote.o: src/Cedar/Remote.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Sam.o: src/Cedar/Sam.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SecureNAT.o: src/Cedar/SecureNAT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Server.o: src/Cedar/Server.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/TcpIp.o: src/Cedar/TcpIp.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLan.o: src/Cedar/VLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o $(CCFLAGS)
+ 
+ # Ham
+ output/ham/ham: tmp/as/Ham.a output/ham/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham
++	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham $(LDFLAGS)
+ 
+ tmp/as/Ham.a: tmp/objs/Ham.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/Ham.a
+@@ -244,11 +244,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/ham/hamcore.utvpn
+ 
+ tmp/objs/Ham.o: src/Ham/Ham.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o $(CCFLAGS)
+ 
+ # utvpnserver
+ output/utvpnserver/utvpnserver: tmp/as/utvpnserver.a output/utvpnserver/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver
++	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver $(LDFLAGS)
+ 
+ tmp/as/utvpnserver.a: tmp/objs/utvpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnserver.a
+@@ -259,11 +259,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnserver/hamcore.utvpn
+ 
+ tmp/objs/utvpnserver.o: src/utvpnserver/utvpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o $(CCFLAGS)
+ 
+ # utvpnclient
+ output/utvpnclient/utvpnclient: tmp/as/utvpnclient.a output/utvpnclient/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient
++	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient $(LDFLAGS)
+ 
+ tmp/as/utvpnclient.a: tmp/objs/utvpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnclient.a
+@@ -274,11 +274,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnclient/hamcore.utvpn
+ 
+ tmp/objs/utvpnclient.o: src/utvpnclient/utvpnclient.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o $(CCFLAGS)
+ 
+ # utvpncmd
+ output/utvpncmd/utvpncmd: tmp/as/utvpncmd.a output/utvpncmd/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd
++	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd $(LDFLAGS)
+ 
+ tmp/as/utvpncmd.a: tmp/objs/utvpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpncmd.a
+@@ -289,7 +289,7 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpncmd/hamcore.utvpn
+ 
+ tmp/objs/utvpncmd.o: src/utvpncmd/utvpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o $(CCFLAGS)
+ 
+ # Install
+ install: $(INSTALL_BINDIR)utvpnserver $(INSTALL_BINDIR)utvpnclient $(INSTALL_BINDIR)utvpncmd
+diff -ruN a/makefiles/linux_32bit_ja.mak b/makefiles/linux_32bit_ja.mak
+--- a/makefiles/linux_32bit_ja.mak	2010-06-27 02:43:58.000000000 -0700
++++ b/makefiles/linux_32bit_ja.mak	2012-08-13 13:00:52.222147861 -0700
+@@ -25,13 +25,13 @@
+ # Variables
+ CC=gcc
+ 
+-OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_LINUX -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char
++OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_LINUX -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char $(CCFLAGS)
+ 
+-OPTIONS_LINK_DEBUG=-g -fsigned-char -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz
++OPTIONS_LINK_DEBUG=-g -fsigned-char -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz $(LDFLAGS)
+ 
+-OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_LINUX -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char
++OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_LINUX -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char $(CCFLAGS)
+ 
+-OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz
++OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz $(LDFLAGS)
+ 
+ INSTALL_BINDIR=/usr/bin/
+ INSTALL_UTVPNSERVER_DIR=/usr/utvpnserver/
+@@ -39,11 +39,11 @@
+ INSTALL_UTVPNCMD_DIR=/usr/utvpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+-	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG) $(LDFLAGS)
+ else
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE)
+-	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE) $(LDFLAGS)
+ endif
+ 
+ # Files
+@@ -69,171 +69,171 @@
+ 	@mkdir -p output/utvpnserver/
+ 	@mkdir -p output/utvpnclient/
+ 	@mkdir -p output/utvpncmd/
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Encrypt.o: src/Mayaqua/Encrypt.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/FileIO.o: src/Mayaqua/FileIO.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Internat.o: src/Mayaqua/Internat.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Kernel.o: src/Mayaqua/Kernel.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Mayaqua.o: src/Mayaqua/Mayaqua.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Object.o: src/Mayaqua/Object.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/OS.o: src/Mayaqua/OS.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Pack.o: src/Mayaqua/Pack.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Secure.o: src/Mayaqua/Secure.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Str.o: src/Mayaqua/Str.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Table.o: src/Mayaqua/Table.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tick64.o: src/Mayaqua/Tick64.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tracking.o: src/Mayaqua/Tracking.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o $(CCFLAGS)
+ 
+ # Cedar Communication Module Code
+ tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Admin.o: src/Cedar/Admin.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Bridge.o: src/Cedar/Bridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) src/Cedar/BridgeUnix.c
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CedarPch.o: src/Cedar/CedarPch.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Connection.o: src/Cedar/Connection.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Console.o: src/Cedar/Console.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Database.o: src/Cedar/Database.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Hub.o: src/Cedar/Hub.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Layer3.o: src/Cedar/Layer3.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Link.o: src/Cedar/Link.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Listener.o: src/Cedar/Listener.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Logging.o: src/Cedar/Logging.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Nat.o: src/Cedar/Nat.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Protocol.o: src/Cedar/Protocol.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Remote.o: src/Cedar/Remote.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Sam.o: src/Cedar/Sam.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SecureNAT.o: src/Cedar/SecureNAT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Server.o: src/Cedar/Server.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/TcpIp.o: src/Cedar/TcpIp.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLan.o: src/Cedar/VLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o $(CCFLAGS)
+ 
+ # Ham
+ output/ham/ham: tmp/as/Ham.a output/ham/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham
++	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham $(LDFLAGS)
+ 
+ tmp/as/Ham.a: tmp/objs/Ham.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/Ham.a
+@@ -244,11 +244,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/ham/hamcore.utvpn
+ 
+ tmp/objs/Ham.o: src/Ham/Ham.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o $(CCFLAGS)
+ 
+ # utvpnserver
+ output/utvpnserver/utvpnserver: tmp/as/utvpnserver.a output/utvpnserver/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver
++	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver $(LDFLAGS)
+ 
+ tmp/as/utvpnserver.a: tmp/objs/utvpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnserver.a
+@@ -259,11 +259,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnserver/hamcore.utvpn
+ 
+ tmp/objs/utvpnserver.o: src/utvpnserver/utvpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o $(CCFLAGS)
+ 
+ # utvpnclient
+ output/utvpnclient/utvpnclient: tmp/as/utvpnclient.a output/utvpnclient/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient
++	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient $(LDFLAGS)
+ 
+ tmp/as/utvpnclient.a: tmp/objs/utvpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnclient.a
+@@ -274,11 +274,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnclient/hamcore.utvpn
+ 
+ tmp/objs/utvpnclient.o: src/utvpnclient/utvpnclient.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o $(CCFLAGS)
+ 
+ # utvpncmd
+ output/utvpncmd/utvpncmd: tmp/as/utvpncmd.a output/utvpncmd/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd
++	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd $(LDFLAGS)
+ 
+ tmp/as/utvpncmd.a: tmp/objs/utvpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpncmd.a
+@@ -289,7 +289,7 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpncmd/hamcore.utvpn
+ 
+ tmp/objs/utvpncmd.o: src/utvpncmd/utvpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o $(CCFLAGS)
+ 
+ # Install
+ install: $(INSTALL_BINDIR)utvpnserver $(INSTALL_BINDIR)utvpnclient $(INSTALL_BINDIR)utvpncmd
+diff -ruN a/makefiles/linux_64bit_ja.mak b/makefiles/linux_64bit_ja.mak
+--- a/makefiles/linux_64bit_ja.mak	2010-06-27 02:43:58.000000000 -0700
++++ b/makefiles/linux_64bit_ja.mak	2012-08-13 13:00:52.222147861 -0700
+@@ -25,13 +25,13 @@
+ # Variables
+ CC=gcc
+ 
+-OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_LINUX -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char -m64
++OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_LINUX -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char -m64 $(CCFLAGS)
+ 
+-OPTIONS_LINK_DEBUG=-g -fsigned-char -m64 -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz
++OPTIONS_LINK_DEBUG=-g -fsigned-char -m64 -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz $(LDFLAGS)
+ 
+-OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_LINUX -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char -m64
++OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_LINUX -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char -m64 $(CCFLAGS)
+ 
+-OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz
++OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -ldl -lrt -lpthread -lssl -lcrypto -lreadline -lncurses -lz $(LDFLAGS)
+ 
+ INSTALL_BINDIR=/usr/bin/
+ INSTALL_UTVPNSERVER_DIR=/usr/utvpnserver/
+@@ -39,11 +39,11 @@
+ INSTALL_UTVPNCMD_DIR=/usr/utvpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+-	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG) $(LDFLAGS)
+ else
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE)
+-	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE) $(LDFLAGS)
+ endif
+ 
+ # Files
+@@ -69,171 +69,171 @@
+ 	@mkdir -p output/utvpnserver/
+ 	@mkdir -p output/utvpnclient/
+ 	@mkdir -p output/utvpncmd/
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Encrypt.o: src/Mayaqua/Encrypt.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/FileIO.o: src/Mayaqua/FileIO.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Internat.o: src/Mayaqua/Internat.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Kernel.o: src/Mayaqua/Kernel.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Mayaqua.o: src/Mayaqua/Mayaqua.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Object.o: src/Mayaqua/Object.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/OS.o: src/Mayaqua/OS.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Pack.o: src/Mayaqua/Pack.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Secure.o: src/Mayaqua/Secure.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Str.o: src/Mayaqua/Str.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Table.o: src/Mayaqua/Table.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tick64.o: src/Mayaqua/Tick64.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tracking.o: src/Mayaqua/Tracking.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o $(CCFLAGS)
+ 
+ # Cedar Communication Module Code
+ tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Admin.o: src/Cedar/Admin.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Bridge.o: src/Cedar/Bridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) src/Cedar/BridgeUnix.c
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CedarPch.o: src/Cedar/CedarPch.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Connection.o: src/Cedar/Connection.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Console.o: src/Cedar/Console.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Database.o: src/Cedar/Database.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Hub.o: src/Cedar/Hub.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Layer3.o: src/Cedar/Layer3.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Link.o: src/Cedar/Link.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Listener.o: src/Cedar/Listener.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Logging.o: src/Cedar/Logging.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Nat.o: src/Cedar/Nat.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Protocol.o: src/Cedar/Protocol.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Remote.o: src/Cedar/Remote.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Sam.o: src/Cedar/Sam.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SecureNAT.o: src/Cedar/SecureNAT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Server.o: src/Cedar/Server.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/TcpIp.o: src/Cedar/TcpIp.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLan.o: src/Cedar/VLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o $(CCFLAGS)
+ 
+ # Ham
+ output/ham/ham: tmp/as/Ham.a output/ham/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham
++	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham $(LDFLAGS)
+ 
+ tmp/as/Ham.a: tmp/objs/Ham.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/Ham.a
+@@ -244,11 +244,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/ham/hamcore.utvpn
+ 
+ tmp/objs/Ham.o: src/Ham/Ham.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o $(CCFLAGS)
+ 
+ # utvpnserver
+ output/utvpnserver/utvpnserver: tmp/as/utvpnserver.a output/utvpnserver/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver
++	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver $(LDFLAGS)
+ 
+ tmp/as/utvpnserver.a: tmp/objs/utvpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnserver.a
+@@ -259,11 +259,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnserver/hamcore.utvpn
+ 
+ tmp/objs/utvpnserver.o: src/utvpnserver/utvpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o $(CCFLAGS)
+ 
+ # utvpnclient
+ output/utvpnclient/utvpnclient: tmp/as/utvpnclient.a output/utvpnclient/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient
++	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient $(LDFLAGS)
+ 
+ tmp/as/utvpnclient.a: tmp/objs/utvpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnclient.a
+@@ -274,11 +274,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnclient/hamcore.utvpn
+ 
+ tmp/objs/utvpnclient.o: src/utvpnclient/utvpnclient.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o $(CCFLAGS)
+ 
+ # utvpncmd
+ output/utvpncmd/utvpncmd: tmp/as/utvpncmd.a output/utvpncmd/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd
++	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd $(LDFLAGS)
+ 
+ tmp/as/utvpncmd.a: tmp/objs/utvpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpncmd.a
+@@ -289,7 +289,7 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpncmd/hamcore.utvpn
+ 
+ tmp/objs/utvpncmd.o: src/utvpncmd/utvpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o $(CCFLAGS)
+ 
+ # Install
+ install: $(INSTALL_BINDIR)utvpnserver $(INSTALL_BINDIR)utvpnclient $(INSTALL_BINDIR)utvpncmd
+diff -ruN a/makefiles/macos_32bit_ja.mak b/makefiles/macos_32bit_ja.mak
+--- a/makefiles/macos_32bit_ja.mak	2010-06-27 02:43:58.000000000 -0700
++++ b/makefiles/macos_32bit_ja.mak	2012-08-13 13:00:52.222147861 -0700
+@@ -25,13 +25,13 @@
+ # Variables
+ CC=gcc
+ 
+-OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_MACOS -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char
++OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_MACOS -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char $(CCFLAGS)
+ 
+-OPTIONS_LINK_DEBUG=-g -fsigned-char -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_DEBUG=-g -fsigned-char -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+-OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_MACOS -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char
++OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_MACOS -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char $(CCFLAGS)
+ 
+-OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+ INSTALL_BINDIR=/usr/bin/
+ INSTALL_UTVPNSERVER_DIR=/usr/utvpnserver/
+@@ -39,11 +39,11 @@
+ INSTALL_UTVPNCMD_DIR=/usr/utvpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+-	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG) $(LDFLAGS)
+ else
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE)
+-	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE) $(LDFLAGS)
+ endif
+ 
+ # Files
+@@ -69,171 +69,171 @@
+ 	@mkdir -p output/utvpnserver/
+ 	@mkdir -p output/utvpnclient/
+ 	@mkdir -p output/utvpncmd/
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Encrypt.o: src/Mayaqua/Encrypt.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/FileIO.o: src/Mayaqua/FileIO.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Internat.o: src/Mayaqua/Internat.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Kernel.o: src/Mayaqua/Kernel.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Mayaqua.o: src/Mayaqua/Mayaqua.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Object.o: src/Mayaqua/Object.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/OS.o: src/Mayaqua/OS.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Pack.o: src/Mayaqua/Pack.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Secure.o: src/Mayaqua/Secure.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Str.o: src/Mayaqua/Str.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Table.o: src/Mayaqua/Table.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tick64.o: src/Mayaqua/Tick64.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tracking.o: src/Mayaqua/Tracking.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o $(CCFLAGS)
+ 
+ # Cedar Communication Module Code
+ tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Admin.o: src/Cedar/Admin.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Bridge.o: src/Cedar/Bridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) src/Cedar/BridgeUnix.c
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CedarPch.o: src/Cedar/CedarPch.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Connection.o: src/Cedar/Connection.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Console.o: src/Cedar/Console.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Database.o: src/Cedar/Database.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Hub.o: src/Cedar/Hub.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Layer3.o: src/Cedar/Layer3.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Link.o: src/Cedar/Link.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Listener.o: src/Cedar/Listener.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Logging.o: src/Cedar/Logging.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Nat.o: src/Cedar/Nat.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Protocol.o: src/Cedar/Protocol.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Remote.o: src/Cedar/Remote.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Sam.o: src/Cedar/Sam.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SecureNAT.o: src/Cedar/SecureNAT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Server.o: src/Cedar/Server.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/TcpIp.o: src/Cedar/TcpIp.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLan.o: src/Cedar/VLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o $(CCFLAGS)
+ 
+ # Ham
+ output/ham/ham: tmp/as/Ham.a output/ham/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham
++	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham $(LDFLAGS)
+ 
+ tmp/as/Ham.a: tmp/objs/Ham.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/Ham.a
+@@ -244,11 +244,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/ham/hamcore.utvpn
+ 
+ tmp/objs/Ham.o: src/Ham/Ham.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o $(CCFLAGS)
+ 
+ # utvpnserver
+ output/utvpnserver/utvpnserver: tmp/as/utvpnserver.a output/utvpnserver/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver
++	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver $(LDFLAGS)
+ 
+ tmp/as/utvpnserver.a: tmp/objs/utvpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnserver.a
+@@ -259,11 +259,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnserver/hamcore.utvpn
+ 
+ tmp/objs/utvpnserver.o: src/utvpnserver/utvpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o $(CCFLAGS)
+ 
+ # utvpnclient
+ output/utvpnclient/utvpnclient: tmp/as/utvpnclient.a output/utvpnclient/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient
++	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient $(LDFLAGS)
+ 
+ tmp/as/utvpnclient.a: tmp/objs/utvpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnclient.a
+@@ -274,11 +274,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnclient/hamcore.utvpn
+ 
+ tmp/objs/utvpnclient.o: src/utvpnclient/utvpnclient.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o $(CCFLAGS)
+ 
+ # utvpncmd
+ output/utvpncmd/utvpncmd: tmp/as/utvpncmd.a output/utvpncmd/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd
++	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd $(LDFLAGS)
+ 
+ tmp/as/utvpncmd.a: tmp/objs/utvpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpncmd.a
+@@ -289,7 +289,7 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpncmd/hamcore.utvpn
+ 
+ tmp/objs/utvpncmd.o: src/utvpncmd/utvpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o $(CCFLAGS)
+ 
+ # Install
+ install: $(INSTALL_BINDIR)utvpnserver $(INSTALL_BINDIR)utvpnclient $(INSTALL_BINDIR)utvpncmd
+diff -ruN a/makefiles/macos_64bit_ja.mak b/makefiles/macos_64bit_ja.mak
+--- a/makefiles/macos_64bit_ja.mak	2010-06-27 02:43:58.000000000 -0700
++++ b/makefiles/macos_64bit_ja.mak	2012-08-13 13:00:52.226147398 -0700
+@@ -25,13 +25,13 @@
+ # Variables
+ CC=gcc
+ 
+-OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_MACOS -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char -m64
++OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_MACOS -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char -m64 $(CCFLAGS)
+ 
+-OPTIONS_LINK_DEBUG=-g -fsigned-char -m64 -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_DEBUG=-g -fsigned-char -m64 -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+-OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_MACOS -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char -m64
++OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_MACOS -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char -m64 $(CCFLAGS)
+ 
+-OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+ INSTALL_BINDIR=/usr/bin/
+ INSTALL_UTVPNSERVER_DIR=/usr/utvpnserver/
+@@ -39,11 +39,11 @@
+ INSTALL_UTVPNCMD_DIR=/usr/utvpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+-	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG) $(LDFLAGS)
+ else
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE)
+-	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE) $(LDFLAGS)
+ endif
+ 
+ # Files
+@@ -69,171 +69,171 @@
+ 	@mkdir -p output/utvpnserver/
+ 	@mkdir -p output/utvpnclient/
+ 	@mkdir -p output/utvpncmd/
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Encrypt.o: src/Mayaqua/Encrypt.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/FileIO.o: src/Mayaqua/FileIO.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Internat.o: src/Mayaqua/Internat.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Kernel.o: src/Mayaqua/Kernel.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Mayaqua.o: src/Mayaqua/Mayaqua.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Object.o: src/Mayaqua/Object.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/OS.o: src/Mayaqua/OS.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Pack.o: src/Mayaqua/Pack.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Secure.o: src/Mayaqua/Secure.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Str.o: src/Mayaqua/Str.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Table.o: src/Mayaqua/Table.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tick64.o: src/Mayaqua/Tick64.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tracking.o: src/Mayaqua/Tracking.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o $(CCFLAGS)
+ 
+ # Cedar Communication Module Code
+ tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Admin.o: src/Cedar/Admin.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Bridge.o: src/Cedar/Bridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) src/Cedar/BridgeUnix.c
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CedarPch.o: src/Cedar/CedarPch.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Connection.o: src/Cedar/Connection.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Console.o: src/Cedar/Console.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Database.o: src/Cedar/Database.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Hub.o: src/Cedar/Hub.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Layer3.o: src/Cedar/Layer3.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Link.o: src/Cedar/Link.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Listener.o: src/Cedar/Listener.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Logging.o: src/Cedar/Logging.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Nat.o: src/Cedar/Nat.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Protocol.o: src/Cedar/Protocol.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Remote.o: src/Cedar/Remote.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Sam.o: src/Cedar/Sam.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SecureNAT.o: src/Cedar/SecureNAT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Server.o: src/Cedar/Server.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/TcpIp.o: src/Cedar/TcpIp.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLan.o: src/Cedar/VLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o $(CCFLAGS)
+ 
+ # Ham
+ output/ham/ham: tmp/as/Ham.a output/ham/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham
++	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham $(LDFLAGS)
+ 
+ tmp/as/Ham.a: tmp/objs/Ham.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/Ham.a
+@@ -244,11 +244,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/ham/hamcore.utvpn
+ 
+ tmp/objs/Ham.o: src/Ham/Ham.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o $(CCFLAGS)
+ 
+ # utvpnserver
+ output/utvpnserver/utvpnserver: tmp/as/utvpnserver.a output/utvpnserver/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver
++	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver $(LDFLAGS)
+ 
+ tmp/as/utvpnserver.a: tmp/objs/utvpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnserver.a
+@@ -259,11 +259,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnserver/hamcore.utvpn
+ 
+ tmp/objs/utvpnserver.o: src/utvpnserver/utvpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o $(CCFLAGS)
+ 
+ # utvpnclient
+ output/utvpnclient/utvpnclient: tmp/as/utvpnclient.a output/utvpnclient/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient
++	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient $(LDFLAGS)
+ 
+ tmp/as/utvpnclient.a: tmp/objs/utvpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnclient.a
+@@ -274,11 +274,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnclient/hamcore.utvpn
+ 
+ tmp/objs/utvpnclient.o: src/utvpnclient/utvpnclient.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o $(CCFLAGS)
+ 
+ # utvpncmd
+ output/utvpncmd/utvpncmd: tmp/as/utvpncmd.a output/utvpncmd/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd
++	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd $(LDFLAGS)
+ 
+ tmp/as/utvpncmd.a: tmp/objs/utvpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpncmd.a
+@@ -289,7 +289,7 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpncmd/hamcore.utvpn
+ 
+ tmp/objs/utvpncmd.o: src/utvpncmd/utvpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o $(CCFLAGS)
+ 
+ # Install
+ install: $(INSTALL_BINDIR)utvpnserver $(INSTALL_BINDIR)utvpnclient $(INSTALL_BINDIR)utvpncmd
+diff -ruN a/makefiles/solaris_32bit_ja.mak b/makefiles/solaris_32bit_ja.mak
+--- a/makefiles/solaris_32bit_ja.mak	2010-06-27 02:43:58.000000000 -0700
++++ b/makefiles/solaris_32bit_ja.mak	2012-08-13 13:00:52.226147398 -0700
+@@ -25,13 +25,13 @@
+ # Variables
+ CC=gcc
+ 
+-OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_SOLARIS -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char
++OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_SOLARIS -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char $(CCFLAGS)
+ 
+-OPTIONS_LINK_DEBUG=-g -fsigned-char -lm -lrt -lnsl -lsocket -ldl -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_DEBUG=-g -fsigned-char -lm -lrt -lnsl -lsocket -ldl -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+-OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_SOLARIS -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char
++OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_SOLARIS -DNO_VLAN -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char $(CCFLAGS)
+ 
+-OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -lrt -lnsl -lsocket -ldl -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_RELEASE=-O2 -fsigned-char -lm -lrt -lnsl -lsocket -ldl -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+ INSTALL_BINDIR=/usr/bin/
+ INSTALL_UTVPNSERVER_DIR=/usr/utvpnserver/
+@@ -39,11 +39,11 @@
+ INSTALL_UTVPNCMD_DIR=/usr/utvpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+-	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG) $(LDFLAGS)
+ else
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE)
+-	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE) $(LDFLAGS)
+ endif
+ 
+ # Files
+@@ -69,171 +69,171 @@
+ 	@mkdir -p output/utvpnserver/
+ 	@mkdir -p output/utvpnclient/
+ 	@mkdir -p output/utvpncmd/
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Encrypt.o: src/Mayaqua/Encrypt.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/FileIO.o: src/Mayaqua/FileIO.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Internat.o: src/Mayaqua/Internat.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Kernel.o: src/Mayaqua/Kernel.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Mayaqua.o: src/Mayaqua/Mayaqua.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Object.o: src/Mayaqua/Object.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/OS.o: src/Mayaqua/OS.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Pack.o: src/Mayaqua/Pack.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Secure.o: src/Mayaqua/Secure.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Str.o: src/Mayaqua/Str.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Table.o: src/Mayaqua/Table.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tick64.o: src/Mayaqua/Tick64.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tracking.o: src/Mayaqua/Tracking.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o $(CCFLAGS)
+ 
+ # Cedar Communication Module Code
+ tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Admin.o: src/Cedar/Admin.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Bridge.o: src/Cedar/Bridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) src/Cedar/BridgeUnix.c
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CedarPch.o: src/Cedar/CedarPch.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Connection.o: src/Cedar/Connection.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Console.o: src/Cedar/Console.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Database.o: src/Cedar/Database.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Hub.o: src/Cedar/Hub.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Layer3.o: src/Cedar/Layer3.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Link.o: src/Cedar/Link.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Listener.o: src/Cedar/Listener.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Logging.o: src/Cedar/Logging.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Nat.o: src/Cedar/Nat.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Protocol.o: src/Cedar/Protocol.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Remote.o: src/Cedar/Remote.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Sam.o: src/Cedar/Sam.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SecureNAT.o: src/Cedar/SecureNAT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Server.o: src/Cedar/Server.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/TcpIp.o: src/Cedar/TcpIp.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLan.o: src/Cedar/VLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o $(CCFLAGS)
+ 
+ # Ham
+ output/ham/ham: tmp/as/Ham.a output/ham/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham
++	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham $(LDFLAGS)
+ 
+ tmp/as/Ham.a: tmp/objs/Ham.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/Ham.a
+@@ -244,11 +244,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/ham/hamcore.utvpn
+ 
+ tmp/objs/Ham.o: src/Ham/Ham.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o $(CCFLAGS)
+ 
+ # utvpnserver
+ output/utvpnserver/utvpnserver: tmp/as/utvpnserver.a output/utvpnserver/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver
++	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver $(LDFLAGS)
+ 
+ tmp/as/utvpnserver.a: tmp/objs/utvpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnserver.a
+@@ -259,11 +259,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnserver/hamcore.utvpn
+ 
+ tmp/objs/utvpnserver.o: src/utvpnserver/utvpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o $(CCFLAGS)
+ 
+ # utvpnclient
+ output/utvpnclient/utvpnclient: tmp/as/utvpnclient.a output/utvpnclient/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient
++	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient $(LDFLAGS)
+ 
+ tmp/as/utvpnclient.a: tmp/objs/utvpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnclient.a
+@@ -274,11 +274,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnclient/hamcore.utvpn
+ 
+ tmp/objs/utvpnclient.o: src/utvpnclient/utvpnclient.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o $(CCFLAGS)
+ 
+ # utvpncmd
+ output/utvpncmd/utvpncmd: tmp/as/utvpncmd.a output/utvpncmd/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd
++	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd $(LDFLAGS)
+ 
+ tmp/as/utvpncmd.a: tmp/objs/utvpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpncmd.a
+@@ -289,7 +289,7 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpncmd/hamcore.utvpn
+ 
+ tmp/objs/utvpncmd.o: src/utvpncmd/utvpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o $(CCFLAGS)
+ 
+ # Install
+ install: $(INSTALL_BINDIR)utvpnserver $(INSTALL_BINDIR)utvpnclient $(INSTALL_BINDIR)utvpncmd
+diff -ruN a/makefiles/solaris_64bit_ja.mak b/makefiles/solaris_64bit_ja.mak
+--- a/makefiles/solaris_64bit_ja.mak	2010-06-27 02:43:58.000000000 -0700
++++ b/makefiles/solaris_64bit_ja.mak	2012-08-13 13:00:52.226147398 -0700
+@@ -25,13 +25,13 @@
+ # Variables
+ CC=gcc
+ 
+-OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_SOLARIS -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char -m64
++OPTIONS_COMPILE_DEBUG=-D_DEBUG -DDEBUG -DUNIX -DUNIX_SOLARIS -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -g -fsigned-char -m64 $(CCFLAGS)
+ 
+-OPTIONS_LINK_DEBUG=-g -fsigned-char -m64 -lm -lrt -lnsl -lsocket -ldl -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_DEBUG=-g -fsigned-char -m64 -lm -lrt -lnsl -lsocket -ldl -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+-OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_SOLARIS -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char -m64
++OPTIONS_COMPILE_RELEASE=-DNDEBUG -DVPN_SPEED -DUNIX -DUNIX_SOLARIS -DNO_VLAN -DCPU_64 -D_REENTRANT -DREENTRANT -D_THREAD_SAFE -D_THREADSAFE -DTHREAD_SAFE -DTHREADSAFE -I./src/ -I./src/Cedar/ -I./src/Mayaqua/ -O2 -fsigned-char -m64 $(CCFLAGS)
+ 
+-OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -lrt -lnsl -lsocket -ldl -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz
++OPTIONS_LINK_RELEASE=-O2 -fsigned-char -m64 -lm -lrt -lnsl -lsocket -ldl -lpthread -lssl -lcrypto -liconv -lreadline -lncurses -lz $(LDFLAGS)
+ 
+ INSTALL_BINDIR=/usr/bin/
+ INSTALL_UTVPNSERVER_DIR=/usr/utvpnserver/
+@@ -39,11 +39,11 @@
+ INSTALL_UTVPNCMD_DIR=/usr/utvpncmd/
+ 
+ ifeq ($(DEBUG),YES)
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG)
+-	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_DEBUG) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_DEBUG) $(LDFLAGS)
+ else
+-	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE)
+-	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE)
++	OPTIONS_COMPILE=$(OPTIONS_COMPILE_RELEASE) $(CCFLAGS)
++	OPTIONS_LINK=$(OPTIONS_LINK_RELEASE) $(LDFLAGS)
+ endif
+ 
+ # Files
+@@ -69,171 +69,171 @@
+ 	@mkdir -p output/utvpnserver/
+ 	@mkdir -p output/utvpnclient/
+ 	@mkdir -p output/utvpncmd/
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Cfg.c -o tmp/objs/Mayaqua/Cfg.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Encrypt.o: src/Mayaqua/Encrypt.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Encrypt.c -o tmp/objs/Mayaqua/Encrypt.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/FileIO.o: src/Mayaqua/FileIO.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/FileIO.c -o tmp/objs/Mayaqua/FileIO.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Internat.o: src/Mayaqua/Internat.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Internat.c -o tmp/objs/Mayaqua/Internat.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Kernel.o: src/Mayaqua/Kernel.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Kernel.c -o tmp/objs/Mayaqua/Kernel.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Mayaqua.o: src/Mayaqua/Mayaqua.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Mayaqua.c -o tmp/objs/Mayaqua/Mayaqua.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Object.o: src/Mayaqua/Object.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Object.c -o tmp/objs/Mayaqua/Object.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/OS.o: src/Mayaqua/OS.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/OS.c -o tmp/objs/Mayaqua/OS.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Pack.o: src/Mayaqua/Pack.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Pack.c -o tmp/objs/Mayaqua/Pack.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Secure.o: src/Mayaqua/Secure.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Secure.c -o tmp/objs/Mayaqua/Secure.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Str.o: src/Mayaqua/Str.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Str.c -o tmp/objs/Mayaqua/Str.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Table.o: src/Mayaqua/Table.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Table.c -o tmp/objs/Mayaqua/Table.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tick64.o: src/Mayaqua/Tick64.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tick64.c -o tmp/objs/Mayaqua/Tick64.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Tracking.o: src/Mayaqua/Tracking.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Tracking.c -o tmp/objs/Mayaqua/Tracking.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o $(CCFLAGS)
+ 
+ tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o $(CCFLAGS)
+ 
+ # Cedar Communication Module Code
+ tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Admin.o: src/Cedar/Admin.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Admin.c -o tmp/objs/Cedar/Admin.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Bridge.o: src/Cedar/Bridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) src/Cedar/BridgeUnix.c
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Bridge.c -o tmp/objs/Cedar/Bridge.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CedarPch.o: src/Cedar/CedarPch.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CedarPch.c -o tmp/objs/Cedar/CedarPch.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Connection.o: src/Cedar/Connection.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Connection.c -o tmp/objs/Cedar/Connection.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Console.o: src/Cedar/Console.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Console.c -o tmp/objs/Cedar/Console.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Database.o: src/Cedar/Database.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Database.c -o tmp/objs/Cedar/Database.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Hub.o: src/Cedar/Hub.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Hub.c -o tmp/objs/Cedar/Hub.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Layer3.o: src/Cedar/Layer3.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Layer3.c -o tmp/objs/Cedar/Layer3.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Link.o: src/Cedar/Link.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Link.c -o tmp/objs/Cedar/Link.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Listener.o: src/Cedar/Listener.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Listener.c -o tmp/objs/Cedar/Listener.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Logging.o: src/Cedar/Logging.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Logging.c -o tmp/objs/Cedar/Logging.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Nat.o: src/Cedar/Nat.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Nat.c -o tmp/objs/Cedar/Nat.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Protocol.o: src/Cedar/Protocol.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Protocol.c -o tmp/objs/Cedar/Protocol.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Remote.o: src/Cedar/Remote.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Remote.c -o tmp/objs/Cedar/Remote.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Sam.o: src/Cedar/Sam.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Sam.c -o tmp/objs/Cedar/Sam.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SecureNAT.o: src/Cedar/SecureNAT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SecureNAT.c -o tmp/objs/Cedar/SecureNAT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Server.o: src/Cedar/Server.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Server.c -o tmp/objs/Cedar/Server.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/TcpIp.o: src/Cedar/TcpIp.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/TcpIp.c -o tmp/objs/Cedar/TcpIp.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLan.o: src/Cedar/VLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLan.c -o tmp/objs/Cedar/VLan.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o $(CCFLAGS)
+ 
+ tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o $(CCFLAGS)
+ 
+ # Ham
+ output/ham/ham: tmp/as/Ham.a output/ham/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham
++	$(CC) tmp/as/Ham.a $(OPTIONS_LINK) -o output/ham/ham $(LDFLAGS)
+ 
+ tmp/as/Ham.a: tmp/objs/Ham.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/Ham.a
+@@ -244,11 +244,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/ham/hamcore.utvpn
+ 
+ tmp/objs/Ham.o: src/Ham/Ham.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o
++	$(CC) $(OPTIONS_COMPILE) -c src/Ham/Ham.c -o tmp/objs/Ham.o $(CCFLAGS)
+ 
+ # utvpnserver
+ output/utvpnserver/utvpnserver: tmp/as/utvpnserver.a output/utvpnserver/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver
++	$(CC) tmp/as/utvpnserver.a $(OPTIONS_LINK) -o output/utvpnserver/utvpnserver $(LDFLAGS)
+ 
+ tmp/as/utvpnserver.a: tmp/objs/utvpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnserver.a
+@@ -259,11 +259,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnserver/hamcore.utvpn
+ 
+ tmp/objs/utvpnserver.o: src/utvpnserver/utvpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnserver/utvpnserver.c -o tmp/objs/utvpnserver.o $(CCFLAGS)
+ 
+ # utvpnclient
+ output/utvpnclient/utvpnclient: tmp/as/utvpnclient.a output/utvpnclient/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient
++	$(CC) tmp/as/utvpnclient.a $(OPTIONS_LINK) -o output/utvpnclient/utvpnclient $(LDFLAGS)
+ 
+ tmp/as/utvpnclient.a: tmp/objs/utvpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpnclient.a
+@@ -274,11 +274,11 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpnclient/hamcore.utvpn
+ 
+ tmp/objs/utvpnclient.o: src/utvpnclient/utvpnclient.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpnclient/utvpnclient.c -o tmp/objs/utvpnclient.o $(CCFLAGS)
+ 
+ # utvpncmd
+ output/utvpncmd/utvpncmd: tmp/as/utvpncmd.a output/utvpncmd/hamcore.utvpn $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd
++	$(CC) tmp/as/utvpncmd.a $(OPTIONS_LINK) -o output/utvpncmd/utvpncmd $(LDFLAGS)
+ 
+ tmp/as/utvpncmd.a: tmp/objs/utvpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+ 	rm -f tmp/as/utvpncmd.a
+@@ -289,7 +289,7 @@
+ 	cp src/bin/BuiltHamcoreFiles/unix_ja/hamcore.utvpn output/utvpncmd/hamcore.utvpn
+ 
+ tmp/objs/utvpncmd.o: src/utvpncmd/utvpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o
++	$(CC) $(OPTIONS_COMPILE) -c src/utvpncmd/utvpncmd.c -o tmp/objs/utvpncmd.o $(CCFLAGS)
+ 
+ # Install
+ install: $(INSTALL_BINDIR)utvpnserver $(INSTALL_BINDIR)utvpnclient $(INSTALL_BINDIR)utvpncmd

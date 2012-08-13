@@ -46,10 +46,12 @@ endef
 
 # libz.so is needed for openssl (utvpn-dynamic)
 define Package/utvpn/install
+	mkdir -p $(PKG_INSTALL_DIR)/etc/init.d
 	mkdir -p $(PKG_INSTALL_DIR)/usr/bin
+	$(CP) $(PKG_BUILD_DIR)/rc/openwrt $(PKG_INSTALL_DIR)/etc/init.d
 	$(CP) $(PKG_BUILD_DIR)/output/utvpnserver/* $(PKG_INSTALL_DIR)/usr/bin
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(CP) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin
+	$(INSTALL_DIR) $(1)
+	$(CP) $(PKG_INSTALL_DIR)/* $(1)
 endef
 
 $(eval $(call BuildPackage,utvpn))
