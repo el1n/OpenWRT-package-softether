@@ -9,12 +9,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=softethervpn
 PKG_VERSION:=4.03
-PKG_RELEASE:=9408
+PKG_RELEASE:=9411
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/v4.03-9408
-PKG_SOURCE:=softether-src-v4.03-9408-rtm.tar.gz
-PKG_SOURCE_URL:=http://jp.softether-download.com/files/softether/v4.03-9408-rtm-2014.01.04-tree/Source%20Code/
-PKG_MD5SUM:=85e6889e3285a05a0c7b231bda1ca57a
+PKG_BUILD_DIR:=$(BUILD_DIR)/v4.03-9411
+PKG_SOURCE:=softether-src-v4.03-9411-rtm.tar.gz
+PKG_SOURCE_URL:=http://jp.softether-download.com/files/softether/v4.03-9411-rtm-2014.01.07-tree/Source%20Code/
+PKG_MD5SUM:=cf531fa15cefabac1a3ac3b3ff7ca85f
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -40,14 +40,27 @@ define Package/softethervpncmd
 endef
 
 define Build/Configure
-	cd $(PKG_BUILD_DIR)
 endef
 
 define Build/Compile
+	make \
+		-C $(PKG_BUILD_DIR) \
+		-f src/makefiles/linux_32bit.mak \
+		src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+	mv $(PKG_BUILD_DIR)/src/bin/BuiltHamcoreFiles/unix/hamcore.se2 $(PKG_BUILD_DIR)/src/bin/BuiltHamcoreFiles/unix/hamcore.se2.1
+
+	make \
+		-C $(PKG_BUILD_DIR) \
+		-f src/makefiles/linux_32bit.mak \
+		clean
+	mv $(PKG_BUILD_DIR)/src/bin/BuiltHamcoreFiles/unix/hamcore.se2.1 $(PKG_BUILD_DIR)/src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+	#touch -d "`date -d 1day`" $(PKG_BUILD_DIR)/tmp/hamcorebuilder
+	touch -d "`date -d 1day`" $(PKG_BUILD_DIR)/src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+
 	$(MAKE) \
 		$(TARGET_CONFIGURE_OPTS) \
 		CCFLAGS="-I$(STAGING_DIR)/usr/include -I$(STAGING_DIR)/usr/lib/libiconv-full/include" \
-		LDFLAGS="-L$(STAGING_DIR)/usr/lib -L$(STAGING_DIR)/usr/lib/libiconv-full/lib" \
+		LDFLAGS="-L$(STAGING_DIR)/usr/lib -L$(STAGING_DIR)/usr/lib/libiconv-full/lib -liconv" \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak
 endef
