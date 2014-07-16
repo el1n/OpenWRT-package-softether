@@ -20,6 +20,7 @@ PKG_SOURCE_URL:=http://jp.softether-download.com/files/softether/v$(PKG_VERSION)
 PKG_MD5SUM:=99154ae2a286bb6f2c71e18ebcb75c8a
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/nls.mk
 
 define Package/softethervpnserver
   SECTION:=net
@@ -27,7 +28,7 @@ define Package/softethervpnserver
   SUBMENU:=VPN
   TITLE:=Open-Source Free Cross-platform Multi-protocol VPN
   URL:=http://www.softether.org/
-  DEPENDS:=+libpthread +librt +libreadline +libopenssl +libncurses +libiconv-full
+  DEPENDS:=+libpthread +librt +libreadline +libopenssl +libncurses
 endef
 
 define Package/softethervpnclient
@@ -62,8 +63,8 @@ define Build/Compile
 
 	$(MAKE) \
 		$(TARGET_CONFIGURE_OPTS) \
-		CCFLAGS="-I$(STAGING_DIR)/usr/include -I$(STAGING_DIR)/usr/lib/libiconv-full/include" \
-		LDFLAGS="-L$(STAGING_DIR)/usr/lib -L$(STAGING_DIR)/usr/lib/libiconv-full/lib -liconv" \
+		CCFLAGS="-I$(STAGING_DIR)/usr/include $(ICONV_CFLAGS)" \
+		LDFLAGS="-L$(STAGING_DIR)/usr/lib $(ICONV_LDFLAGS) -liconv" \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak
 endef
