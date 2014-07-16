@@ -16,14 +16,8 @@ Compile
 
 2. Get OpenWrt SDK and prepare for compile
   ```
-  svn co svn://svn.openwrt.org/openwrt/tags/attitude_adjustment_12.09
-  cd attitude_adjustment_12.09
-  ```
-
-  SoftEther VPN requires libiconv, But SDK did not including libiconv.  
-  Therefore, You need download libiconv for compile.
-  ```
-  svn export svn://svn.openwrt.org/openwrt/packages/libs/libiconv-full@29638 package/libiconv-full
+  svn co svn://svn.openwrt.org/openwrt/branches/attitude_adjustment
+  cd attitude_adjustment
   ```
 
   SoftEther VPN uses SHA algorithm.  
@@ -33,8 +27,16 @@ Compile
   sed -i 's/no-sha0//' package/openssl/Makefile
   ```
 
+  Add following line to feeds.conf file.
+  If file not exists, Add line after copy feeds.conf.default to feeds.conf.
   ```
-  git clone https://github.com/el1n/OpenWRT-package-softether.git package/softethervpn
+  src-git softethervpn https://github.com/el1n/OpenWRT-package-softether.git
+  ```
+
+  Update feeds and Install SoftEther VPN.
+  ```
+  ./scripts/feeds update
+  ./scripts/feeds install softethervpnserver
   ```
 
 3. SDK settings
