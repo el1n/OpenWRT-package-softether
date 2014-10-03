@@ -8,11 +8,11 @@ diff -crN a/rc/vpnbridge b/rc/vpnbridge
 + START=60
 + 
 + start(){
-+ 	/usr/bin/vpnbridge start
++ 	/usr/bin/env LANG=en_US.UTF-8 /usr/bin/vpnbridge start
 + }
 + 
 + stop(){
-+ 	/usr/bin/vpnbridge stop
++ 	/usr/bin/env LANG=en_US.UTF-8 /usr/bin/vpnbridge stop
 + }
 diff -crN a/rc/vpnserver b/rc/vpnserver
 *** a/rc/vpnserver	Thu Jan  1 00:00:00 1970
@@ -24,9 +24,9 @@ diff -crN a/rc/vpnserver b/rc/vpnserver
 + START=60
 + 
 + start(){
-+ 	/usr/bin/vpnserver start
++ 	/usr/bin/env LANG=en_US.UTF-8 /usr/bin/vpnserver start
 + }
 + 
 + stop(){
-+ 	/usr/bin/vpnserver stop
++ 	/usr/bin/env LANG=en_US.UTF-8 /usr/bin/vpnserver stop
 + }
