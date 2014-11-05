@@ -65,6 +65,7 @@ Compile
   + libreadline
   + libncurses
   + libiconv-full
+  + kmod-tun
 
   And libopenssl, But can not use SHA algorithm in official build.  
   So install the libopenssl package that was build together with SoftEther VPN.
