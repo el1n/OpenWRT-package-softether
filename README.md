@@ -77,6 +77,10 @@ Compile
   ```
   rm /var/opkg-lists/barrier_breaker_base
   ```
+  You will see this error if you forget install the libopenssl for the SoftEther VPN.
+  ```
+  /overlay/usr/bin/vpnserver: can't resolve symbol 'SHA' in lib '/overlay/usr/bin/vpnserver'.
+  ```
 
   If you are doing install some SoftEther VPN packages from a shell, This problem occurs.
   ```
@@ -91,11 +95,6 @@ Compile
   This will you can install successfully.
   ```
   opkg install --force-overwrite softethervpnserver_4.10-9505_ar71xx.ipk
-  ```
-
-  You will see this error if you forget install the libopenssl for the SoftEther VPN.
-  ```
-  /overlay/usr/bin/vpnserver: can't resolve symbol 'SHA' in lib '/overlay/usr/bin/vpnserver'.
   ```
 
 6. Execute
