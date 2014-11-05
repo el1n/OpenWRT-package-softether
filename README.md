@@ -5,7 +5,9 @@ You can get binary package from http://b.mikomoe.jp/.
 
 If need compile for OpenWrt 12.09, See old [README.MD](https://github.com/el1n/OpenWRT-package-softether/blob/7dc4c4ce19da9aa7dc2330e2dbbdc4d3e4dd4fcc/README.md)
 
-If you are japanese or could read japanese, Visit [my blog](http://elin.mikomoe.jp/index.php?entry=OpenWRT%E3%81%A7SoftEther-VPN%E3%82%92%E5%8B%95%E3%81%8B%E3%81%99).
+If you are japanese or could read japanese, Visit [my blog](http://elin.mikomoe.jp/index.php?entry=OpenWRT%E3%81%A7SoftEther-VPN%E3%82%92%E5%8B%95%E3%81%8B%E3%81%99).  
+This entry too old.  
+If possible, Please read this README.MD.
 
 Compile
 -
@@ -74,4 +76,33 @@ Compile
   Delete the package list once to avoid this.
   ```
   rm /var/opkg-lists/barrier_breaker_base
+  ```
+
+  If you are doing install some SoftEther VPN packages from a shell, This problem occurs.
+  ```
+  Installing softethervpncmd (4.10-9505) to root...
+  Collected errors:
+   * check_data_file_clashes: Package softethervpncmd wants to install file /usr/bin/hamcore.se2
+          But that file is already provided by package  * softethervpnclient
+  ```
+  Each SoftEther VPN package included hamcore.se2.  
+  This means collision when install other SoftEther VPN packages.  
+  Install package from the LuCI or execute the opkg command with "--force-overwrite" option.  
+  This will you can install successfully.
+  ```
+  opkg install --force-overwrite softethervpnserver_4.10-9505_ar71xx.ipk
+  ```
+
+  You will see this error if you forget install the libopenssl for the SoftEther VPN.
+  ```
+  /overlay/usr/bin/vpnserver: can't resolve symbol 'SHA' in lib '/overlay/usr/bin/vpnserver'.
+  ```
+
+6. Execute
+
+  Press "Start" from "System -> Startup" in the LuCI.
+
+  If you want run SoftEther VPN in a shell, You need set the LANG environment variable and execute the SoftEther VPN.
+  ```
+  /usr/bin/env LANG=en_US.UTF-8 /usr/bin/vpnserver start
   ```
