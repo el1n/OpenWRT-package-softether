@@ -47,6 +47,16 @@ define Build/Configure
 endef
 
 define Build/Compile
+	-cp -ar $(BUILD_DIR)/openssl-* $(PKG_BUILD_DIR)/src/Mayaqua/openssl
+	-rm -f $(PKG_BUILD_DIR)/src/Mayaqua/openssl/crypto/sha/*.o
+
+	$(MAKE) \
+		$(TARGET_CONFIGURE_OPTS) \
+		CFLAGS="-I../ -DOPENSSL_DOING_MAKEDEPEND" \
+		-C $(PKG_BUILD_DIR)/src/Mayaqua/openssl/crypto/sha \
+		-f Makefile \
+		sha_dgst.o sha_one.o
+
 	make \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak \
@@ -64,7 +74,7 @@ define Build/Compile
 	$(MAKE) \
 		$(TARGET_CONFIGURE_OPTS) \
 		CCFLAGS="-I$(STAGING_DIR)/usr/include $(ICONV_CFLAGS) -minterlink-mips16" \
-		LDFLAGS="-L$(STAGING_DIR)/usr/lib $(ICONV_LDFLAGS) -liconv" \
+		LDFLAGS="-L$(STAGING_DIR)/usr/lib $(ICONV_LDFLAGS) -liconv src/Mayaqua/openssl/crypto/sha/sha_dgst.o src/Mayaqua/openssl/crypto/sha/sha_one.o" \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak
 endef
