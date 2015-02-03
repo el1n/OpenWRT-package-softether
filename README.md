@@ -24,13 +24,6 @@ Compile
   cd barrier_breaker
   ```
 
-  SoftEther VPN uses SHA algorithm.  
-  For default, it is not enabled.  
-  You will need to enabled this.
-  ```
-  sed -i 's/no-sha0//' package/libs/openssl/Makefile
-  ```
-
   Add following line to feeds.conf file.
   If file not exists, Add line after copy feeds.conf.default to feeds.conf.
   ```
@@ -68,19 +61,7 @@ Compile
   + libncurses
   + libiconv-full
   + kmod-tun
-
-  And libopenssl, But can not use SHA algorithm in official build.  
-  So install the libopenssl package that was build together with SoftEther VPN.
-
-  However results in "md5sum mismatch" error.  
-  Delete the package list once to avoid this.
-  ```
-  rm /var/opkg-lists/barrier_breaker_base
-  ```
-  You will see this error if you forget install the libopenssl for the SoftEther VPN.
-  ```
-  /overlay/usr/bin/vpnserver: can't resolve symbol 'SHA' in lib '/overlay/usr/bin/vpnserver'.
-  ```
+  + libopenssl
 
   If you are doing install some SoftEther VPN packages from a shell, This problem occurs.
   ```
