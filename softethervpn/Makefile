@@ -8,16 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=softethervpn
-PKG_VERSION:=4.12
-PKG_RELEASE:=9514
+PKG_VERSION:=4.13
+PKG_RELEASE:=9522
 #PKG_VERSION2:=rtm
 PKG_VERSION2:=beta
-PKG_DATE:=2014.11.17
+PKG_DATE:=2015.01.30
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/v$(PKG_VERSION)-$(PKG_RELEASE)
 PKG_SOURCE:=softether-src-v$(PKG_VERSION)-$(PKG_RELEASE)-$(PKG_VERSION2).tar.gz
 PKG_SOURCE_URL:=http://jp.softether-download.com/files/softether/v$(PKG_VERSION)-$(PKG_RELEASE)-$(PKG_VERSION2)-$(PKG_DATE)-tree/Source_Code/
-PKG_MD5SUM:=a6aa5bf7fba45e4c456801103c804dab
+PKG_MD5SUM:=021b4c5eb71fff59b4494a7b22b30aca
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
@@ -47,16 +47,6 @@ define Build/Configure
 endef
 
 define Build/Compile
-	-cp -ar $(BUILD_DIR)/openssl-* $(PKG_BUILD_DIR)/src/Mayaqua/openssl
-	-rm -f $(PKG_BUILD_DIR)/src/Mayaqua/openssl/crypto/sha/*.o
-
-	$(MAKE) \
-		$(TARGET_CONFIGURE_OPTS) \
-		CFLAGS="-I../ -DOPENSSL_DOING_MAKEDEPEND" \
-		-C $(PKG_BUILD_DIR)/src/Mayaqua/openssl/crypto/sha \
-		-f Makefile \
-		sha_dgst.o sha_one.o
-
 	make \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak \
@@ -74,7 +64,7 @@ define Build/Compile
 	$(MAKE) \
 		$(TARGET_CONFIGURE_OPTS) \
 		CCFLAGS="-I$(STAGING_DIR)/usr/include $(ICONV_CFLAGS) -minterlink-mips16" \
-		LDFLAGS="-L$(STAGING_DIR)/usr/lib $(ICONV_LDFLAGS) -liconv src/Mayaqua/openssl/crypto/sha/sha_dgst.o src/Mayaqua/openssl/crypto/sha/sha_one.o" \
+		LDFLAGS="-L$(STAGING_DIR)/usr/lib $(ICONV_LDFLAGS) -liconv" \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak
 endef
