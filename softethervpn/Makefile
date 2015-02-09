@@ -22,7 +22,7 @@ PKG_MD5SUM:=99096d80128dfd25dd54fe11b7ff6459
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
 
-define Package/softethervpnserver
+define Package/softethervpn
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=VPN
@@ -31,17 +31,17 @@ define Package/softethervpnserver
   DEPENDS:=+libpthread +librt +libreadline +libopenssl +libncurses +kmod-tun
 endef
 
-define Package/softethervpnclient
-	$(call Package/softethervpnserver)
-endef
-
-define Package/softethervpnbridge
-	$(call Package/softethervpnserver)
-endef
-
-define Package/softethervpncmd
-	$(call Package/softethervpnserver)
-endef
+#define Package/softethervpnclient
+#	$(call Package/softethervpnserver)
+#endef
+#
+#define Package/softethervpnbridge
+#	$(call Package/softethervpnserver)
+#endef
+#
+#define Package/softethervpncmd
+#	$(call Package/softethervpnserver)
+#endef
 
 define Build/Configure
 endef
@@ -69,31 +69,38 @@ define Build/Compile
 		-f src/makefiles/linux_32bit.mak
 endef
 
-define Package/softethervpnserver/install
+#define Package/softethervpnserver/install
+define Package/softethervpn/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/vpnserver/* $(1)/usr/bin
+	ln -s vpnserver $(1)/usr/bin/vpnclient
+	ln -s vpnserver $(1)/usr/bin/vpnbridge
+	ln -s vpnserver $(1)/usr/bin/vpncmd
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rc/vpnserver $(1)/etc/init.d/softethervpnserver
-endef
-
-define Package/softethervpnclient/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/vpnclient/* $(1)/usr/bin
-endef
-
-define Package/softethervpnbridge/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/vpnbridge/* $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rc/vpnclient $(1)/etc/init.d/softethervpnclient
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rc/vpnbridge $(1)/etc/init.d/softethervpnbridge
 endef
 
-define Package/softethervpncmd/install
-	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/vpncmd/* $(1)/usr/bin
-endef
+#define Package/softethervpnclient/install
+#	$(INSTALL_DIR) $(1)/usr/bin
+#	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/vpnclient/* $(1)/usr/bin
+#endef
+#
+#define Package/softethervpnbridge/install
+#	$(INSTALL_DIR) $(1)/usr/bin
+#	$(INSTALL_DIR) $(1)/etc/init.d
+#	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/vpnbridge/* $(1)/usr/bin
+#	$(INSTALL_BIN) $(PKG_BUILD_DIR)/rc/vpnbridge $(1)/etc/init.d/softethervpnbridge
+#endef
+#
+#define Package/softethervpncmd/install
+#	$(INSTALL_DIR) $(1)/usr/bin
+#	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/vpncmd/* $(1)/usr/bin
+#endef
 
-$(eval $(call BuildPackage,softethervpnserver))
-$(eval $(call BuildPackage,softethervpnclient))
-$(eval $(call BuildPackage,softethervpnbridge))
-$(eval $(call BuildPackage,softethervpncmd))
+$(eval $(call BuildPackage,softethervpn))
+#$(eval $(call BuildPackage,softethervpnserver))
+#$(eval $(call BuildPackage,softethervpnclient))
+#$(eval $(call BuildPackage,softethervpnbridge))
+#$(eval $(call BuildPackage,softethervpncmd))
