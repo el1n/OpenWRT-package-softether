@@ -1,0 +1,541 @@
+diff -crN a/src/makefiles/linux_32bit.mak b/src/makefiles/linux_32bit.mak
+*** a/src/makefiles/linux_32bit.mak	Mon Feb  2 09:13:23 2015
+--- b/src/makefiles/linux_32bit.mak	Mon Feb  9 21:30:51 2015
+***************
+*** 57,63 ****
+  # Build Action
+  default:	build
+  
+! build:	$(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) bin/vpnserver/vpnserver bin/vpnclient/vpnclient bin/vpnbridge/vpnbridge bin/vpncmd/vpncmd
+  
+  # Mayaqua Kernel Code
+  tmp/objs/Mayaqua/Cfg.o: src/Mayaqua/Cfg.c $(HEADERS_MAYAQUA)
+--- 57,63 ----
+  # Build Action
+  default:	build
+  
+! build:	$(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) bin/vpnserver/vpnserver
+  
+  # Mayaqua Kernel Code
+  tmp/objs/Mayaqua/Cfg.o: src/Mayaqua/Cfg.c $(HEADERS_MAYAQUA)
+***************
+*** 322,330 ****
+  bin/vpnserver/vpnserver: tmp/as/vpnserver.a bin/vpnserver/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) tmp/as/vpnserver.a $(OPTIONS_LINK) -o bin/vpnserver/vpnserver
+  
+! tmp/as/vpnserver.a: tmp/objs/vpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	rm -f tmp/as/vpnserver.a
+! 	ar r tmp/as/vpnserver.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnserver.o
+  	ranlib tmp/as/vpnserver.a
+  
+  bin/vpnserver/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+--- 322,330 ----
+  bin/vpnserver/vpnserver: tmp/as/vpnserver.a bin/vpnserver/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) tmp/as/vpnserver.a $(OPTIONS_LINK) -o bin/vpnserver/vpnserver
+  
+! tmp/as/vpnserver.a: tmp/objs/vpnserver.o tmp/objs/vpnclient.o tmp/objs/vpnbridge.o tmp/objs/vpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	rm -f tmp/as/vpnserver.a
+! 	ar r tmp/as/vpnserver.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnserver.o tmp/objs/vpnclient.o tmp/objs/vpnbridge.o tmp/objs/vpncmd.o
+  	ranlib tmp/as/vpnserver.a
+  
+  bin/vpnserver/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+***************
+*** 333,380 ****
+  tmp/objs/vpnserver.o: src/vpnserver/vpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnserver/vpnserver.c -o tmp/objs/vpnserver.o
+  
+! # vpnclient
+! bin/vpnclient/vpnclient: tmp/as/vpnclient.a bin/vpnclient/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	$(CC) tmp/as/vpnclient.a $(OPTIONS_LINK) -o bin/vpnclient/vpnclient
+! 
+! tmp/as/vpnclient.a: tmp/objs/vpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	rm -f tmp/as/vpnclient.a
+! 	ar r tmp/as/vpnclient.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnclient.o
+! 	ranlib tmp/as/vpnclient.a
+! 
+! bin/vpnclient/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! 	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpnclient/hamcore.se2
+! 
+  tmp/objs/vpnclient.o: src/vpnclient/vpncsvc.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnclient/vpncsvc.c -o tmp/objs/vpnclient.o
+! 
+! # vpnbridge
+! bin/vpnbridge/vpnbridge: tmp/as/vpnbridge.a bin/vpnbridge/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	$(CC) tmp/as/vpnbridge.a $(OPTIONS_LINK) -o bin/vpnbridge/vpnbridge
+! 
+! tmp/as/vpnbridge.a: tmp/objs/vpnbridge.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	rm -f tmp/as/vpnbridge.a
+! 	ar r tmp/as/vpnbridge.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnbridge.o
+! 	ranlib tmp/as/vpnbridge.a
+! 
+! bin/vpnbridge/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! 	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpnbridge/hamcore.se2
+! 
+  tmp/objs/vpnbridge.o: src/vpnbridge/vpnbridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnbridge/vpnbridge.c -o tmp/objs/vpnbridge.o
+! 
+! # vpncmd
+! bin/vpncmd/vpncmd: tmp/as/vpncmd.a bin/vpncmd/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	$(CC) tmp/as/vpncmd.a $(OPTIONS_LINK) -o bin/vpncmd/vpncmd
+! 
+! tmp/as/vpncmd.a: tmp/objs/vpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	rm -f tmp/as/vpncmd.a
+! 	ar r tmp/as/vpncmd.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpncmd.o
+! 	ranlib tmp/as/vpncmd.a
+! 
+! bin/vpncmd/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! 	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpncmd/hamcore.se2
+! 
+  tmp/objs/vpncmd.o: src/vpncmd/vpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpncmd/vpncmd.c -o tmp/objs/vpncmd.o
+  
+--- 333,380 ----
+  tmp/objs/vpnserver.o: src/vpnserver/vpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnserver/vpnserver.c -o tmp/objs/vpnserver.o
+  
+! ## vpnclient
+! #bin/vpnclient/vpnclient: tmp/as/vpnclient.a bin/vpnclient/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	$(CC) tmp/as/vpnclient.a $(OPTIONS_LINK) -o bin/vpnclient/vpnclient
+! #
+! #tmp/as/vpnclient.a: tmp/objs/vpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	rm -f tmp/as/vpnclient.a
+! #	ar r tmp/as/vpnclient.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnclient.o
+! #	ranlib tmp/as/vpnclient.a
+! #
+! #bin/vpnclient/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! #	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpnclient/hamcore.se2
+! #
+  tmp/objs/vpnclient.o: src/vpnclient/vpncsvc.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnclient/vpncsvc.c -o tmp/objs/vpnclient.o
+! #
+! ## vpnbridge
+! #bin/vpnbridge/vpnbridge: tmp/as/vpnbridge.a bin/vpnbridge/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	$(CC) tmp/as/vpnbridge.a $(OPTIONS_LINK) -o bin/vpnbridge/vpnbridge
+! #
+! #tmp/as/vpnbridge.a: tmp/objs/vpnbridge.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	rm -f tmp/as/vpnbridge.a
+! #	ar r tmp/as/vpnbridge.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnbridge.o
+! #	ranlib tmp/as/vpnbridge.a
+! #
+! #bin/vpnbridge/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! #	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpnbridge/hamcore.se2
+! #
+  tmp/objs/vpnbridge.o: src/vpnbridge/vpnbridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnbridge/vpnbridge.c -o tmp/objs/vpnbridge.o
+! #
+! ## vpncmd
+! #bin/vpncmd/vpncmd: tmp/as/vpncmd.a bin/vpncmd/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	$(CC) tmp/as/vpncmd.a $(OPTIONS_LINK) -o bin/vpncmd/vpncmd
+! #
+! #tmp/as/vpncmd.a: tmp/objs/vpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	rm -f tmp/as/vpncmd.a
+! #	ar r tmp/as/vpncmd.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpncmd.o
+! #	ranlib tmp/as/vpncmd.a
+! #
+! #bin/vpncmd/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! #	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpncmd/hamcore.se2
+! #
+  tmp/objs/vpncmd.o: src/vpncmd/vpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpncmd/vpncmd.c -o tmp/objs/vpncmd.o
+  
+diff -crN a/src/makefiles/linux_64bit.mak b/src/makefiles/linux_64bit.mak
+*** a/src/makefiles/linux_64bit.mak	Mon Feb  2 09:13:23 2015
+--- b/src/makefiles/linux_64bit.mak	Mon Feb  9 21:31:10 2015
+***************
+*** 57,63 ****
+  # Build Action
+  default:	build
+  
+! build:	$(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) bin/vpnserver/vpnserver bin/vpnclient/vpnclient bin/vpnbridge/vpnbridge bin/vpncmd/vpncmd
+  
+  # Mayaqua Kernel Code
+  tmp/objs/Mayaqua/Cfg.o: src/Mayaqua/Cfg.c $(HEADERS_MAYAQUA)
+--- 57,63 ----
+  # Build Action
+  default:	build
+  
+! build:	$(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) bin/vpnserver/vpnserver
+  
+  # Mayaqua Kernel Code
+  tmp/objs/Mayaqua/Cfg.o: src/Mayaqua/Cfg.c $(HEADERS_MAYAQUA)
+***************
+*** 322,330 ****
+  bin/vpnserver/vpnserver: tmp/as/vpnserver.a bin/vpnserver/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) tmp/as/vpnserver.a $(OPTIONS_LINK) -o bin/vpnserver/vpnserver
+  
+! tmp/as/vpnserver.a: tmp/objs/vpnserver.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	rm -f tmp/as/vpnserver.a
+! 	ar r tmp/as/vpnserver.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnserver.o
+  	ranlib tmp/as/vpnserver.a
+  
+  bin/vpnserver/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+--- 322,330 ----
+  bin/vpnserver/vpnserver: tmp/as/vpnserver.a bin/vpnserver/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) tmp/as/vpnserver.a $(OPTIONS_LINK) -o bin/vpnserver/vpnserver
+  
+! tmp/as/vpnserver.a: tmp/objs/vpnserver.o tmp/objs/vpnclient.o tmp/objs/vpnbridge.o tmp/objs/vpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	rm -f tmp/as/vpnserver.a
+! 	ar r tmp/as/vpnserver.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnserver.o tmp/objs/vpnclient.o tmp/objs/vpnbridge.o tmp/objs/vpncmd.o
+  	ranlib tmp/as/vpnserver.a
+  
+  bin/vpnserver/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+***************
+*** 333,380 ****
+  tmp/objs/vpnserver.o: src/vpnserver/vpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnserver/vpnserver.c -o tmp/objs/vpnserver.o
+  
+! # vpnclient
+! bin/vpnclient/vpnclient: tmp/as/vpnclient.a bin/vpnclient/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	$(CC) tmp/as/vpnclient.a $(OPTIONS_LINK) -o bin/vpnclient/vpnclient
+! 
+! tmp/as/vpnclient.a: tmp/objs/vpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	rm -f tmp/as/vpnclient.a
+! 	ar r tmp/as/vpnclient.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnclient.o
+! 	ranlib tmp/as/vpnclient.a
+! 
+! bin/vpnclient/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! 	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpnclient/hamcore.se2
+! 
+  tmp/objs/vpnclient.o: src/vpnclient/vpncsvc.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnclient/vpncsvc.c -o tmp/objs/vpnclient.o
+! 
+! # vpnbridge
+! bin/vpnbridge/vpnbridge: tmp/as/vpnbridge.a bin/vpnbridge/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	$(CC) tmp/as/vpnbridge.a $(OPTIONS_LINK) -o bin/vpnbridge/vpnbridge
+! 
+! tmp/as/vpnbridge.a: tmp/objs/vpnbridge.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	rm -f tmp/as/vpnbridge.a
+! 	ar r tmp/as/vpnbridge.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnbridge.o
+! 	ranlib tmp/as/vpnbridge.a
+! 
+! bin/vpnbridge/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! 	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpnbridge/hamcore.se2
+! 
+  tmp/objs/vpnbridge.o: src/vpnbridge/vpnbridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnbridge/vpnbridge.c -o tmp/objs/vpnbridge.o
+! 
+! # vpncmd
+! bin/vpncmd/vpncmd: tmp/as/vpncmd.a bin/vpncmd/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	$(CC) tmp/as/vpncmd.a $(OPTIONS_LINK) -o bin/vpncmd/vpncmd
+! 
+! tmp/as/vpncmd.a: tmp/objs/vpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! 	rm -f tmp/as/vpncmd.a
+! 	ar r tmp/as/vpncmd.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpncmd.o
+! 	ranlib tmp/as/vpncmd.a
+! 
+! bin/vpncmd/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! 	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpncmd/hamcore.se2
+! 
+  tmp/objs/vpncmd.o: src/vpncmd/vpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpncmd/vpncmd.c -o tmp/objs/vpncmd.o
+  
+--- 333,380 ----
+  tmp/objs/vpnserver.o: src/vpnserver/vpnserver.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnserver/vpnserver.c -o tmp/objs/vpnserver.o
+  
+! ## vpnclient
+! #bin/vpnclient/vpnclient: tmp/as/vpnclient.a bin/vpnclient/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	$(CC) tmp/as/vpnclient.a $(OPTIONS_LINK) -o bin/vpnclient/vpnclient
+! #
+! #tmp/as/vpnclient.a: tmp/objs/vpnclient.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	rm -f tmp/as/vpnclient.a
+! #	ar r tmp/as/vpnclient.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnclient.o
+! #	ranlib tmp/as/vpnclient.a
+! #
+! #bin/vpnclient/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! #	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpnclient/hamcore.se2
+! #
+  tmp/objs/vpnclient.o: src/vpnclient/vpncsvc.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnclient/vpncsvc.c -o tmp/objs/vpnclient.o
+! #
+! ## vpnbridge
+! #bin/vpnbridge/vpnbridge: tmp/as/vpnbridge.a bin/vpnbridge/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	$(CC) tmp/as/vpnbridge.a $(OPTIONS_LINK) -o bin/vpnbridge/vpnbridge
+! #
+! #tmp/as/vpnbridge.a: tmp/objs/vpnbridge.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	rm -f tmp/as/vpnbridge.a
+! #	ar r tmp/as/vpnbridge.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpnbridge.o
+! #	ranlib tmp/as/vpnbridge.a
+! #
+! #bin/vpnbridge/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! #	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpnbridge/hamcore.se2
+! #
+  tmp/objs/vpnbridge.o: src/vpnbridge/vpnbridge.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpnbridge/vpnbridge.c -o tmp/objs/vpnbridge.o
+! #
+! ## vpncmd
+! #bin/vpncmd/vpncmd: tmp/as/vpncmd.a bin/vpncmd/hamcore.se2 $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	$(CC) tmp/as/vpncmd.a $(OPTIONS_LINK) -o bin/vpncmd/vpncmd
+! #
+! #tmp/as/vpncmd.a: tmp/objs/vpncmd.o $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+! #	rm -f tmp/as/vpncmd.a
+! #	ar r tmp/as/vpncmd.a $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR) tmp/objs/vpncmd.o
+! #	ranlib tmp/as/vpncmd.a
+! #
+! #bin/vpncmd/hamcore.se2: src/bin/BuiltHamcoreFiles/unix/hamcore.se2
+! #	cp src/bin/BuiltHamcoreFiles/unix/hamcore.se2 bin/vpncmd/hamcore.se2
+! #
+  tmp/objs/vpncmd.o: src/vpncmd/vpncmd.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR) $(OBJECTS_MAYAQUA) $(OBJECTS_CEDAR)
+  	$(CC) $(OPTIONS_COMPILE) -c src/vpncmd/vpncmd.c -o tmp/objs/vpncmd.o
+  
+diff -crN a/src/vpnbridge/vpnbridge.c b/src/vpnbridge/vpnbridge.c
+*** a/src/vpnbridge/vpnbridge.c	Mon Feb  2 09:13:21 2015
+--- b/src/vpnbridge/vpnbridge.c	Mon Feb  9 20:52:23 2015
+***************
+*** 135,141 ****
+  #include <Cedar/Cedar.h>
+  
+  // Process start function
+! void StartProcess()
+  {
+  	// Start the server
+  	InitCedar();
+--- 135,141 ----
+  #include <Cedar/Cedar.h>
+  
+  // Process start function
+! void vpnb_StartProcess()
+  {
+  	// Start the server
+  	InitCedar();
+***************
+*** 144,150 ****
+  }
+  
+  // Process stop function
+! void StopProcess()
+  {
+  	// Stop the server
+  	StStopServer();
+--- 144,150 ----
+  }
+  
+  // Process stop function
+! void vpnb_StopProcess()
+  {
+  	// Stop the server
+  	StStopServer();
+***************
+*** 153,166 ****
+  }
+  
+  // WinMain function
+! int main(int argc, char *argv[])
+  {
+  	VgUseStaticLink();
+  
+  #ifdef	OS_WIN32
+! 	return MsService(GC_SVC_NAME_VPNBRIDGE, StartProcess, StopProcess, ICO_BRIDGE, argv[0]);
+  #else	// OS_WIN32
+! 	return UnixService(argc, argv, "vpnbridge", StartProcess, StopProcess);
+  #endif	// OS_WIN32
+  }
+  
+--- 153,166 ----
+  }
+  
+  // WinMain function
+! int vpnb_main(int argc, char *argv[])
+  {
+  	VgUseStaticLink();
+  
+  #ifdef	OS_WIN32
+! 	return MsService(GC_SVC_NAME_VPNBRIDGE, vpnb_StartProcess, vpnb_StopProcess, ICO_BRIDGE, argv[0]);
+  #else	// OS_WIN32
+! 	return UnixService(argc, argv, "vpnbridge", vpnb_StartProcess, vpnb_StopProcess);
+  #endif	// OS_WIN32
+  }
+  
+diff -crN a/src/vpnclient/vpncsvc.c b/src/vpnclient/vpncsvc.c
+*** a/src/vpnclient/vpncsvc.c	Mon Feb  2 09:13:21 2015
+--- b/src/vpnclient/vpncsvc.c	Mon Feb  9 20:52:23 2015
+***************
+*** 125,131 ****
+  #include <Cedar/Cedar.h>
+  
+  // Process start function
+! void StartProcess()
+  {
+  	// Start the client
+  	InitCedar();
+--- 125,131 ----
+  #include <Cedar/Cedar.h>
+  
+  // Process start function
+! void vpnc_StartProcess()
+  {
+  	// Start the client
+  	InitCedar();
+***************
+*** 133,139 ****
+  }
+  
+  // Process termination function
+! void StopProcess()
+  {
+    	// Stop the client
+  	CtStopClient();
+--- 133,139 ----
+  }
+  
+  // Process termination function
+! void vpnc_StopProcess()
+  {
+    	// Stop the client
+  	CtStopClient();
+***************
+*** 141,153 ****
+  }
+  
+  // WinMain function
+! int main(int argc, char *argv[])
+  {
+  #ifdef	OS_WIN32
+  
+! 	return MsService(GC_SVC_NAME_VPNCLIENT, StartProcess, StopProcess, ICO_MACHINE, argv[0]);
+  #else	// OS_WIN32
+! 	return UnixService(argc, argv, "vpnclient", StartProcess, StopProcess);
+  #endif	// OS_WIN32
+  }
+  
+--- 141,153 ----
+  }
+  
+  // WinMain function
+! int vpnc_main(int argc, char *argv[])
+  {
+  #ifdef	OS_WIN32
+  
+! 	return MsService(GC_SVC_NAME_VPNCLIENT, vpnc_StartProcess, vpnc_StopProcess, ICO_MACHINE, argv[0]);
+  #else	// OS_WIN32
+! 	return UnixService(argc, argv, "vpnclient", vpnc_StartProcess, vpnc_StopProcess);
+  #endif	// OS_WIN32
+  }
+  
+diff -crN a/src/vpncmd/vpncmd.c b/src/vpncmd/vpncmd.c
+*** a/src/vpncmd/vpncmd.c	Mon Feb  2 09:13:21 2015
+--- b/src/vpncmd/vpncmd.c	Mon Feb  9 20:52:23 2015
+***************
+*** 131,138 ****
+  #include <Mayaqua/Mayaqua.h>
+  #include <Cedar/Cedar.h>
+  
+! // main function
+! int main(int argc, char *argv[])
+  {
+  	wchar_t *s;
+  	UINT ret = 0;
+--- 131,138 ----
+  #include <Mayaqua/Mayaqua.h>
+  #include <Cedar/Cedar.h>
+  
+! // vpnm_main function
+! int vpnm_main(int argc, char *argv[])
+  {
+  	wchar_t *s;
+  	UINT ret = 0;
+diff -crN a/src/vpnserver/vpnserver.c b/src/vpnserver/vpnserver.c
+*** a/src/vpnserver/vpnserver.c	Mon Feb  2 09:13:21 2015
+--- b/src/vpnserver/vpnserver.c	Mon Feb  9 20:52:23 2015
+***************
+*** 113,118 ****
+--- 113,119 ----
+  
+  #include <GlobalConst.h>
+  
++ #define	_GNU_SOURCE
+  #define	VPN_EXE
+  
+  #ifdef	WIN32
+***************
+*** 135,141 ****
+  #include <Cedar/Cedar.h>
+  
+  // Process starting function
+! void StartProcess()
+  {
+  	// Start the server
+  	InitCedar();
+--- 136,142 ----
+  #include <Cedar/Cedar.h>
+  
+  // Process starting function
+! void vpns_StartProcess()
+  {
+  	// Start the server
+  	InitCedar();
+***************
+*** 144,150 ****
+  }
+  
+  // Process termination function
+! void StopProcess()
+  {
+  	// Stop the server
+  	StStopServer();
+--- 145,151 ----
+  }
+  
+  // Process termination function
+! void vpns_StopProcess()
+  {
+  	// Stop the server
+  	StStopServer();
+***************
+*** 153,167 ****
+  }
+  
+  // WinMain function
+! int main(int argc, char *argv[])
+  {
+  	VgUseStaticLink();
+  
+  #ifdef	OS_WIN32
+  
+! 	return MsService(GC_SVC_NAME_VPNSERVER, StartProcess, StopProcess, ICO_CASCADE, argv[0]);
+  #else	// OS_WIN32
+! 	return UnixService(argc, argv, "vpnserver", StartProcess, StopProcess);
+  #endif	// OS_WIN32
+  }
+  
+--- 154,168 ----
+  }
+  
+  // WinMain function
+! int vpns_main(int argc, char *argv[])
+  {
+  	VgUseStaticLink();
+  
+  #ifdef	OS_WIN32
+  
+! 	return MsService(GC_SVC_NAME_VPNSERVER, vpns_StartProcess, vpns_StopProcess, ICO_CASCADE, argv[0]);
+  #else	// OS_WIN32
+! 	return UnixService(argc, argv, "vpnserver", vpns_StartProcess, vpns_StopProcess);
+  #endif	// OS_WIN32
+  }
+  
+***************
+*** 169,171 ****
+--- 170,191 ----
+  // Developed by SoftEther VPN Project at University of Tsukuba in Japan.
+  // Department of Computer Science has dozens of overly-enthusiastic geeks.
+  // Join us: http://www.tsukuba.ac.jp/english/admission/
++ 
++ int main(int argc, char *argv[])
++ {
++ 	char *nox = basename(argv[0]);
++ 	int r;
++ 
++ 	if(strcmp(nox,"vpnserver") == 0)
++ 		r = vpns_main(argc,argv);
++ 	else if(strcmp(nox,"vpnclient") == 0)
++ 		r = vpnc_main(argc,argv);
++ 	else if(strcmp(nox,"vpnbridge") == 0)
++ 		r = vpnb_main(argc,argv);
++ 	else if(strcmp(nox,"vpncmd") == 0)
++ 		r = vpnm_main(argc,argv);
++ 	else
++ 		r = 1;
++ 
++ 	return(r);
++ }
