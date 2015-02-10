@@ -13,8 +13,8 @@ Note
 -
 + No more need customized libopenssl for Jan 15, 2015 or later version.
 
-+ Every SoftEther VPN packages did integrated for Feb 10, 2015 or later version.
-Binary has function of vpnserver/vpnclient/vpnbridge/vpncmd like busybox now.
++ Every SoftEther VPN packages did integrated for Feb 10, 2015 or later version. 
+Binary has function of vpnserver/vpnclient/vpnbridge/vpncmd like busybox now. 
 Uninstall all the SoftEther VPN packages if you will update from old version.
 
 Compile and Install
