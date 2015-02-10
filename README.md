@@ -9,7 +9,15 @@ If you are japanese or could read japanese, Visit [my blog](http://elin.mikomoe.
 This entry too old.  
 If possible, Please read this README.MD.
 
-Compile
+Note
+-
++ No more need customized libopenssl for Jan 15, 2015 or later version.
+
++ Every SoftEther VPN packages did integrated for Feb 10, 2015 or later version.
+Binary has function of vpnserver/vpnclient/vpnbridge/vpncmd like busybox now.
+Uninstall all the SoftEther VPN packages if you will update from old version.
+
+Compile and Install
 -
 1. Install the packages required to compile
 
@@ -33,7 +41,7 @@ Compile
   Update feeds and Install SoftEther VPN.
   ```
   ./scripts/feeds update
-  ./scripts/feeds install softethervpnserver
+  ./scripts/feeds install softethervpn
   ```
 
 3. SDK settings
@@ -62,21 +70,6 @@ Compile
   + libiconv-full
   + kmod-tun
   + libopenssl
-
-  If you are doing install some SoftEther VPN packages from a shell, This problem occurs.
-  ```
-  Installing softethervpncmd (4.10-9505) to root...
-  Collected errors:
-   * check_data_file_clashes: Package softethervpncmd wants to install file /usr/bin/hamcore.se2
-          But that file is already provided by package  * softethervpnclient
-  ```
-  Each SoftEther VPN package included hamcore.se2.  
-  This means collision when install other SoftEther VPN packages.  
-  Install package from the LuCI or execute the opkg command with "--force-overwrite" option.  
-  This will you can install successfully.
-  ```
-  opkg install --force-overwrite softethervpnserver_4.10-9505_ar71xx.ipk
-  ```
 
 6. Execute
 
