@@ -50,6 +50,11 @@ define Build/Compile
 	make \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak \
+		clean
+
+	make \
+		-C $(PKG_BUILD_DIR) \
+		-f src/makefiles/linux_32bit.mak \
 		src/bin/BuiltHamcoreFiles/unix/hamcore.se2
 	mv $(PKG_BUILD_DIR)/src/bin/BuiltHamcoreFiles/unix/hamcore.se2 $(PKG_BUILD_DIR)/src/bin/BuiltHamcoreFiles/unix/hamcore.se2.1
 
