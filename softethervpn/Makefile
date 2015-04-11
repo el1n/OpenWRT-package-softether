@@ -9,15 +9,15 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=softethervpn
 PKG_VERSION:=4.15
-PKG_RELEASE:=9537
+PKG_RELEASE:=9538
 #PKG_VERSION2:=rtm
 PKG_VERSION2:=beta
-PKG_DATE:=2015.03.26
+PKG_DATE:=2015.03.27
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/v$(PKG_VERSION)-$(PKG_RELEASE)
 PKG_SOURCE:=softether-src-v$(PKG_VERSION)-$(PKG_RELEASE)-$(PKG_VERSION2).tar.gz
 PKG_SOURCE_URL:=http://jp.softether-download.com/files/softether/v$(PKG_VERSION)-$(PKG_RELEASE)-$(PKG_VERSION2)-$(PKG_DATE)-tree/Source_Code/
-PKG_MD5SUM:=deffaa3af475e9c1a27af168790016c0
+PKG_MD5SUM:=1c0df0776b47d07e14bb31f2e811686a
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
