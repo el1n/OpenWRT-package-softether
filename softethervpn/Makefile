@@ -23,12 +23,12 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
 
 define Package/softethervpn
-  SECTION:=net
-  CATEGORY:=Network
-  SUBMENU:=VPN
-  TITLE:=Open-Source Free Cross-platform Multi-protocol VPN
-  URL:=http://www.softether.org/
-  DEPENDS:=+libpthread +librt +libreadline +libopenssl +libncurses +kmod-tun
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=VPN
+	TITLE:=Open-Source Free Cross-platform Multi-protocol VPN
+	URL:=http://www.softether.org/
+	DEPENDS:=+libpthread +librt +libreadline +libopenssl +libncurses +kmod-tun
 endef
 
 #define Package/softethervpnclient
@@ -42,6 +42,13 @@ endef
 #define Package/softethervpncmd
 #	$(call Package/softethervpnserver)
 #endef
+
+ifeq ($(ARCH),mips)
+	SE4WRT_OPTIONS := -minterlink-mips16
+endif
+ifeq ($(ARCH),mipsel)
+	SE4WRT_OPTIONS := -minterlink-mips16
+endif
 
 define Build/Configure
 endef
@@ -68,7 +75,7 @@ define Build/Compile
 
 	$(MAKE) \
 		$(TARGET_CONFIGURE_OPTS) \
-		CCFLAGS="-I$(STAGING_DIR)/usr/include $(ICONV_CFLAGS) -minterlink-mips16" \
+		CCFLAGS="-I$(STAGING_DIR)/usr/include $(ICONV_CFLAGS) $(SE4WRT_OPTIONS)" \
 		LDFLAGS="-L$(STAGING_DIR)/usr/lib $(ICONV_LDFLAGS) -liconv" \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak
