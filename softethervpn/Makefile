@@ -59,6 +59,10 @@ define Build/Compile
 		-f src/makefiles/linux_32bit.mak \
 		clean
 
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/*_cn.*
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/*_ja.*
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/openvpn_readme.pdf
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/webui/
 	make \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak \
