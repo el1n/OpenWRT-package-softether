@@ -85,7 +85,7 @@ define Build/Compile
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpnweb_sample_en.htm
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpnweb_sample_ja.htm
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/warning_cn.txt
-#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/warning_en.txt
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/warning_en.txt
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/warning_ja.txt
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/webui/
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/winpcap_installer.exe
