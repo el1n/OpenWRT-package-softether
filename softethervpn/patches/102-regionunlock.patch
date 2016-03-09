@@ -1,0 +1,338 @@
+diff -urN a/src/Cedar/DDNS.c b/src/Cedar/DDNS.c
+--- a/src/Cedar/DDNS.c	2016-03-06 13:08:37.000000000 +0000
++++ b/src/Cedar/DDNS.c	2016-03-09 13:01:20.673456470 +0000
+@@ -729,11 +729,11 @@
+ 				c->CurrentIPv4, c->CurrentIPv6,
+ 				c->CurrentAzureIp, c->CurrentAzureTimestamp, c->CurrentAzureSignature, c->AzureCertHash);
+ 
+-			if (IsEmptyStr(current_region) == false)
+-			{
+-				// Update the current region
+-				SiUpdateCurrentRegion(c->Cedar, current_region, false);
+-			}
++//			if (IsEmptyStr(current_region) == false)
++//			{
++//				// Update the current region
++//				SiUpdateCurrentRegion(c->Cedar, current_region, false);
++//			}
+ 		}
+ 	}
+ 	Unlock(c->Lock);
+diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
+--- a/src/Cedar/Server.c	2016-03-06 13:08:37.000000000 +0000
++++ b/src/Cedar/Server.c	2016-03-09 12:31:20.477458120 +0000
+@@ -1361,21 +1361,27 @@
+ // Update the global server flags
+ void UpdateGlobalServerFlags(SERVER *s, CAPSLIST *t)
+ {
+-	bool is_restricted = false;
+-	// Validate arguments
+-	if (s == NULL || t == NULL)
+-	{
+-		return;
+-	}
+-
+-	is_restricted = SiIsEnterpriseFunctionsRestrictedOnOpenSource(s->Cedar);
+-
+-	SetGlobalServerFlag(GSF_DISABLE_PUSH_ROUTE, is_restricted);
+-	SetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH, is_restricted);
+-	SetGlobalServerFlag(GSF_DISABLE_CERT_AUTH, is_restricted);
+-	SetGlobalServerFlag(GSF_DISABLE_DEEP_LOGGING, is_restricted);
+-	SetGlobalServerFlag(GSF_DISABLE_AC, is_restricted);
+-	SetGlobalServerFlag(GSF_DISABLE_SYSLOG, is_restricted);
++//	bool is_restricted = false;
++//	// Validate arguments
++//	if (s == NULL || t == NULL)
++//	{
++//		return;
++//	}
++//
++//	is_restricted = SiIsEnterpriseFunctionsRestrictedOnOpenSource(s->Cedar);
++//
++//	SetGlobalServerFlag(GSF_DISABLE_PUSH_ROUTE, is_restricted);
++//	SetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH, is_restricted);
++//	SetGlobalServerFlag(GSF_DISABLE_CERT_AUTH, is_restricted);
++//	SetGlobalServerFlag(GSF_DISABLE_DEEP_LOGGING, is_restricted);
++//	SetGlobalServerFlag(GSF_DISABLE_AC, is_restricted);
++//	SetGlobalServerFlag(GSF_DISABLE_SYSLOG, is_restricted);
++	SetGlobalServerFlag(GSF_DISABLE_PUSH_ROUTE, false);
++	SetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH, false);
++	SetGlobalServerFlag(GSF_DISABLE_CERT_AUTH, false);
++	SetGlobalServerFlag(GSF_DISABLE_DEEP_LOGGING, false);
++	SetGlobalServerFlag(GSF_DISABLE_AC, false);
++	SetGlobalServerFlag(GSF_DISABLE_SYSLOG, false);
+ }
+ 
+ // Set a global server flag
+@@ -1405,7 +1411,7 @@
+ // Main of the aquisition of Caps of the server
+ void GetServerCapsMain(SERVER *s, CAPSLIST *t)
+ {
+-	bool is_restricted = false;
++//	bool is_restricted = false;
+ 
+ 	// Validate arguments
+ 	if (s == NULL || t == NULL)
+@@ -1413,7 +1419,7 @@
+ 		return;
+ 	}
+ 
+-	is_restricted = SiIsEnterpriseFunctionsRestrictedOnOpenSource(s->Cedar);
++//	is_restricted = SiIsEnterpriseFunctionsRestrictedOnOpenSource(s->Cedar);
+ 
+ 	// Initialize
+ 	InitCapsList(t);
+@@ -1559,7 +1565,8 @@
+ 	AddCapsBool(t, "b_support_securenat", true);
+ 
+ 	// Pushing routing table function of SecureNAT Virtual DHCP Server is available
+-	AddCapsBool(t, "b_suppport_push_route", !is_restricted);
++//	AddCapsBool(t, "b_suppport_push_route", !is_restricted);
++	AddCapsBool(t, "b_suppport_push_route", true);
+ 	AddCapsBool(t, "b_suppport_push_route_config", true);
+ 
+ 	if (s->ServerType != SERVER_TYPE_STANDALONE)
+@@ -3333,7 +3340,7 @@
+ 
+ 	root = CfgCreateFolder(NULL, TAG_ROOT);
+ 
+-	SiGetCurrentRegion(s->Cedar, region, sizeof(region));
++//	SiGetCurrentRegion(s->Cedar, region, sizeof(region));
+ 
+ 	CfgAddStr(root, "Region", region);
+ 
+@@ -10744,49 +10751,49 @@
+ 	return f;
+ }
+ 
+-// Get the current version
+-void SiGetCurrentRegion(CEDAR *c, char *region, UINT region_size)
+-{
+-	ClearStr(region, region_size);
+-	// Validate arguments
+-	if (c == NULL || region == NULL)
+-	{
+-		return;
+-	}
+-
+-	Lock(c->CurrentRegionLock);
+-	{
+-		StrCpy(region, region_size, c->CurrentRegion);
+-	}
+-	Unlock(c->CurrentRegionLock);
+-
+-	if (IsEmptyStr(region))
+-	{
+-		if (GetCurrentLangId() == SE_LANG_JAPANESE)
+-		{
+-			StrCpy(region, region_size, "JP");
+-		}
+-		else if (GetCurrentLangId() == SE_LANG_CHINESE_ZH)
+-		{
+-			StrCpy(region, region_size, "CN");
+-		}
+-	}
+-}
+-
+-// Check the current region
+-bool SiCheckCurrentRegion(CEDAR *c, char *r)
+-{
+-	char tmp[64];
+-	// Validate arguments
+-	if (c == NULL || r == NULL)
+-	{
+-		return false;
+-	}
+-
+-	SiGetCurrentRegion(c, tmp, sizeof(tmp));
+-
+-	return (StrCmpi(r, tmp) == 0);
+-}
++//// Get the current version
++//void SiGetCurrentRegion(CEDAR *c, char *region, UINT region_size)
++//{
++//	ClearStr(region, region_size);
++//	// Validate arguments
++//	if (c == NULL || region == NULL)
++//	{
++//		return;
++//	}
++//
++//	Lock(c->CurrentRegionLock);
++//	{
++//		StrCpy(region, region_size, c->CurrentRegion);
++//	}
++//	Unlock(c->CurrentRegionLock);
++//
++//	if (IsEmptyStr(region))
++//	{
++//		if (GetCurrentLangId() == SE_LANG_JAPANESE)
++//		{
++//			StrCpy(region, region_size, "JP");
++//		}
++//		else if (GetCurrentLangId() == SE_LANG_CHINESE_ZH)
++//		{
++//			StrCpy(region, region_size, "CN");
++//		}
++//	}
++//}
++//
++//// Check the current region
++//bool SiCheckCurrentRegion(CEDAR *c, char *r)
++//{
++//	char tmp[64];
++//	// Validate arguments
++//	if (c == NULL || r == NULL)
++//	{
++//		return false;
++//	}
++//
++//	SiGetCurrentRegion(c, tmp, sizeof(tmp));
++//
++//	return (StrCmpi(r, tmp) == 0);
++//}
+ 
+ // Check whether some enterprise functions are restricted
+ // 
+@@ -10820,60 +10827,60 @@
+ // Anyone, except Daiyuu Nobori, who understands and writes the C language
+ // program can remove this restriction at his own risk.
+ // 
+-bool SiIsEnterpriseFunctionsRestrictedOnOpenSource(CEDAR *c)
+-{
+-	char region[128];
+-	bool ret = false;
+-	// Validate arguments
+-	if (c == NULL)
+-	{
+-		return false;
+-	}
+-
+-
+-	SiGetCurrentRegion(c, region, sizeof(region));
+-
+-	if (StrCmpi(region, "JP") == 0 || StrCmpi(region, "CN") == 0)
+-	{
+-		ret = true;
+-	}
+-
+-	return ret;
+-}
+-
+-// Update the current region
+-void SiUpdateCurrentRegion(CEDAR *c, char *region, bool force_update)
+-{
+-	bool changed = false;
+-	// Validate arguments
+-	if (c == NULL)
+-	{
+-		return;
+-	}
+-
+-	if (IsEmptyStr(region) == false)
+-	{
+-		Lock(c->CurrentRegionLock);
+-		{
+-			if (StrCmpi(c->CurrentRegion, region) != 0)
+-			{
+-				StrCpy(c->CurrentRegion, sizeof(c->CurrentRegion), region);
+-				changed = true;
+-			}
+-		}
+-		Unlock(c->CurrentRegionLock);
+-	}
+-
+-	if (force_update)
+-	{
+-		changed = true;
+-	}
+-
+-	if (changed)
+-	{
+-		FlushServerCaps(c->Server);
+-	}
+-}
++//bool SiIsEnterpriseFunctionsRestrictedOnOpenSource(CEDAR *c)
++//{
++//	char region[128];
++//	bool ret = false;
++//	// Validate arguments
++//	if (c == NULL)
++//	{
++//		return false;
++//	}
++//
++//
++//	SiGetCurrentRegion(c, region, sizeof(region));
++//
++//	if (StrCmpi(region, "JP") == 0 || StrCmpi(region, "CN") == 0)
++//	{
++//		ret = true;
++//	}
++//
++//	return ret;
++//}
++//
++//// Update the current region
++//void SiUpdateCurrentRegion(CEDAR *c, char *region, bool force_update)
++//{
++//	bool changed = false;
++//	// Validate arguments
++//	if (c == NULL)
++//	{
++//		return;
++//	}
++//
++//	if (IsEmptyStr(region) == false)
++//	{
++//		Lock(c->CurrentRegionLock);
++//		{
++//			if (StrCmpi(c->CurrentRegion, region) != 0)
++//			{
++//				StrCpy(c->CurrentRegion, sizeof(c->CurrentRegion), region);
++//				changed = true;
++//			}
++//		}
++//		Unlock(c->CurrentRegionLock);
++//	}
++//
++//	if (force_update)
++//	{
++//		changed = true;
++//	}
++//
++//	if (changed)
++//	{
++//		FlushServerCaps(c->Server);
++//	}
++//}
+ 
+ // Create a server
+ SERVER *SiNewServer(bool bridge)
+@@ -11035,7 +11042,7 @@
+ 
+ 	SiInitDeadLockCheck(s);
+ 
+-	SiUpdateCurrentRegion(s->Cedar, "", true);
++	//SiUpdateCurrentRegion(s->Cedar, "", true);
+ 
+ 	return s;
+ }
+diff -urN a/src/Cedar/Server.h b/src/Cedar/Server.h
+--- a/src/Cedar/Server.h	2016-03-06 13:08:38.000000000 +0000
++++ b/src/Cedar/Server.h	2016-03-09 12:09:24.982461139 +0000
+@@ -739,10 +739,10 @@
+ void SiSetAzureEnable(SERVER *s, bool enabled);
+ bool SiGetAzureEnable(SERVER *s);
+ 
+-void SiUpdateCurrentRegion(CEDAR *c, char *region, bool force_update);
+-void SiGetCurrentRegion(CEDAR *c, char *region, UINT region_size);
+-bool SiIsEnterpriseFunctionsRestrictedOnOpenSource(CEDAR *c);
+-bool SiCheckCurrentRegion(CEDAR *c, char *r);
++//void SiUpdateCurrentRegion(CEDAR *c, char *region, bool force_update);
++//void SiGetCurrentRegion(CEDAR *c, char *region, UINT region_size);
++//bool SiIsEnterpriseFunctionsRestrictedOnOpenSource(CEDAR *c);
++//bool SiCheckCurrentRegion(CEDAR *c, char *r);
+ 
+ #endif	// SERVER_H
+ 

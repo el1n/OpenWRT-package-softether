@@ -59,10 +59,37 @@ define Build/Compile
 		-f src/makefiles/linux_32bit.mak \
 		clean
 
-	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/*_cn.*
-	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/*_ja.*
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/authors.txt
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/backup_dir_readme.txt
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/DriverPackages/
+#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/empty.config
+#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/empty_sevpnclient.config
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/eula.txt
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/install_src.dat
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/lang.config
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/languages.txt
+#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/legal.txt
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/openvpn_readme.pdf
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/openvpn_readme.txt
+#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/openvpn_sample.ovpn
+#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/root_certs.dat
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/SOURCES_OF_BINARY_FILES.TXT
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/strtable_cn.stb
+#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/strtable_en.stb
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/strtable_ja.stb
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpn16.exe
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpninstall_cn.inf
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpninstall_en.inf
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpninstall_ja.inf
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpnweb_sample_cn.htm
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpnweb_sample_en.htm
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/vpnweb_sample_ja.htm
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/warning_cn.txt
+#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/warning_en.txt
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/warning_ja.txt
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/webui/
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/winpcap_installer.exe
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/winpcap_installer_win9x.exe
 	make \
 		-C $(PKG_BUILD_DIR) \
 		-f src/makefiles/linux_32bit.mak \
