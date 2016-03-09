@@ -1,3 +1,93 @@
+diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
+--- a/src/Cedar/Admin.c	2016-03-06 13:08:37.000000000 +0000
++++ b/src/Cedar/Admin.c	2016-03-09 20:14:58.454420012 +0000
+@@ -2218,10 +2218,10 @@
+ 		return ERR_NOT_SUPPORTED;
+ 	}
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_AC) != 0 && LIST_NUM(t->o) >= 1)
+-	{
+-		return ERR_NOT_SUPPORTED_FUNCTION_ON_OPENSOURCE;
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_AC) != 0 && LIST_NUM(t->o) >= 1)
++//	{
++//		return ERR_NOT_SUPPORTED_FUNCTION_ON_OPENSOURCE;
++//	}
+ 
+ 	CHECK_RIGHT;
+ 	NO_SUPPORT_FOR_BRIDGE;
+@@ -3664,10 +3664,10 @@
+ 
+ 	SERVER_ADMIN_ONLY;
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_SYSLOG) != 0 && t->SaveType != SYSLOG_NONE)
+-	{
+-		return ERR_NOT_SUPPORTED_FUNCTION_ON_OPENSOURCE;
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_SYSLOG) != 0 && t->SaveType != SYSLOG_NONE)
++//	{
++//		return ERR_NOT_SUPPORTED_FUNCTION_ON_OPENSOURCE;
++//	}
+ 
+ 	if (GetServerCapsBool(s, "b_support_syslog") == false)
+ 	{
+@@ -5068,13 +5068,13 @@
+ 
+ 	CHECK_RIGHT;
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
+-	{
+-		if (t->AuthType == AUTHTYPE_USERCERT || t->AuthType == AUTHTYPE_RADIUS || t->AuthType == AUTHTYPE_ROOTCERT || t->AuthType == AUTHTYPE_NT)
+-		{
+-			return ERR_NOT_SUPPORTED_AUTH_ON_OPENSOURCE;
+-		}
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
++//	{
++//		if (t->AuthType == AUTHTYPE_USERCERT || t->AuthType == AUTHTYPE_RADIUS || t->AuthType == AUTHTYPE_ROOTCERT || t->AuthType == AUTHTYPE_NT)
++//		{
++//			return ERR_NOT_SUPPORTED_AUTH_ON_OPENSOURCE;
++//		}
++//	}
+ 
+ 	if (StrCmpi(t->Name, "*") == 0)
+ 	{
+@@ -5201,13 +5201,13 @@
+ 
+ 	CHECK_RIGHT;
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
+-	{
+-		if (t->AuthType == AUTHTYPE_USERCERT || t->AuthType == AUTHTYPE_RADIUS || t->AuthType == AUTHTYPE_ROOTCERT || t->AuthType == AUTHTYPE_NT)
+-		{
+-			return ERR_NOT_SUPPORTED_AUTH_ON_OPENSOURCE;
+-		}
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
++//	{
++//		if (t->AuthType == AUTHTYPE_USERCERT || t->AuthType == AUTHTYPE_RADIUS || t->AuthType == AUTHTYPE_ROOTCERT || t->AuthType == AUTHTYPE_NT)
++//		{
++//			return ERR_NOT_SUPPORTED_AUTH_ON_OPENSOURCE;
++//		}
++//	}
+ 
+ 	if (t->AuthType == AUTHTYPE_USERCERT)
+ 	{
+@@ -7694,10 +7694,10 @@
+ 		return ERR_NOT_SUPPORTED;
+ 	}
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0 && IsEmptyStr(t->RadiusServerName) == false)
+-	{
+-		return ERR_NOT_SUPPORTED_FUNCTION_ON_OPENSOURCE;
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0 && IsEmptyStr(t->RadiusServerName) == false)
++//	{
++//		return ERR_NOT_SUPPORTED_FUNCTION_ON_OPENSOURCE;
++//	}
+ 
+ 	CHECK_RIGHT;
+ 
 diff -urN a/src/Cedar/DDNS.c b/src/Cedar/DDNS.c
 --- a/src/Cedar/DDNS.c	2016-03-06 13:08:37.000000000 +0000
 +++ b/src/Cedar/DDNS.c	2016-03-09 13:01:20.673456470 +0000
@@ -18,13 +108,208 @@ diff -urN a/src/Cedar/DDNS.c b/src/Cedar/DDNS.c
  		}
  	}
  	Unlock(c->Lock);
+diff -urN a/src/Cedar/Hub.c b/src/Cedar/Hub.c
+--- a/src/Cedar/Hub.c	2016-03-06 13:08:37.000000000 +0000
++++ b/src/Cedar/Hub.c	2016-03-09 20:18:21.584419724 +0000
+@@ -920,10 +920,10 @@
+ 		return false;
+ 	}
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_AC) != 0)
+-	{
+-		return false;
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_AC) != 0)
++//	{
++//		return false;
++//	}
+ 
+ 	for (i = 0;i < LIST_NUM(o);i++)
+ 	{
+@@ -955,10 +955,10 @@
+ 		return false;
+ 	}
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_AC) != 0)
+-	{
+-		return false;
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_AC) != 0)
++//	{
++//		return false;
++//	}
+ 
+ 	if (IsIP4(ip))
+ 	{
+diff -urN a/src/Cedar/Logging.c b/src/Cedar/Logging.c
+--- a/src/Cedar/Logging.c	2016-03-06 13:08:37.000000000 +0000
++++ b/src/Cedar/Logging.c	2016-03-09 20:17:51.858419769 +0000
+@@ -1119,10 +1119,10 @@
+ 
+ 	if (true)
+ 	{
+-		if (GetGlobalServerFlag(GSF_DISABLE_DEEP_LOGGING) != 0)
+-		{
+-			no_log = true;
+-		}
++//		if (GetGlobalServerFlag(GSF_DISABLE_DEEP_LOGGING) != 0)
++//		{
++//			no_log = true;
++//		}
+ 
+ 		if (hub->IsVgsHub)
+ 		{
+diff -urN a/src/Cedar/Protocol.c b/src/Cedar/Protocol.c
+--- a/src/Cedar/Protocol.c	2016-03-06 13:08:37.000000000 +0000
++++ b/src/Cedar/Protocol.c	2016-03-09 20:27:57.301418921 +0000
+@@ -1607,8 +1607,8 @@
+ 			goto CLEANUP;
+ 		}
+ 
+-		if (GetGlobalServerFlag(GSF_DISABLE_AC) == 0)
+-		{
++//		if (GetGlobalServerFlag(GSF_DISABLE_AC) == 0)
++//		{
+ 			if (hub->HubDb != NULL && c->FirstSock != NULL)
+ 			{
+ 				IP ip;
+@@ -1628,7 +1628,7 @@
+ 					goto CLEANUP;
+ 				}
+ 			}
+-		}
++//		}
+ 
+ 		Lock(hub->lock);
+ 		{
+@@ -2022,10 +2022,10 @@
+ 						{
+ 							// Attempt external authentication registered users
+ 							bool fail_ext_user_auth = false;
+-							if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
+-							{
+-								fail_ext_user_auth = true;
+-							}
++//							if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
++//							{
++//								fail_ext_user_auth = true;
++//							}
+ 
+ 							if (fail_ext_user_auth == false)
+ 							{
+@@ -2044,10 +2044,10 @@
+ 							bool b = false;
+ 							bool fail_ext_user_auth = false;
+ 
+-							if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
+-							{
+-								fail_ext_user_auth = true;
+-							}
++//							if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
++//							{
++//								fail_ext_user_auth = true;
++//							}
+ 
+ 							if (fail_ext_user_auth == false)
+ 							{
+@@ -2085,8 +2085,8 @@
+ 					break;
+ 
+ 				case CLIENT_AUTHTYPE_CERT:
+-					if (GetGlobalServerFlag(GSF_DISABLE_CERT_AUTH) == 0)
+-					{
++//					if (GetGlobalServerFlag(GSF_DISABLE_CERT_AUTH) == 0)
++//					{
+ 						// Certificate authentication
+ 						cert_size = PackGetDataSize(p, "cert");
+ 						if (cert_size >= 1 && cert_size <= 100000)
+@@ -2134,17 +2134,17 @@
+ 							}
+ 							Free(cert_buf);
+ 						}
+-					}
+-					else
+-					{
+-						// Certificate authentication is not supported in the open source version
+-						HLog(hub, "LH_AUTH_CERT_NOT_SUPPORT_ON_OPEN_SOURCE", c->Name, username);
+-						Unlock(hub->lock);
+-						ReleaseHub(hub);
+-						FreePack(p);
+-						c->Err = ERR_AUTHTYPE_NOT_SUPPORTED;
+-						goto CLEANUP;
+-					}
++//					}
++//					else
++//					{
++//						// Certificate authentication is not supported in the open source version
++//						HLog(hub, "LH_AUTH_CERT_NOT_SUPPORT_ON_OPEN_SOURCE", c->Name, username);
++//						Unlock(hub->lock);
++//						ReleaseHub(hub);
++//						FreePack(p);
++//						c->Err = ERR_AUTHTYPE_NOT_SUPPORTED;
++//						goto CLEANUP;
++//					}
+ 					break;
+ 
+ 				default:
+diff -urN a/src/Cedar/Sam.c b/src/Cedar/Sam.c
+--- a/src/Cedar/Sam.c	2016-03-06 13:08:37.000000000 +0000
++++ b/src/Cedar/Sam.c	2016-03-09 20:17:07.218419832 +0000
+@@ -187,10 +187,10 @@
+ 		return false;
+ 	}
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
+-	{
+-		return false;
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH) != 0)
++//	{
++//		return false;
++//	}
+ 
+ 	h = hub;
+ 
+@@ -349,10 +349,10 @@
+ 		return false;
+ 	}
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_CERT_AUTH) != 0)
+-	{
+-		return false;
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_CERT_AUTH) != 0)
++//	{
++//		return false;
++//	}
+ 
+ 	// Check expiration date
+ 	if (CheckXDateNow(x) == false)
 diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
 --- a/src/Cedar/Server.c	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Cedar/Server.c	2016-03-09 12:31:20.477458120 +0000
-@@ -1361,21 +1361,27 @@
- // Update the global server flags
- void UpdateGlobalServerFlags(SERVER *s, CAPSLIST *t)
- {
++++ b/src/Cedar/Server.c	2016-03-09 20:29:20.197418806 +0000
+@@ -913,10 +913,10 @@
+ 		return;
+ 	}
+ 
+-	if (GetGlobalServerFlag(GSF_DISABLE_SYSLOG) != 0)
+-	{
+-		return;
+-	}
++//	if (GetGlobalServerFlag(GSF_DISABLE_SYSLOG) != 0)
++//	{
++//		return;
++//	}
+ 
+ 	// Host name
+ 	GetMachineName(machinename, sizeof(machinename));
+@@ -1358,25 +1358,25 @@
+ 	Unlock(s->CapsCacheLock);
+ }
+ 
+-// Update the global server flags
+-void UpdateGlobalServerFlags(SERVER *s, CAPSLIST *t)
+-{
 -	bool is_restricted = false;
 -	// Validate arguments
 -	if (s == NULL || t == NULL)
@@ -40,6 +325,10 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
 -	SetGlobalServerFlag(GSF_DISABLE_DEEP_LOGGING, is_restricted);
 -	SetGlobalServerFlag(GSF_DISABLE_AC, is_restricted);
 -	SetGlobalServerFlag(GSF_DISABLE_SYSLOG, is_restricted);
+-}
++//// Update the global server flags
++//void UpdateGlobalServerFlags(SERVER *s, CAPSLIST *t)
++//{
 +//	bool is_restricted = false;
 +//	// Validate arguments
 +//	if (s == NULL || t == NULL)
@@ -55,16 +344,11 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
 +//	SetGlobalServerFlag(GSF_DISABLE_DEEP_LOGGING, is_restricted);
 +//	SetGlobalServerFlag(GSF_DISABLE_AC, is_restricted);
 +//	SetGlobalServerFlag(GSF_DISABLE_SYSLOG, is_restricted);
-+	SetGlobalServerFlag(GSF_DISABLE_PUSH_ROUTE, false);
-+	SetGlobalServerFlag(GSF_DISABLE_RADIUS_AUTH, false);
-+	SetGlobalServerFlag(GSF_DISABLE_CERT_AUTH, false);
-+	SetGlobalServerFlag(GSF_DISABLE_DEEP_LOGGING, false);
-+	SetGlobalServerFlag(GSF_DISABLE_AC, false);
-+	SetGlobalServerFlag(GSF_DISABLE_SYSLOG, false);
- }
++//}
  
  // Set a global server flag
-@@ -1405,7 +1411,7 @@
+ void SetGlobalServerFlag(UINT index, UINT value)
+@@ -1405,7 +1405,7 @@
  // Main of the aquisition of Caps of the server
  void GetServerCapsMain(SERVER *s, CAPSLIST *t)
  {
@@ -73,7 +357,7 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
  
  	// Validate arguments
  	if (s == NULL || t == NULL)
-@@ -1413,7 +1419,7 @@
+@@ -1413,7 +1413,7 @@
  		return;
  	}
  
@@ -82,7 +366,7 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
  
  	// Initialize
  	InitCapsList(t);
-@@ -1559,7 +1565,8 @@
+@@ -1559,7 +1559,8 @@
  	AddCapsBool(t, "b_support_securenat", true);
  
  	// Pushing routing table function of SecureNAT Virtual DHCP Server is available
@@ -92,7 +376,16 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
  	AddCapsBool(t, "b_suppport_push_route_config", true);
  
  	if (s->ServerType != SERVER_TYPE_STANDALONE)
-@@ -3333,7 +3340,7 @@
+@@ -1800,7 +1801,7 @@
+ 	AddCapsBool(t, "b_vpn4", true);
+ 
+ 
+-	UpdateGlobalServerFlags(s, t);
++//	UpdateGlobalServerFlags(s, t);
+ }
+ 
+ // SYSLOG_SETTING
+@@ -3333,7 +3334,7 @@
  
  	root = CfgCreateFolder(NULL, TAG_ROOT);
  
@@ -101,7 +394,7 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
  
  	CfgAddStr(root, "Region", region);
  
-@@ -10744,49 +10751,49 @@
+@@ -10744,49 +10745,49 @@
  	return f;
  }
  
@@ -194,7 +487,7 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
  
  // Check whether some enterprise functions are restricted
  // 
-@@ -10820,60 +10827,60 @@
+@@ -10820,60 +10821,60 @@
  // Anyone, except Daiyuu Nobori, who understands and writes the C language
  // program can remove this restriction at his own risk.
  // 
@@ -309,7 +602,7 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
  
  // Create a server
  SERVER *SiNewServer(bool bridge)
-@@ -11035,7 +11042,7 @@
+@@ -11035,7 +11036,7 @@
  
  	SiInitDeadLockCheck(s);
  
@@ -320,7 +613,35 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
  }
 diff -urN a/src/Cedar/Server.h b/src/Cedar/Server.h
 --- a/src/Cedar/Server.h	2016-03-06 13:08:38.000000000 +0000
-+++ b/src/Cedar/Server.h	2016-03-09 12:09:24.982461139 +0000
++++ b/src/Cedar/Server.h	2016-03-09 20:22:24.135419384 +0000
+@@ -424,12 +424,12 @@
+ 
+ // Global server flags
+ #define	NUM_GLOBAL_SERVER_FLAGS			128
+-#define	GSF_DISABLE_PUSH_ROUTE			1
+-#define	GSF_DISABLE_RADIUS_AUTH			2
+-#define	GSF_DISABLE_CERT_AUTH			3
+-#define	GSF_DISABLE_DEEP_LOGGING		4
+-#define	GSF_DISABLE_AC					5
+-#define	GSF_DISABLE_SYSLOG				6
++//#define	GSF_DISABLE_PUSH_ROUTE			1
++//#define	GSF_DISABLE_RADIUS_AUTH			2
++//#define	GSF_DISABLE_CERT_AUTH			3
++//#define	GSF_DISABLE_DEEP_LOGGING		4
++//#define	GSF_DISABLE_AC					5
++//#define	GSF_DISABLE_SYSLOG				6
+ #define	GSF_SHOW_OSS_MSG				7
+ #define	GSF_LOCALBRIDGE_NO_DISABLE_OFFLOAD	8
+ #define	GSF_DISABLE_SESSION_RECONNECT	9
+@@ -711,7 +711,7 @@
+ 
+ void SetGlobalServerFlag(UINT index, UINT value);
+ UINT GetGlobalServerFlag(UINT index);
+-void UpdateGlobalServerFlags(SERVER *s, CAPSLIST *t);
++//void UpdateGlobalServerFlags(SERVER *s, CAPSLIST *t);
+ 
+ 
+ bool IsAdminPackSupportedServerProduct(char *name);
 @@ -739,10 +739,10 @@
  void SiSetAzureEnable(SERVER *s, bool enabled);
  bool SiGetAzureEnable(SERVER *s);
@@ -336,3 +657,26 @@ diff -urN a/src/Cedar/Server.h b/src/Cedar/Server.h
  
  #endif	// SERVER_H
  
+diff -urN a/src/Cedar/Virtual.c b/src/Cedar/Virtual.c
+--- a/src/Cedar/Virtual.c	2016-03-06 13:08:38.000000000 +0000
++++ b/src/Cedar/Virtual.c	2016-03-09 20:12:48.277420193 +0000
+@@ -9647,8 +9647,8 @@
+ 				ret.DnsServer2 = v->DhcpDns2;
+ 				ret.Gateway = v->DhcpGateway;
+ 
+-				if (GetGlobalServerFlag(GSF_DISABLE_PUSH_ROUTE) == 0)
+-				{
++//				if (GetGlobalServerFlag(GSF_DISABLE_PUSH_ROUTE) == 0)
++//				{
+ 					Copy(&ret.ClasslessRoute, &v->PushRoute, sizeof(DHCP_CLASSLESS_ROUTE_TABLE));
+ 
+ 					if (IsIpcMacAddress(p->MacAddressSrc))
+@@ -9697,7 +9697,7 @@
+ 							}
+ 						}
+ 					}
+-				}
++//				}
+ 
+ 				if (opt->Opcode != DHCP_INFORM)
+ 				{
