@@ -21,8 +21,12 @@ Uninstall all the SoftEther VPN packages if you will update from old version.
 
 + WebUI is no longer available for Mar 8, 2016 or later version.
 + Languages except english no longer available for Mar 8, 2016 or later version.
-+ pdf file no longer contain when generate a sample configuration file for openvpn for Mar 8, 2016 or later version.  
-New package size is smaller from 1.8MB to 1.1MB at these changes.
++ ~~pdf file no longer contain when generate a sample configuration file for openvpn for Mar 8, 2016 or later version.~~
++ readme file no longer contain when generate a sample configuration file for openvpn for Mar 9, 2016 or later version.  
+New package size is smaller from 1.8MB to 1.0MB at these changes.
+
++ Removed region lock for Mar 9, 2016 or later version.  
+Can be used some authentication function (Radius/Certificate/NT Domain) and syslog transmission in all region.
 
 Compile and Install
 -
