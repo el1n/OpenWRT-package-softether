@@ -1,6 +1,6 @@
 diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
---- a/src/Cedar/Admin.c	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Cedar/Admin.c	2016-03-09 18:32:07.228428669 +0000
+--- a/src/Cedar/Admin.c	2016-03-09 20:14:58.454420012 +0000
++++ b/src/Cedar/Admin.c	2016-03-10 16:55:10.011315650 +0000
 @@ -1053,8 +1053,8 @@
  	UINT ret = ERR_NO_ERROR;
  	ZIP_PACKER *p;
@@ -64,7 +64,7 @@ diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
  		FreeX(dummy_x);
 diff -urN a/src/Cedar/Cedar.c b/src/Cedar/Cedar.c
 --- a/src/Cedar/Cedar.c	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Cedar/Cedar.c	2016-03-09 18:32:07.229428669 +0000
++++ b/src/Cedar/Cedar.c	2016-03-10 16:55:10.012315650 +0000
 @@ -1336,7 +1336,7 @@
  		return;
  	}
@@ -85,7 +85,7 @@ diff -urN a/src/Cedar/Cedar.c b/src/Cedar/Cedar.c
  	beta_str = "Alpha";
 diff -urN a/src/Cedar/Cedar.h b/src/Cedar/Cedar.h
 --- a/src/Cedar/Cedar.h	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Cedar/Cedar.h	2016-03-09 18:32:07.229428669 +0000
++++ b/src/Cedar/Cedar.h	2016-03-10 16:55:10.012315650 +0000
 @@ -1157,7 +1157,7 @@
  #include <Cedar/Nat.h>
  
@@ -96,8 +96,8 @@ diff -urN a/src/Cedar/Cedar.h b/src/Cedar/Cedar.h
  // VPN Gate Plugin DLL
  #include <VGate/VGateCommon.h>
 diff -urN a/src/Cedar/Protocol.c b/src/Cedar/Protocol.c
---- a/src/Cedar/Protocol.c	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Cedar/Protocol.c	2016-03-09 18:32:07.230428668 +0000
+--- a/src/Cedar/Protocol.c	2016-03-09 20:27:57.301418921 +0000
++++ b/src/Cedar/Protocol.c	2016-03-10 16:55:10.013315650 +0000
 @@ -6291,22 +6291,22 @@
  				{
  					bool b = false;
@@ -138,9 +138,9 @@ diff -urN a/src/Cedar/Protocol.c b/src/Cedar/Protocol.c
  					if (c->FirstSock->RemoteIP.addr[0] == 127)
  					{
 diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
---- a/src/Cedar/Server.c	2016-03-09 12:31:20.477458120 +0000
-+++ b/src/Cedar/Server.c	2016-03-09 18:32:07.232428666 +0000
-@@ -5930,7 +5930,8 @@
+--- a/src/Cedar/Server.c	2016-03-09 20:29:20.197418806 +0000
++++ b/src/Cedar/Server.c	2016-03-10 16:55:10.014315650 +0000
+@@ -5924,7 +5924,8 @@
  		s->Eraser = NewEraser(s->Logger, CfgGetInt64(f, "AutoDeleteCheckDiskFreeSpaceMin"));
  
  		// WebUI
@@ -152,7 +152,7 @@ diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
  		// WebTimePage
 diff -urN a/src/makefiles/linux_32bit.mak b/src/makefiles/linux_32bit.mak
 --- a/src/makefiles/linux_32bit.mak	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/makefiles/linux_32bit.mak	2016-03-09 18:45:21.342427555 +0000
++++ b/src/makefiles/linux_32bit.mak	2016-03-10 16:55:10.015315650 +0000
 @@ -48,11 +48,11 @@
  endif
  
@@ -268,9 +268,112 @@ diff -urN a/src/makefiles/linux_32bit.mak b/src/makefiles/linux_32bit.mak
  tmp/objs/Cedar/Wpc.o: src/Cedar/Wpc.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
  	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Wpc.c -o tmp/objs/Cedar/Wpc.o
  
+diff -urN a/src/Mayaqua/Internat.c b/src/Mayaqua/Internat.c
+--- a/src/Mayaqua/Internat.c	2016-03-10 17:37:31.487312084 +0000
++++ b/src/Mayaqua/Internat.c	2016-03-10 17:37:11.542312115 +0000
+@@ -925,37 +925,37 @@
+ void InitInternational()
+ {
+ #ifdef	OS_UNIX
+-	void *d;
+-
+-	if (iconv_lock != NULL)
+-	{
+-		return;
+-	}
+-
+-	GetCurrentCharSet(charset, sizeof(charset));
+-	d = IconvWideToStrInternal();
+-	if (d == (void *)-1)
+-	{
+-#ifdef	UNIX_MACOS
+-		StrCpy(charset, sizeof(charset), "utf-8");
+-#else	// UNIX_MACOS
+-//		StrCpy(charset, sizeof(charset), "EUCJP");
+-		StrCpy(charset, sizeof(charset), "UTF-8");
+-#endif	// UNIX_MACOS
+-		d = IconvWideToStrInternal();
+-		if (d == (void *)-1)
+-		{
+-			StrCpy(charset, sizeof(charset), "US");
+-		}
+-		else
+-		{
+-			IconvFreeInternal(d);
+-		}
+-	}
+-	else
+-	{
+-		IconvFreeInternal(d);
+-	}
++//	void *d;
++//
++//	if (iconv_lock != NULL)
++//	{
++//		return;
++//	}
++//
++//	GetCurrentCharSet(charset, sizeof(charset));
++//	d = IconvWideToStrInternal();
++//	if (d == (void *)-1)
++//	{
++//#ifdef	UNIX_MACOS
++//		StrCpy(charset, sizeof(charset), "utf-8");
++//#else	// UNIX_MACOS
++////		StrCpy(charset, sizeof(charset), "EUCJP");
++//		StrCpy(charset, sizeof(charset), "UTF-8");
++//#endif	// UNIX_MACOS
++//		d = IconvWideToStrInternal();
++//		if (d == (void *)-1)
++//		{
++//			StrCpy(charset, sizeof(charset), "US");
++//		}
++//		else
++//		{
++//			IconvFreeInternal(d);
++//		}
++//	}
++//	else
++//	{
++//		IconvFreeInternal(d);
++//	}
+ 
+ 	iconv_lock = NewLockMain();
+ 
+@@ -1126,12 +1126,12 @@
+ 	return (void *)iconv_open(IsBigEndian() ? "UTF-16BE" : "UTF-16LE", charset);
+ }
+ 
+-// Close the handle
+-int IconvFreeInternal(void *d)
+-{
+-	iconv_close((iconv_t)d);
+-	return 0;
+-}
++//// Close the handle
++//int IconvFreeInternal(void *d)
++//{
++//	iconv_close((iconv_t)d);
++//	return 0;
++//}
+ 
+ void *IconvWideToStr()
+ {
+diff -urN a/src/Mayaqua/Internat.h b/src/Mayaqua/Internat.h
+--- a/src/Mayaqua/Internat.h	2016-03-06 13:08:36.000000000 +0000
++++ b/src/Mayaqua/Internat.h	2016-03-10 16:57:13.885315473 +0000
+@@ -245,7 +245,7 @@
+ int IconvFree(void *d);
+ void *IconvWideToStrInternal();
+ void *IconvStrToWideInternal();
+-int IconvFreeInternal(void *d);
++//int IconvFreeInternal(void *d);
+ #endif	// OS_UNIX
+ 
+ #endif	// INTERNAT_H
 diff -urN a/src/Mayaqua/Mayaqua.h b/src/Mayaqua/Mayaqua.h
 --- a/src/Mayaqua/Mayaqua.h	2016-03-06 13:08:36.000000000 +0000
-+++ b/src/Mayaqua/Mayaqua.h	2016-03-09 18:32:07.232428666 +0000
++++ b/src/Mayaqua/Mayaqua.h	2016-03-10 16:55:10.015315650 +0000
 @@ -388,7 +388,7 @@
  #include <Mayaqua/OS.h>
  
@@ -282,7 +385,7 @@ diff -urN a/src/Mayaqua/Mayaqua.h b/src/Mayaqua/Mayaqua.h
  // Global variables
 diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
 --- a/src/Mayaqua/Table.c	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Mayaqua/Table.c	2016-03-09 18:32:07.233428666 +0000
++++ b/src/Mayaqua/Table.c	2016-03-10 17:42:37.341311656 +0000
 @@ -131,10 +131,10 @@
  // Initialization of string table routine
  void InitTable()
@@ -393,7 +496,8 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
 -	if (e == NULL)
 -	{
 -		return;
--	}
++//		goto LABEL_FATAL_ERROR;
+ 	}
 -
 -	Copy(e, &current_os_lang, sizeof(LANGLIST));
 -}
@@ -432,8 +536,10 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
 -	GetCurrentLang(&e);
 -
 -	return e.Id;
--}
--
++//
++//	FreeLangList(o);
+ }
+ 
 -// Write to the lang.config file in the current directory
 -bool SaveLangConfigCurrentDir(char *str)
 -{
@@ -490,18 +596,15 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
 -		AppendBufStr(b, "\r\n\r\n");
 -
 -		FreeLangList(o);
-+//		goto LABEL_FATAL_ERROR;
- 	}
+-	}
 -
 -	ret = DumpBufWIfNecessary(b, filename);
 -
 -	FreeBuf(b);
 -
 -	return ret;
-+//
-+//	FreeLangList(o);
- }
- 
+-}
+-
 -// Read the lang.config file in the current directory
 -bool LoadLangConfigCurrentDir(char *str, UINT str_size)
 -{
@@ -1310,3 +1413,455 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
  
  // Get an error string in Unicode
  wchar_t *GetUniErrorStr(UINT err)
+@@ -1177,204 +1180,204 @@
+ 	return true;
+ }
+ 
+-// Generate the Unicode string cache file name
+-void GenerateUnicodeCacheFileName(wchar_t *name, UINT size, wchar_t *strfilename, UINT strfilesize, UCHAR *filehash)
+-{
+-	wchar_t tmp[MAX_SIZE];
+-	wchar_t hashstr[64];
+-	wchar_t hashtemp[MAX_SIZE];
+-	wchar_t exe[MAX_SIZE];
+-	UCHAR hash[SHA1_SIZE];
+-	// Validate arguments
+-	if (name == NULL || strfilename == NULL || filehash == NULL)
+-	{
+-		return;
+-	}
+-
+-	GetExeDirW(exe, sizeof(exe));
+-	UniStrCpy(hashtemp, sizeof(hashtemp), strfilename);
+-	BinToStrW(tmp, sizeof(tmp), filehash, MD5_SIZE);
+-	UniStrCat(hashtemp, sizeof(hashtemp), tmp);
+-	UniStrCat(hashtemp, sizeof(hashtemp), exe);
+-	UniStrLower(hashtemp);
+-
+-	Hash(hash, hashtemp, UniStrLen(hashtemp) * sizeof(wchar_t), true);
+-	BinToStrW(hashstr, sizeof(hashstr), hash, 4);
+-	UniFormat(tmp, sizeof(tmp), UNICODE_CACHE_FILE, hashstr);
+-	UniStrLower(tmp);
+-
+-#ifndef	OS_WIN32
+-	UniStrCpy(exe, sizeof(exe), L"/tmp");
+-#else	// OS_WIN32
+-	StrToUni(exe, sizeof(exe), MsGetTempDir());
+-#endif	// OS_WIN32
+-
+-	UniFormat(name, size, L"%s/%s", exe, tmp);
+-	NormalizePathW(name, size, name);
+-}
+-
+-// Save the Unicode cache
+-void SaveUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash)
+-{
+-	UNICODE_CACHE c;
+-	BUF *b;
+-	UINT i;
+-	IO *io;
+-	wchar_t name[MAX_PATH];
+-	UCHAR binhash[MD5_SIZE];
+-	// Validate arguments
+-	if (strfilename == NULL || hash == NULL)
+-	{
+-		return;
+-	}
+-
+-	Zero(&c, sizeof(c));
+-	UniToStr(c.StrFileName, sizeof(c.StrFileName), strfilename);
+-	c.StrFileSize = strfilesize;
+-	GetMachineName(c.MachineName, sizeof(c.MachineName));
+-	c.OsType = GetOsInfo()->OsType;
+-	Copy(c.hash, hash, MD5_SIZE);
+-
+-#ifdef	OS_UNIX
+-	GetCurrentCharSet(c.CharSet, sizeof(c.CharSet));
+-#else	// OS_UNIX
+-	{
+-		UINT id = MsGetThreadLocale();
+-		Copy(c.CharSet, &id, sizeof(id));
+-	}
+-#endif	// OS_UNIX
+-
+-	b = NewBuf();
+-	WriteBuf(b, &c, sizeof(c));
+-
+-	WriteBufInt(b, LIST_NUM(TableList));
+-	for (i = 0;i < LIST_NUM(TableList);i++)
+-	{
+-		TABLE *t = LIST_DATA(TableList, i);
+-		WriteBufInt(b, StrLen(t->name));
+-		WriteBuf(b, t->name, StrLen(t->name));
+-		WriteBufInt(b, StrLen(t->str));
+-		WriteBuf(b, t->str, StrLen(t->str));
+-		WriteBufInt(b, UniStrLen(t->unistr));
+-		WriteBuf(b, t->unistr, UniStrLen(t->unistr) * sizeof(wchar_t));
+-	}
+-
+-	Hash(binhash, b->Buf, b->Size, false);
+-	WriteBuf(b, binhash, MD5_SIZE);
+-
+-	GenerateUnicodeCacheFileName(name, sizeof(name), strfilename, strfilesize, hash);
+-
+-	io = FileCreateW(name);
+-	if (io != NULL)
+-	{
+-		SeekBuf(b, 0, 0);
+-		BufToFile(io, b);
+-		FileClose(io);
+-	}
+-
+-	FreeBuf(b);
+-}
+-
+-// Reading the Unicode cache
+-bool LoadUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash)
+-{
+-	UNICODE_CACHE c, t;
+-	BUF *b;
+-	UINT i, num;
+-	IO *io;
+-	wchar_t name[MAX_PATH];
+-	UCHAR binhash[MD5_SIZE];
+-	UCHAR binhash_2[MD5_SIZE];
+-	// Validate arguments
+-	if (strfilename == NULL || hash == NULL)
+-	{
+-		return false;
+-	}
+-
+-	GenerateUnicodeCacheFileName(name, sizeof(name), strfilename, strfilesize, hash);
+-
+-	io = FileOpenW(name, false);
+-	if (io == NULL)
+-	{
+-		return false;
+-	}
+-
+-	b = FileToBuf(io);
+-	if (b == NULL)
+-	{
+-		FileClose(io);
+-		return false;
+-	}
+-
+-	SeekBuf(b, 0, 0);
+-	FileClose(io);
+-
+-	Hash(binhash, b->Buf, b->Size >= MD5_SIZE ? (b->Size - MD5_SIZE) : 0, false);
+-	Copy(binhash_2, ((UCHAR *)b->Buf) + (b->Size >= MD5_SIZE ? (b->Size - MD5_SIZE) : 0), MD5_SIZE);
+-	if (Cmp(binhash, binhash_2, MD5_SIZE) != 0)
+-	{
+-		FreeBuf(b);
+-		return false;
+-	}
+-
+-	Zero(&c, sizeof(c));
+-	UniToStr(c.StrFileName, sizeof(c.StrFileName), strfilename);
+-	c.StrFileSize = strfilesize;
+-	DisableNetworkNameCache();
+-	GetMachineName(c.MachineName, sizeof(c.MachineName));
+-	EnableNetworkNameCache();
+-	c.OsType = GetOsInfo()->OsType;
+-	Copy(c.hash, hash, MD5_SIZE);
+-
+-#ifdef	OS_UNIX
+-	GetCurrentCharSet(c.CharSet, sizeof(c.CharSet));
+-#else	// OS_UNIX
+-	{
+-		UINT id = MsGetThreadLocale();
+-		Copy(c.CharSet, &id, sizeof(id));
+-	}
+-#endif	// OS_UNIX
+-
+-	Zero(&t, sizeof(t));
+-	ReadBuf(b, &t, sizeof(t));
+-
+-	if (Cmp(&c, &t, sizeof(UNICODE_CACHE)) != 0)
+-	{
+-		FreeBuf(b);
+-		return false;
+-	}
+-
+-	num = ReadBufInt(b);
+-
+-	FreeTable();
+-	TableList = NewList(CmpTableName);
+-
+-	for (i = 0;i < num;i++)
+-	{
+-		UINT len;
+-		TABLE *t = ZeroMalloc(sizeof(TABLE));
+-
+-		len = ReadBufInt(b);
+-		t->name = ZeroMalloc(len + 1);
+-		ReadBuf(b, t->name, len);
+-
+-		len = ReadBufInt(b);
+-		t->str = ZeroMalloc(len + 1);
+-		ReadBuf(b, t->str, len);
+-
+-		len = ReadBufInt(b);
+-		t->unistr = ZeroMalloc((len + 1) * sizeof(wchar_t));
+-		ReadBuf(b, t->unistr, len * sizeof(wchar_t));
+-
+-		Add(TableList, t);
+-	}
+-
+-	FreeBuf(b);
+-
+-	Sort(TableList);
+-
+-	return true;
+-}
++//// Generate the Unicode string cache file name
++//void GenerateUnicodeCacheFileName(wchar_t *name, UINT size, wchar_t *strfilename, UINT strfilesize, UCHAR *filehash)
++//{
++//	wchar_t tmp[MAX_SIZE];
++//	wchar_t hashstr[64];
++//	wchar_t hashtemp[MAX_SIZE];
++//	wchar_t exe[MAX_SIZE];
++//	UCHAR hash[SHA1_SIZE];
++//	// Validate arguments
++//	if (name == NULL || strfilename == NULL || filehash == NULL)
++//	{
++//		return;
++//	}
++//
++//	GetExeDirW(exe, sizeof(exe));
++//	UniStrCpy(hashtemp, sizeof(hashtemp), strfilename);
++//	BinToStrW(tmp, sizeof(tmp), filehash, MD5_SIZE);
++//	UniStrCat(hashtemp, sizeof(hashtemp), tmp);
++//	UniStrCat(hashtemp, sizeof(hashtemp), exe);
++//	UniStrLower(hashtemp);
++//
++//	Hash(hash, hashtemp, UniStrLen(hashtemp) * sizeof(wchar_t), true);
++//	BinToStrW(hashstr, sizeof(hashstr), hash, 4);
++//	UniFormat(tmp, sizeof(tmp), UNICODE_CACHE_FILE, hashstr);
++//	UniStrLower(tmp);
++//
++//#ifndef	OS_WIN32
++//	UniStrCpy(exe, sizeof(exe), L"/tmp");
++//#else	// OS_WIN32
++//	StrToUni(exe, sizeof(exe), MsGetTempDir());
++//#endif	// OS_WIN32
++//
++//	UniFormat(name, size, L"%s/%s", exe, tmp);
++//	NormalizePathW(name, size, name);
++//}
++//
++//// Save the Unicode cache
++//void SaveUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash)
++//{
++//	UNICODE_CACHE c;
++//	BUF *b;
++//	UINT i;
++//	IO *io;
++//	wchar_t name[MAX_PATH];
++//	UCHAR binhash[MD5_SIZE];
++//	// Validate arguments
++//	if (strfilename == NULL || hash == NULL)
++//	{
++//		return;
++//	}
++//
++//	Zero(&c, sizeof(c));
++//	UniToStr(c.StrFileName, sizeof(c.StrFileName), strfilename);
++//	c.StrFileSize = strfilesize;
++//	GetMachineName(c.MachineName, sizeof(c.MachineName));
++//	c.OsType = GetOsInfo()->OsType;
++//	Copy(c.hash, hash, MD5_SIZE);
++//
++//#ifdef	OS_UNIX
++//	GetCurrentCharSet(c.CharSet, sizeof(c.CharSet));
++//#else	// OS_UNIX
++//	{
++//		UINT id = MsGetThreadLocale();
++//		Copy(c.CharSet, &id, sizeof(id));
++//	}
++//#endif	// OS_UNIX
++//
++//	b = NewBuf();
++//	WriteBuf(b, &c, sizeof(c));
++//
++//	WriteBufInt(b, LIST_NUM(TableList));
++//	for (i = 0;i < LIST_NUM(TableList);i++)
++//	{
++//		TABLE *t = LIST_DATA(TableList, i);
++//		WriteBufInt(b, StrLen(t->name));
++//		WriteBuf(b, t->name, StrLen(t->name));
++//		WriteBufInt(b, StrLen(t->str));
++//		WriteBuf(b, t->str, StrLen(t->str));
++//		WriteBufInt(b, UniStrLen(t->unistr));
++//		WriteBuf(b, t->unistr, UniStrLen(t->unistr) * sizeof(wchar_t));
++//	}
++//
++//	Hash(binhash, b->Buf, b->Size, false);
++//	WriteBuf(b, binhash, MD5_SIZE);
++//
++//	GenerateUnicodeCacheFileName(name, sizeof(name), strfilename, strfilesize, hash);
++//
++//	io = FileCreateW(name);
++//	if (io != NULL)
++//	{
++//		SeekBuf(b, 0, 0);
++//		BufToFile(io, b);
++//		FileClose(io);
++//	}
++//
++//	FreeBuf(b);
++//}
++//
++//// Reading the Unicode cache
++//bool LoadUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash)
++//{
++//	UNICODE_CACHE c, t;
++//	BUF *b;
++//	UINT i, num;
++//	IO *io;
++//	wchar_t name[MAX_PATH];
++//	UCHAR binhash[MD5_SIZE];
++//	UCHAR binhash_2[MD5_SIZE];
++//	// Validate arguments
++//	if (strfilename == NULL || hash == NULL)
++//	{
++//		return false;
++//	}
++//
++//	GenerateUnicodeCacheFileName(name, sizeof(name), strfilename, strfilesize, hash);
++//
++//	io = FileOpenW(name, false);
++//	if (io == NULL)
++//	{
++//		return false;
++//	}
++//
++//	b = FileToBuf(io);
++//	if (b == NULL)
++//	{
++//		FileClose(io);
++//		return false;
++//	}
++//
++//	SeekBuf(b, 0, 0);
++//	FileClose(io);
++//
++//	Hash(binhash, b->Buf, b->Size >= MD5_SIZE ? (b->Size - MD5_SIZE) : 0, false);
++//	Copy(binhash_2, ((UCHAR *)b->Buf) + (b->Size >= MD5_SIZE ? (b->Size - MD5_SIZE) : 0), MD5_SIZE);
++//	if (Cmp(binhash, binhash_2, MD5_SIZE) != 0)
++//	{
++//		FreeBuf(b);
++//		return false;
++//	}
++//
++//	Zero(&c, sizeof(c));
++//	UniToStr(c.StrFileName, sizeof(c.StrFileName), strfilename);
++//	c.StrFileSize = strfilesize;
++//	DisableNetworkNameCache();
++//	GetMachineName(c.MachineName, sizeof(c.MachineName));
++//	EnableNetworkNameCache();
++//	c.OsType = GetOsInfo()->OsType;
++//	Copy(c.hash, hash, MD5_SIZE);
++//
++//#ifdef	OS_UNIX
++//	GetCurrentCharSet(c.CharSet, sizeof(c.CharSet));
++//#else	// OS_UNIX
++//	{
++//		UINT id = MsGetThreadLocale();
++//		Copy(c.CharSet, &id, sizeof(id));
++//	}
++//#endif	// OS_UNIX
++//
++//	Zero(&t, sizeof(t));
++//	ReadBuf(b, &t, sizeof(t));
++//
++//	if (Cmp(&c, &t, sizeof(UNICODE_CACHE)) != 0)
++//	{
++//		FreeBuf(b);
++//		return false;
++//	}
++//
++//	num = ReadBufInt(b);
++//
++//	FreeTable();
++//	TableList = NewList(CmpTableName);
++//
++//	for (i = 0;i < num;i++)
++//	{
++//		UINT len;
++//		TABLE *t = ZeroMalloc(sizeof(TABLE));
++//
++//		len = ReadBufInt(b);
++//		t->name = ZeroMalloc(len + 1);
++//		ReadBuf(b, t->name, len);
++//
++//		len = ReadBufInt(b);
++//		t->str = ZeroMalloc(len + 1);
++//		ReadBuf(b, t->str, len);
++//
++//		len = ReadBufInt(b);
++//		t->unistr = ZeroMalloc((len + 1) * sizeof(wchar_t));
++//		ReadBuf(b, t->unistr, len * sizeof(wchar_t));
++//
++//		Add(TableList, t);
++//	}
++//
++//	FreeBuf(b);
++//
++//	Sort(TableList);
++//
++//	return true;
++//}
+ 
+ // Read the string table
+ bool LoadTableMain(wchar_t *filename)
+@@ -1414,22 +1417,22 @@
+ 
+ 	Hash(hash, b->Buf, b->Size, false);
+ 
+-	if (LoadUnicodeCache(filename, b->Size, hash) == false)
+-	{
++//	if (LoadUnicodeCache(filename, b->Size, hash) == false)
++//	{
+ 		if (LoadTableFromBuf(b) == false)
+ 		{
+ 			FreeBuf(b);
+ 			return false;
+ 		}
+ 
+-		SaveUnicodeCache(filename, b->Size, hash);
+-
+-		//Debug("Unicode Source: strtable.stb\n");
+-	}
+-	else
+-	{
+-		//Debug("Unicode Source: unicode_cache\n");
+-	}
++//		SaveUnicodeCache(filename, b->Size, hash);
++//
++//		//Debug("Unicode Source: strtable.stb\n");
++//	}
++//	else
++//	{
++//		//Debug("Unicode Source: unicode_cache\n");
++//	}
+ 
+ 	FreeBuf(b);
+ 
+diff -urN a/src/Mayaqua/Table.h b/src/Mayaqua/Table.h
+--- a/src/Mayaqua/Table.h	2016-03-06 13:08:37.000000000 +0000
++++ b/src/Mayaqua/Table.h	2016-03-10 16:56:08.073315569 +0000
+@@ -181,9 +181,9 @@
+ char *GetErrorStr(UINT err);
+ wchar_t *GetUniErrorStr(UINT err);
+ UINT GetTableInt(char *name);
+-void GenerateUnicodeCacheFileName(wchar_t *name, UINT size, wchar_t *strfilename, UINT strfilesize, UCHAR *filehash);
+-void SaveUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash);
+-bool LoadUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash);
++//void GenerateUnicodeCacheFileName(wchar_t *name, UINT size, wchar_t *strfilename, UINT strfilesize, UCHAR *filehash);
++//void SaveUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash);
++//bool LoadUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash);
+ void InitTable();
+ 
+ LIST *LoadLangList();
