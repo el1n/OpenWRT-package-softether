@@ -31,6 +31,12 @@ define Package/softethervpn
 	DEPENDS:=+libpthread +librt +libreadline +libopenssl +libncurses +kmod-tun
 endef
 
+define Package/softethervpn/conffiles
+	/usr/bin/vpn_bridge.config
+	/usr/bin/vpn_client.config
+	/usr/bin/vpn_server.config
+endef
+
 #define Package/softethervpnclient
 #	$(call Package/softethervpnserver)
 #endef
