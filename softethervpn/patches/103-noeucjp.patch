@@ -1,32 +1,33 @@
-diff -urN a/src/Mayaqua/Internat.c b/src/Mayaqua/Internat.c
---- a/src/Mayaqua/Internat.c	2016-03-06 13:08:36.000000000 +0000
-+++ b/src/Mayaqua/Internat.c	2016-03-10 08:47:51.188356657 +0000
-@@ -123,7 +123,8 @@
+diff --git a/src/Mayaqua/Internat.c b/src/Mayaqua/Internat.c
+index fa7bad9..73e5a52 100644
+--- a/src/Mayaqua/Internat.c
++++ b/src/Mayaqua/Internat.c
+@@ -123,7 +123,7 @@
  #include <Mayaqua/Mayaqua.h>
  
  extern LOCK *token_lock;
 -static char charset[MAX_SIZE] = "EUCJP";
-+//static char charset[MAX_SIZE] = "EUCJP";
 +static char charset[MAX_SIZE] = "UTF-8";
  static LOCK *iconv_lock = NULL;
  void *iconv_cache_wide_to_str = 0;
  void *iconv_cache_str_to_wide = 0;
-@@ -938,7 +939,8 @@
- #ifdef	UNIX_MACOS
+@@ -935,11 +935,7 @@ void InitInternational()
+ 	d = IconvWideToStrInternal();
+ 	if (d == (void *)-1)
+ 	{
+-#ifdef	UNIX_MACOS
  		StrCpy(charset, sizeof(charset), "utf-8");
- #else	// UNIX_MACOS
+-#else	// UNIX_MACOS
 -		StrCpy(charset, sizeof(charset), "EUCJP");
-+//		StrCpy(charset, sizeof(charset), "EUCJP");
-+		StrCpy(charset, sizeof(charset), "UTF-8");
- #endif	// UNIX_MACOS
+-#endif	// UNIX_MACOS
  		d = IconvWideToStrInternal();
  		if (d == (void *)-1)
-@@ -1198,7 +1200,8 @@
+ 		{
+@@ -1198,7 +1194,7 @@ void GetCurrentCharSet(char *name, UINT size)
  		}
  		else
  		{
 -			StrCpy(name, size, "eucJP");
-+//			StrCpy(name, size, "eucJP");
 +			StrCpy(name, size, "UTF-8");
  		}
  	}

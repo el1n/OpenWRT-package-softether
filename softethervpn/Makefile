@@ -62,8 +62,8 @@ define Build/Compile
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/authors.txt
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/backup_dir_readme.txt
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/DriverPackages/
-#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/empty.config
-#	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/empty_sevpnclient.config
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/empty.config
+	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/empty_sevpnclient.config
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/eula.txt
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/install_src.dat
 	rm -fr $(PKG_BUILD_DIR)/src/bin/hamcore/lang.config

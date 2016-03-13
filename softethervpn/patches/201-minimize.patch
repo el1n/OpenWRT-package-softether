@@ -1,7 +1,8 @@
-diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
---- a/src/Cedar/Admin.c	2016-03-09 20:14:58.454420012 +0000
-+++ b/src/Cedar/Admin.c	2016-03-10 16:55:10.011315650 +0000
-@@ -1053,8 +1053,8 @@
+diff --git a/src/Cedar/Admin.c b/src/Cedar/Admin.c
+index 3b0ab15..6f12a1c 100644
+--- a/src/Cedar/Admin.c
++++ b/src/Cedar/Admin.c
+@@ -1053,8 +1053,8 @@ UINT StMakeOpenVpnConfigFile(ADMIN *a, RPC_READ_LOG_FILE *t)
  	UINT ret = ERR_NO_ERROR;
  	ZIP_PACKER *p;
  	FIFO *f;
@@ -12,7 +13,7 @@ diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
  	BUF *sample_buf;
  	OPENVPN_SSTP_CONFIG config;
  	LIST *port_list;
-@@ -1081,11 +1081,11 @@
+@@ -1081,11 +1081,11 @@ UINT StMakeOpenVpnConfigFile(ADMIN *a, RPC_READ_LOG_FILE *t)
  
  	p = NewZipPacker();
  
@@ -29,7 +30,7 @@ diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
  
  	// sample.ovpn
  	sample_buf = ReadDump("|openvpn_sample.ovpn");
-@@ -1094,7 +1094,8 @@
+@@ -1094,7 +1094,8 @@ UINT StMakeOpenVpnConfigFile(ADMIN *a, RPC_READ_LOG_FILE *t)
  	GetMachineHostName(my_hostname, sizeof(my_hostname));
  	my_hostname[16] = 0;
  
@@ -39,7 +40,7 @@ diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
  	{
  		ret = ERR_INTERNAL_ERROR;
  	}
-@@ -1279,8 +1280,8 @@
+@@ -1279,8 +1280,8 @@ UINT StMakeOpenVpnConfigFile(ADMIN *a, RPC_READ_LOG_FILE *t)
  			StrLower(my_hostname);
  		}
  
@@ -50,7 +51,7 @@ diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
  
  		ReplaceStrEx((char *)config_l3_buf->Buf, config_l3_buf->Size, (char *)config_l3_buf->Buf,
  			"$TAG_TUN_TAP$", "tun", false);
-@@ -1358,9 +1359,9 @@
+@@ -1358,9 +1359,9 @@ UINT StMakeOpenVpnConfigFile(ADMIN *a, RPC_READ_LOG_FILE *t)
  			SeekBuf(t->Buffer, 0, 0);
  		}
  
@@ -62,10 +63,11 @@ diff -urN a/src/Cedar/Admin.c b/src/Cedar/Admin.c
  		FreeBuf(x_buf);
  
  		FreeX(dummy_x);
-diff -urN a/src/Cedar/Cedar.c b/src/Cedar/Cedar.c
---- a/src/Cedar/Cedar.c	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Cedar/Cedar.c	2016-03-10 16:55:10.012315650 +0000
-@@ -1336,7 +1336,7 @@
+diff --git a/src/Cedar/Cedar.c b/src/Cedar/Cedar.c
+index 00ff67e..6477c83 100644
+--- a/src/Cedar/Cedar.c
++++ b/src/Cedar/Cedar.c
+@@ -1336,7 +1336,7 @@ void CleanupCedar(CEDAR *c)
  		return;
  	}
  
@@ -74,7 +76,7 @@ diff -urN a/src/Cedar/Cedar.c b/src/Cedar/Cedar.c
  	FreeCedarLayer3(c);
  
  /*
-@@ -1762,7 +1762,7 @@
+@@ -1762,7 +1762,7 @@ CEDAR *NewCedar(X *server_x, K *server_k)
  
  	InitCedarLayer3(c);
  
@@ -83,22 +85,35 @@ diff -urN a/src/Cedar/Cedar.c b/src/Cedar/Cedar.c
  
  #ifdef	ALPHA_VERSION
  	beta_str = "Alpha";
-diff -urN a/src/Cedar/Cedar.h b/src/Cedar/Cedar.h
---- a/src/Cedar/Cedar.h	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Cedar/Cedar.h	2016-03-10 16:55:10.012315650 +0000
-@@ -1157,7 +1157,7 @@
+diff --git a/src/Cedar/Cedar.h b/src/Cedar/Cedar.h
+index 73a3047..c837d77 100644
+--- a/src/Cedar/Cedar.h
++++ b/src/Cedar/Cedar.h
+@@ -1033,7 +1033,7 @@ typedef struct CEDAR
+ 	COUNTER *AssignedBridgeLicense;	// Number of assigned bridge licenses
+ 	UINT64 LicenseViolationTick;	// License violation occurs
+ 	LIST *NonSslList;				// Non-SSL connection list
+-	struct WEBUI *WebUI;			// Data for WebUI service
++//	struct WEBUI *WebUI;			// Data for WebUI service
+ 	UINT Beta;						// Beta number
+ 	LOCK *CedarSuperLock;			// Cedar super lock!
+ 	bool DisableIPv6Listener;		// Disable IPv6 listener
+@@ -1158,8 +1158,8 @@ typedef struct CEDAR
+ // User-mode Router
  #include <Cedar/Nat.h>
  
- // Web UI
+-// Web UI
 -#include <Cedar/WebUI.h>
++//// Web UI
 +//#include <Cedar/WebUI.h>
  
  // VPN Gate Plugin DLL
  #include <VGate/VGateCommon.h>
-diff -urN a/src/Cedar/Protocol.c b/src/Cedar/Protocol.c
---- a/src/Cedar/Protocol.c	2016-03-09 20:27:57.301418921 +0000
-+++ b/src/Cedar/Protocol.c	2016-03-10 16:55:10.013315650 +0000
-@@ -6291,22 +6291,22 @@
+diff --git a/src/Cedar/Protocol.c b/src/Cedar/Protocol.c
+index b806213..3c7f2de 100644
+--- a/src/Cedar/Protocol.c
++++ b/src/Cedar/Protocol.c
+@@ -6291,22 +6291,22 @@ bool ServerDownloadSignature(CONNECTION *c, char **error_detail_str)
  				{
  					bool b = false;
  
@@ -137,161 +152,118 @@ diff -urN a/src/Cedar/Protocol.c b/src/Cedar/Protocol.c
  
  					if (c->FirstSock->RemoteIP.addr[0] == 127)
  					{
-diff -urN a/src/Cedar/Server.c b/src/Cedar/Server.c
---- a/src/Cedar/Server.c	2016-03-09 20:29:20.197418806 +0000
-+++ b/src/Cedar/Server.c	2016-03-10 16:55:10.014315650 +0000
-@@ -5924,7 +5924,8 @@
+diff --git a/src/Cedar/Server.c b/src/Cedar/Server.c
+index 52be8a8..cd17684 100644
+--- a/src/Cedar/Server.c
++++ b/src/Cedar/Server.c
+@@ -5923,12 +5923,12 @@ void SiLoadServerCfg(SERVER *s, FOLDER *f)
+ 		SetEraserCheckInterval(CfgGetInt(f, "AutoDeleteCheckIntervalSecs"));
  		s->Eraser = NewEraser(s->Logger, CfgGetInt64(f, "AutoDeleteCheckDiskFreeSpaceMin"));
  
- 		// WebUI
+-		// WebUI
 -		s->UseWebUI = CfgGetBool(f, "UseWebUI");
++//		// WebUI
 +//		s->UseWebUI = CfgGetBool(f, "UseWebUI");
-+		s->UseWebUI = false;
  
  
- 		// WebTimePage
-diff -urN a/src/makefiles/linux_32bit.mak b/src/makefiles/linux_32bit.mak
---- a/src/makefiles/linux_32bit.mak	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/makefiles/linux_32bit.mak	2016-03-10 16:55:10.015315650 +0000
-@@ -48,11 +48,11 @@
- endif
+-		// WebTimePage
+-		s->UseWebTimePage = CfgGetBool(f, "UseWebTimePage");
++//		// WebTimePage
++//		s->UseWebTimePage = CfgGetBool(f, "UseWebTimePage");
  
- # Files
--HEADERS_MAYAQUA=src/Mayaqua/Cfg.h src/Mayaqua/cryptoki.h src/Mayaqua/Encrypt.h src/Mayaqua/FileIO.h src/Mayaqua/intelaes/iaesni.h src/Mayaqua/Internat.h src/Mayaqua/Kernel.h src/Mayaqua/Mayaqua.h src/Mayaqua/MayaType.h src/Mayaqua/Memory.h src/Mayaqua/Microsoft.h src/Mayaqua/Network.h src/Mayaqua/Object.h src/Mayaqua/OS.h src/Mayaqua/Pack.h src/Mayaqua/pkcs11.h src/Mayaqua/pkcs11f.h src/Mayaqua/pkcs11t.h src/Mayaqua/Secure.h src/Mayaqua/Str.h src/Mayaqua/Table.h src/Mayaqua/TcpIp.h src/Mayaqua/Tick64.h src/Mayaqua/Tracking.h src/Mayaqua/TunTap.h src/Mayaqua/Unix.h src/Mayaqua/Win32.h src/Mayaqua/zlib/zconf.h src/Mayaqua/zlib/zlib.h
--HEADERS_CEDAR=src/Cedar/Account.h src/Cedar/Admin.h src/Cedar/AzureClient.h src/Cedar/AzureServer.h src/Cedar/Bridge.h src/Cedar/BridgeUnix.h src/Cedar/BridgeWin32.h src/Cedar/Cedar.h src/Cedar/CedarPch.h src/Cedar/CedarType.h src/Cedar/Client.h src/Cedar/CM.h src/Cedar/CMInner.h src/Cedar/Command.h src/Cedar/Connection.h src/Cedar/Console.h src/Cedar/Database.h src/Cedar/DDNS.h src/Cedar/EM.h src/Cedar/EMInner.h src/Cedar/EtherLog.h src/Cedar/Hub.h src/Cedar/Interop_OpenVPN.h src/Cedar/Interop_SSTP.h src/Cedar/IPsec.h src/Cedar/IPsec_EtherIP.h src/Cedar/IPsec_IKE.h src/Cedar/IPsec_IkePacket.h src/Cedar/IPsec_IPC.h src/Cedar/IPsec_L2TP.h src/Cedar/IPsec_PPP.h src/Cedar/IPsec_Win7.h src/Cedar/IPsec_Win7Inner.h src/Cedar/Layer3.h src/Cedar/Link.h src/Cedar/Listener.h src/Cedar/Logging.h src/Cedar/Nat.h src/Cedar/NativeStack.h src/Cedar/netcfgn.h src/Cedar/netcfgx.h src/Cedar/NM.h src/Cedar/NMInner.h src/Cedar/NullLan.h src/Cedar/Protocol.h src/Cedar/Radius.h src/Cedar/Remote.h src/Cedar/Sam.h src/Cedar/SecureInfo.h src/Cedar/SecureNAT.h src/Cedar/SeLowUser.h src/Cedar/Server.h src/Cedar/Session.h src/Cedar/SM.h src/Cedar/SMInner.h src/Cedar/SW.h src/Cedar/SWInner.h src/Cedar/UdpAccel.h src/Cedar/UT.h src/Cedar/VG.h src/Cedar/Virtual.h src/Cedar/VLan.h src/Cedar/VLanUnix.h src/Cedar/VLanWin32.h src/Cedar/WaterMark.h src/Cedar/WebUI.h src/Cedar/Win32Com.h src/Cedar/winpcap/bittypes.h src/Cedar/winpcap/bucket_lookup.h src/Cedar/winpcap/count_packets.h src/Cedar/winpcap/Devioctl.h src/Cedar/winpcap/Gnuc.h src/Cedar/winpcap/ip6_misc.h src/Cedar/winpcap/memory_t.h src/Cedar/winpcap/normal_lookup.h src/Cedar/winpcap/Ntddndis.h src/Cedar/winpcap/Ntddpack.h src/Cedar/winpcap/Packet32.h src/Cedar/winpcap/pcap.h src/Cedar/winpcap/pcap-bpf.h src/Cedar/winpcap/pcap-int.h src/Cedar/winpcap/pcap-stdinc.h src/Cedar/winpcap/pthread.h src/Cedar/winpcap/remote-ext.h src/Cedar/winpcap/sched.h src/Cedar/winpcap/semaphore.h src/Cedar/winpcap/tcp_session.h src/Cedar/winpcap/time_calls.h src/Cedar/winpcap/tme.h src/Cedar/winpcap/Win32-Extensions.h src/Cedar/WinUi.h src/Cedar/Wpc.h
--OBJECTS_MAYAQUA=tmp/objs/Mayaqua/Cfg.o tmp/objs/Mayaqua/Encrypt.o tmp/objs/Mayaqua/FileIO.o tmp/objs/Mayaqua/Internat.o tmp/objs/Mayaqua/Kernel.o tmp/objs/Mayaqua/Mayaqua.o tmp/objs/Mayaqua/Memory.o tmp/objs/Mayaqua/Microsoft.o tmp/objs/Mayaqua/Network.o tmp/objs/Mayaqua/Object.o tmp/objs/Mayaqua/OS.o tmp/objs/Mayaqua/Pack.o tmp/objs/Mayaqua/Secure.o tmp/objs/Mayaqua/Str.o tmp/objs/Mayaqua/Table.o tmp/objs/Mayaqua/TcpIp.o tmp/objs/Mayaqua/Tick64.o tmp/objs/Mayaqua/Tracking.o tmp/objs/Mayaqua/Unix.o tmp/objs/Mayaqua/Win32.o
--OBJECTS_CEDAR=tmp/objs/Cedar/Account.o tmp/objs/Cedar/Admin.o tmp/objs/Cedar/AzureClient.o tmp/objs/Cedar/AzureServer.o tmp/objs/Cedar/Bridge.o tmp/objs/Cedar/BridgeUnix.o tmp/objs/Cedar/BridgeWin32.o tmp/objs/Cedar/Cedar.o tmp/objs/Cedar/CedarPch.o tmp/objs/Cedar/Client.o tmp/objs/Cedar/CM.o tmp/objs/Cedar/Command.o tmp/objs/Cedar/Connection.o tmp/objs/Cedar/Console.o tmp/objs/Cedar/Database.o tmp/objs/Cedar/DDNS.o tmp/objs/Cedar/EM.o tmp/objs/Cedar/EtherLog.o tmp/objs/Cedar/Hub.o tmp/objs/Cedar/Interop_OpenVPN.o tmp/objs/Cedar/Interop_SSTP.o tmp/objs/Cedar/IPsec.o tmp/objs/Cedar/IPsec_EtherIP.o tmp/objs/Cedar/IPsec_IKE.o tmp/objs/Cedar/IPsec_IkePacket.o tmp/objs/Cedar/IPsec_IPC.o tmp/objs/Cedar/IPsec_L2TP.o tmp/objs/Cedar/IPsec_PPP.o tmp/objs/Cedar/IPsec_Win7.o tmp/objs/Cedar/Layer3.o tmp/objs/Cedar/Link.o tmp/objs/Cedar/Listener.o tmp/objs/Cedar/Logging.o tmp/objs/Cedar/Nat.o tmp/objs/Cedar/NativeStack.o tmp/objs/Cedar/NM.o tmp/objs/Cedar/NullLan.o tmp/objs/Cedar/Protocol.o tmp/objs/Cedar/Radius.o tmp/objs/Cedar/Remote.o tmp/objs/Cedar/Sam.o tmp/objs/Cedar/SecureInfo.o tmp/objs/Cedar/SecureNAT.o tmp/objs/Cedar/SeLowUser.o tmp/objs/Cedar/Server.o tmp/objs/Cedar/Session.o tmp/objs/Cedar/SM.o tmp/objs/Cedar/SW.o tmp/objs/Cedar/UdpAccel.o tmp/objs/Cedar/UT.o tmp/objs/Cedar/VG.o tmp/objs/Cedar/Virtual.o tmp/objs/Cedar/VLan.o tmp/objs/Cedar/VLanUnix.o tmp/objs/Cedar/VLanWin32.o tmp/objs/Cedar/WaterMark.o tmp/objs/Cedar/WebUI.o tmp/objs/Cedar/WinUi.o tmp/objs/Cedar/Wpc.o
--HAMCORE_FILES=src/bin/hamcore/authors.txt src/bin/hamcore/backup_dir_readme.txt src/bin/hamcore/empty.config src/bin/hamcore/empty_sevpnclient.config src/bin/hamcore/eula.txt src/bin/hamcore/install_src.dat src/bin/hamcore/lang.config src/bin/hamcore/languages.txt src/bin/hamcore/legal.txt src/bin/hamcore/openvpn_readme.pdf src/bin/hamcore/openvpn_readme.txt src/bin/hamcore/openvpn_sample.ovpn src/bin/hamcore/root_certs.dat src/bin/hamcore/SOURCES_OF_BINARY_FILES.TXT src/bin/hamcore/strtable_cn.stb src/bin/hamcore/strtable_en.stb src/bin/hamcore/strtable_ja.stb src/bin/hamcore/vpnweb_sample_cn.htm src/bin/hamcore/vpnweb_sample_en.htm src/bin/hamcore/vpnweb_sample_ja.htm src/bin/hamcore/warning_cn.txt src/bin/hamcore/warning_en.txt src/bin/hamcore/warning_ja.txt src/bin/hamcore/webui/cryptcom.cgi src/bin/hamcore/webui/edituser.cgi src/bin/hamcore/webui/error.cgi src/bin/hamcore/webui/hub.cgi src/bin/hamcore/webui/license.cgi src/bin/hamcore/webui/listener.cgi src/bin/hamcore/webui/localbridge.cgi src/bin/hamcore/webui/login.cgi src/bin/hamcore/webui/newhub.cgi src/bin/hamcore/webui/redirect.cgi src/bin/hamcore/webui/securenat.cgi src/bin/hamcore/webui/server.cgi src/bin/hamcore/webui/session.cgi src/bin/hamcore/webui/user.cgi src/bin/hamcore/webui/webui.css
-+HEADERS_MAYAQUA=src/Mayaqua/Cfg.h src/Mayaqua/cryptoki.h src/Mayaqua/Encrypt.h src/Mayaqua/FileIO.h src/Mayaqua/intelaes/iaesni.h src/Mayaqua/Internat.h src/Mayaqua/Kernel.h src/Mayaqua/Mayaqua.h src/Mayaqua/MayaType.h src/Mayaqua/Memory.h  src/Mayaqua/Network.h src/Mayaqua/Object.h src/Mayaqua/OS.h src/Mayaqua/Pack.h src/Mayaqua/pkcs11.h src/Mayaqua/pkcs11f.h src/Mayaqua/pkcs11t.h src/Mayaqua/Secure.h src/Mayaqua/Str.h src/Mayaqua/Table.h src/Mayaqua/TcpIp.h src/Mayaqua/Tick64.h src/Mayaqua/Tracking.h src/Mayaqua/TunTap.h src/Mayaqua/Unix.h src/Mayaqua/zlib/zconf.h src/Mayaqua/zlib/zlib.h
-+HEADERS_CEDAR=src/Cedar/Account.h src/Cedar/Admin.h src/Cedar/AzureClient.h src/Cedar/AzureServer.h src/Cedar/Bridge.h src/Cedar/BridgeUnix.h src/Cedar/Cedar.h src/Cedar/CedarPch.h src/Cedar/CedarType.h src/Cedar/Client.h src/Cedar/Command.h src/Cedar/Connection.h src/Cedar/Console.h src/Cedar/Database.h src/Cedar/DDNS.h src/Cedar/EtherLog.h src/Cedar/Hub.h src/Cedar/Interop_OpenVPN.h src/Cedar/Interop_SSTP.h src/Cedar/IPsec.h src/Cedar/IPsec_EtherIP.h src/Cedar/IPsec_IKE.h src/Cedar/IPsec_IkePacket.h src/Cedar/IPsec_IPC.h src/Cedar/IPsec_L2TP.h src/Cedar/IPsec_PPP.h src/Cedar/IPsec_Win7.h src/Cedar/IPsec_Win7Inner.h src/Cedar/Layer3.h src/Cedar/Link.h src/Cedar/Listener.h src/Cedar/Logging.h src/Cedar/Nat.h src/Cedar/NativeStack.h src/Cedar/netcfgn.h src/Cedar/netcfgx.h src/Cedar/NullLan.h src/Cedar/Protocol.h src/Cedar/Radius.h src/Cedar/Remote.h src/Cedar/Sam.h src/Cedar/SecureInfo.h src/Cedar/SecureNAT.h src/Cedar/SeLowUser.h src/Cedar/Server.h src/Cedar/Session.h src/Cedar/UdpAccel.h src/Cedar/VG.h src/Cedar/Virtual.h src/Cedar/VLan.h src/Cedar/VLanUnix.h src/Cedar/WaterMark.h src/Cedar/winpcap/bittypes.h src/Cedar/winpcap/bucket_lookup.h src/Cedar/winpcap/count_packets.h src/Cedar/winpcap/Devioctl.h src/Cedar/winpcap/Gnuc.h src/Cedar/winpcap/ip6_misc.h src/Cedar/winpcap/memory_t.h src/Cedar/winpcap/normal_lookup.h src/Cedar/winpcap/Ntddndis.h src/Cedar/winpcap/Ntddpack.h src/Cedar/winpcap/Packet32.h src/Cedar/winpcap/pcap.h src/Cedar/winpcap/pcap-bpf.h src/Cedar/winpcap/pcap-int.h src/Cedar/winpcap/pcap-stdinc.h src/Cedar/winpcap/pthread.h src/Cedar/winpcap/remote-ext.h src/Cedar/winpcap/sched.h src/Cedar/winpcap/semaphore.h src/Cedar/winpcap/tcp_session.h src/Cedar/winpcap/time_calls.h src/Cedar/winpcap/tme.h src/Cedar/winpcap/Win32-Extensions.h src/Cedar/WinUi.h src/Cedar/Wpc.h
-+OBJECTS_MAYAQUA=tmp/objs/Mayaqua/Cfg.o tmp/objs/Mayaqua/Encrypt.o tmp/objs/Mayaqua/FileIO.o tmp/objs/Mayaqua/Internat.o tmp/objs/Mayaqua/Kernel.o tmp/objs/Mayaqua/Mayaqua.o tmp/objs/Mayaqua/Memory.o tmp/objs/Mayaqua/Network.o tmp/objs/Mayaqua/Object.o tmp/objs/Mayaqua/OS.o tmp/objs/Mayaqua/Pack.o tmp/objs/Mayaqua/Secure.o tmp/objs/Mayaqua/Str.o tmp/objs/Mayaqua/Table.o tmp/objs/Mayaqua/TcpIp.o tmp/objs/Mayaqua/Tick64.o tmp/objs/Mayaqua/Tracking.o tmp/objs/Mayaqua/Unix.o
-+OBJECTS_CEDAR=tmp/objs/Cedar/Account.o tmp/objs/Cedar/Admin.o tmp/objs/Cedar/AzureClient.o tmp/objs/Cedar/AzureServer.o tmp/objs/Cedar/Bridge.o tmp/objs/Cedar/BridgeUnix.o tmp/objs/Cedar/Cedar.o tmp/objs/Cedar/CedarPch.o tmp/objs/Cedar/Client.o tmp/objs/Cedar/Command.o tmp/objs/Cedar/Connection.o tmp/objs/Cedar/Console.o tmp/objs/Cedar/Database.o tmp/objs/Cedar/DDNS.o tmp/objs/Cedar/EtherLog.o tmp/objs/Cedar/Hub.o tmp/objs/Cedar/Interop_OpenVPN.o tmp/objs/Cedar/Interop_SSTP.o tmp/objs/Cedar/IPsec.o tmp/objs/Cedar/IPsec_EtherIP.o tmp/objs/Cedar/IPsec_IKE.o tmp/objs/Cedar/IPsec_IkePacket.o tmp/objs/Cedar/IPsec_IPC.o tmp/objs/Cedar/IPsec_L2TP.o tmp/objs/Cedar/IPsec_PPP.o tmp/objs/Cedar/IPsec_Win7.o tmp/objs/Cedar/Layer3.o tmp/objs/Cedar/Link.o tmp/objs/Cedar/Listener.o tmp/objs/Cedar/Logging.o tmp/objs/Cedar/Nat.o tmp/objs/Cedar/NativeStack.o tmp/objs/Cedar/NullLan.o tmp/objs/Cedar/Protocol.o tmp/objs/Cedar/Radius.o tmp/objs/Cedar/Remote.o tmp/objs/Cedar/Sam.o tmp/objs/Cedar/SecureInfo.o tmp/objs/Cedar/SecureNAT.o tmp/objs/Cedar/SeLowUser.o tmp/objs/Cedar/Server.o tmp/objs/Cedar/Session.o tmp/objs/Cedar/UdpAccel.o tmp/objs/Cedar/VG.o tmp/objs/Cedar/Virtual.o tmp/objs/Cedar/VLan.o tmp/objs/Cedar/VLanUnix.o tmp/objs/Cedar/WaterMark.o tmp/objs/Cedar/Wpc.o
-+HAMCORE_FILES=src/bin/hamcore/empty.config src/bin/hamcore/empty_sevpnclient.config src/bin/hamcore/legal.txt src/bin/hamcore/openvpn_sample.ovpn src/bin/hamcore/root_certs.dat src/bin/hamcore/strtable_en.stb
+ 		// NoLinuxArpFilter
+ 		s->NoLinuxArpFilter = CfgGetBool(f, "NoLinuxArpFilter");
+@@ -6323,8 +6323,8 @@ void SiWriteServerCfg(FOLDER *f, SERVER *s)
+ 		CfgAddInt64(f, "AutoDeleteCheckDiskFreeSpaceMin", s->Eraser->MinFreeSpace);
+ 		CfgAddInt(f, "AutoDeleteCheckIntervalSecs", GetEraserCheckInterval());
  
- # Build Action
- default:	build
-@@ -91,9 +91,6 @@
- tmp/objs/Mayaqua/Memory.o: src/Mayaqua/Memory.c $(HEADERS_MAYAQUA)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Memory.c -o tmp/objs/Mayaqua/Memory.o
+-		// WebUI
+-		CfgAddBool(f, "UseWebUI", s->UseWebUI);
++//		// WebUI
++//		CfgAddBool(f, "UseWebUI", s->UseWebUI);
  
--tmp/objs/Mayaqua/Microsoft.o: src/Mayaqua/Microsoft.c $(HEADERS_MAYAQUA)
--	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Microsoft.c -o tmp/objs/Mayaqua/Microsoft.o
--
- tmp/objs/Mayaqua/Network.o: src/Mayaqua/Network.c $(HEADERS_MAYAQUA)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Network.c -o tmp/objs/Mayaqua/Network.o
  
-@@ -127,9 +124,6 @@
- tmp/objs/Mayaqua/Unix.o: src/Mayaqua/Unix.c $(HEADERS_MAYAQUA)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Unix.c -o tmp/objs/Mayaqua/Unix.o
+ 		// NoLinuxArpFilter
+@@ -6378,8 +6378,8 @@ void SiWriteServerCfg(FOLDER *f, SERVER *s)
+ 			CfgAddStr(f, "OpenVPN_UdpPortList", config.OpenVPNPortList);
+ 		}
  
--tmp/objs/Mayaqua/Win32.o: src/Mayaqua/Win32.c $(HEADERS_MAYAQUA)
--	$(CC) $(OPTIONS_COMPILE) -c src/Mayaqua/Win32.c -o tmp/objs/Mayaqua/Win32.o
--
- # Cedar Communication Module Code
- tmp/objs/Cedar/Account.o: src/Cedar/Account.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Account.c -o tmp/objs/Cedar/Account.o
-@@ -149,9 +143,6 @@
- tmp/objs/Cedar/BridgeUnix.o: src/Cedar/BridgeUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeUnix.c -o tmp/objs/Cedar/BridgeUnix.o
+-		// WebTimePage
+-		CfgAddBool(f, "UseWebTimePage", s->UseWebTimePage);
++//		// WebTimePage
++//		CfgAddBool(f, "UseWebTimePage", s->UseWebTimePage);
  
--tmp/objs/Cedar/BridgeWin32.o: src/Cedar/BridgeWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/BridgeWin32.c -o tmp/objs/Cedar/BridgeWin32.o
--
- tmp/objs/Cedar/Cedar.o: src/Cedar/Cedar.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Cedar.c -o tmp/objs/Cedar/Cedar.o
+ 		// Debug log
+ 		CfgAddBool(f, "SaveDebugLog", s->SaveDebugLog);
+diff --git a/src/Cedar/Server.h b/src/Cedar/Server.h
+index faf9b63..365958f 100644
+--- a/src/Cedar/Server.h
++++ b/src/Cedar/Server.h
+@@ -279,10 +279,10 @@ struct SERVER
+ 	UCHAR MyRandomKey[SHA1_SIZE];		// Their own random key
+ 	bool FarmControllerInited;			// Initialization of farm controller has been completed
+ 	bool DisableDeadLockCheck;			// Disable the deadlock check
+-	bool UseWebUI;						// Use the WebUI
++//	bool UseWebUI;						// Use the WebUI
+ 	bool SaveDebugLog;					// Save the debug log
+ 	bool NoSendSignature;				// Let the client not to send a signature
+-	bool UseWebTimePage;				// Use WebTimePage
++//	bool UseWebTimePage;				// Use WebTimePage
+ 	bool NoLinuxArpFilter;				// Not to set arp_filter in Linux
+ 	bool NoHighPriorityProcess;			// Not to raise the priority of the process
+ 	bool NoDebugDump;					// Not to output the debug dump
+diff --git a/src/Cedar/VG.h b/src/Cedar/VG.h
+index 9595eee..eba559e 100644
+--- a/src/Cedar/VG.h
++++ b/src/Cedar/VG.h
+@@ -117,9 +117,9 @@
+ #define	VG_HUBNAME			"VPNGATE"
  
-@@ -161,9 +152,6 @@
- tmp/objs/Cedar/Client.o: src/Cedar/Client.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Client.c -o tmp/objs/Cedar/Client.o
  
--tmp/objs/Cedar/CM.o: src/Cedar/CM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/CM.c -o tmp/objs/Cedar/CM.o
--
- tmp/objs/Cedar/Command.o: src/Cedar/Command.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Command.c -o tmp/objs/Cedar/Command.o
+-bool InitVg();
+-void FreeVg();
+-void VgUseStaticLink();
++//bool InitVg();
++//void FreeVg();
++//void VgUseStaticLink();
  
-@@ -179,9 +167,6 @@
- tmp/objs/Cedar/DDNS.o: src/Cedar/DDNS.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/DDNS.c -o tmp/objs/Cedar/DDNS.o
+ #endif	// VG_H
  
--tmp/objs/Cedar/EM.o: src/Cedar/EM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/EM.c -o tmp/objs/Cedar/EM.o
--
- tmp/objs/Cedar/EtherLog.o: src/Cedar/EtherLog.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/EtherLog.c -o tmp/objs/Cedar/EtherLog.o
- 
-@@ -236,9 +221,6 @@
- tmp/objs/Cedar/NativeStack.o: src/Cedar/NativeStack.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NativeStack.c -o tmp/objs/Cedar/NativeStack.o
- 
--tmp/objs/Cedar/NM.o: src/Cedar/NM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NM.c -o tmp/objs/Cedar/NM.o
--
- tmp/objs/Cedar/NullLan.o: src/Cedar/NullLan.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/NullLan.c -o tmp/objs/Cedar/NullLan.o
- 
-@@ -269,18 +251,9 @@
- tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Session.c -o tmp/objs/Cedar/Session.o
- 
--tmp/objs/Cedar/SM.o: src/Cedar/SM.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SM.c -o tmp/objs/Cedar/SM.o
--
--tmp/objs/Cedar/SW.o: src/Cedar/SW.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/SW.c -o tmp/objs/Cedar/SW.o
--
- tmp/objs/Cedar/UdpAccel.o: src/Cedar/UdpAccel.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UdpAccel.c -o tmp/objs/Cedar/UdpAccel.o
- 
--tmp/objs/Cedar/UT.o: src/Cedar/UT.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UT.c -o tmp/objs/Cedar/UT.o
--
- tmp/objs/Cedar/VG.o: src/Cedar/VG.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VG.c -o tmp/objs/Cedar/VG.o
- 
-@@ -293,18 +266,9 @@
- tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanUnix.c -o tmp/objs/Cedar/VLanUnix.o
- 
--tmp/objs/Cedar/VLanWin32.o: src/Cedar/VLanWin32.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VLanWin32.c -o tmp/objs/Cedar/VLanWin32.o
--
- tmp/objs/Cedar/WaterMark.o: src/Cedar/WaterMark.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WaterMark.c -o tmp/objs/Cedar/WaterMark.o
- 
--tmp/objs/Cedar/WebUI.o: src/Cedar/WebUI.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WebUI.c -o tmp/objs/Cedar/WebUI.o
--
--tmp/objs/Cedar/WinUi.o: src/Cedar/WinUi.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
--	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WinUi.c -o tmp/objs/Cedar/WinUi.o
--
- tmp/objs/Cedar/Wpc.o: src/Cedar/Wpc.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
- 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Wpc.c -o tmp/objs/Cedar/Wpc.o
- 
-diff -urN a/src/Mayaqua/Internat.c b/src/Mayaqua/Internat.c
---- a/src/Mayaqua/Internat.c	2016-03-10 17:37:31.487312084 +0000
-+++ b/src/Mayaqua/Internat.c	2016-03-10 17:37:11.542312115 +0000
-@@ -925,37 +925,37 @@
+diff --git a/src/Mayaqua/FileIO.c b/src/Mayaqua/FileIO.c
+index 49fbec9..5e728fb 100644
+--- a/src/Mayaqua/FileIO.c
++++ b/src/Mayaqua/FileIO.c
+@@ -1315,7 +1315,8 @@ void BuildHamcore(char *dst_filename, char *src_dir, bool unix_only)
+ 					c->Size = b->Size;
+ 					tmp_size = CalcCompress(c->Size);
+ 					tmp = Malloc(tmp_size);
+-					c->SizeCompressed = Compress(tmp, tmp_size, b->Buf, b->Size);
++//					c->SizeCompressed = Compress(tmp, tmp_size, b->Buf, b->Size);
++					c->SizeCompressed = CompressEx(tmp, tmp_size, b->Buf, b->Size, 9);
+ 					c->Buffer = tmp;
+ 					Insert(o, c);
+ 					Print("%s: %u -> %u\n", s, c->Size, c->SizeCompressed);
+diff --git a/src/Mayaqua/Internat.c b/src/Mayaqua/Internat.c
+index 73e5a52..41ea987 100644
+--- a/src/Mayaqua/Internat.c
++++ b/src/Mayaqua/Internat.c
+@@ -924,32 +924,32 @@ USHORT *WideToUtf16(wchar_t *str)
  void InitInternational()
  {
  #ifdef	OS_UNIX
 -	void *d;
--
--	if (iconv_lock != NULL)
--	{
--		return;
--	}
--
++//	void *d;
+ 
+ 	if (iconv_lock != NULL)
+ 	{
+ 		return;
+ 	}
+ 
 -	GetCurrentCharSet(charset, sizeof(charset));
 -	d = IconvWideToStrInternal();
 -	if (d == (void *)-1)
 -	{
--#ifdef	UNIX_MACOS
 -		StrCpy(charset, sizeof(charset), "utf-8");
--#else	// UNIX_MACOS
--//		StrCpy(charset, sizeof(charset), "EUCJP");
--		StrCpy(charset, sizeof(charset), "UTF-8");
--#endif	// UNIX_MACOS
 -		d = IconvWideToStrInternal();
 -		if (d == (void *)-1)
 -		{
@@ -306,23 +278,11 @@ diff -urN a/src/Mayaqua/Internat.c b/src/Mayaqua/Internat.c
 -	{
 -		IconvFreeInternal(d);
 -	}
-+//	void *d;
-+//
-+//	if (iconv_lock != NULL)
-+//	{
-+//		return;
-+//	}
-+//
 +//	GetCurrentCharSet(charset, sizeof(charset));
 +//	d = IconvWideToStrInternal();
 +//	if (d == (void *)-1)
 +//	{
-+//#ifdef	UNIX_MACOS
 +//		StrCpy(charset, sizeof(charset), "utf-8");
-+//#else	// UNIX_MACOS
-+////		StrCpy(charset, sizeof(charset), "EUCJP");
-+//		StrCpy(charset, sizeof(charset), "UTF-8");
-+//#endif	// UNIX_MACOS
 +//		d = IconvWideToStrInternal();
 +//		if (d == (void *)-1)
 +//		{
@@ -340,7 +300,7 @@ diff -urN a/src/Mayaqua/Internat.c b/src/Mayaqua/Internat.c
  
  	iconv_lock = NewLockMain();
  
-@@ -1126,12 +1126,12 @@
+@@ -1120,12 +1120,12 @@ void *IconvStrToWideInternal()
  	return (void *)iconv_open(IsBigEndian() ? "UTF-16BE" : "UTF-16LE", charset);
  }
  
@@ -359,10 +319,113 @@ diff -urN a/src/Mayaqua/Internat.c b/src/Mayaqua/Internat.c
  
  void *IconvWideToStr()
  {
-diff -urN a/src/Mayaqua/Internat.h b/src/Mayaqua/Internat.h
---- a/src/Mayaqua/Internat.h	2016-03-06 13:08:36.000000000 +0000
-+++ b/src/Mayaqua/Internat.h	2016-03-10 16:57:13.885315473 +0000
-@@ -245,7 +245,7 @@
+@@ -1158,49 +1158,49 @@ int IconvFree(void *d)
+ 	return 0;
+ }
+ 
+-// Get the character set that is currently used from the environment variable
+-void GetCurrentCharSet(char *name, UINT size)
+-{
+-	char tmp[MAX_SIZE];
+-	TOKEN_LIST *t;
+-	// Validate arguments
+-	if (name == NULL)
+-	{
+-		return;
+-	}
+-
+-	Zero(tmp, sizeof(tmp));
+-	if (GetEnv("LANG", tmp, sizeof(tmp)) == false || IsEmptyStr(tmp))
+-	{
+-		Zero(tmp, sizeof(tmp));
+-		if (GetEnv("LOCATION", tmp, sizeof(tmp)) == false || IsEmptyStr(tmp))
+-		{
+-			StrCpy(tmp, sizeof(tmp), "C");
+-		}
+-	}
+-
+-	Trim(tmp);
+-
+-	t = ParseToken(tmp, ".");
+-	if (t->NumTokens >= 2)
+-	{
+-		StrCpy(name, size, t->Token[1]);
+-	}
+-	else
+-	{
+-		if (t->NumTokens == 1)
+-		{
+-			StrCpy(name, size, t->Token[0]);
+-		}
+-		else
+-		{
+-			StrCpy(name, size, "UTF-8");
+-		}
+-	}
+-	FreeToken(t);
+-
+-	StrUpper(name);
+-}
++//// Get the character set that is currently used from the environment variable
++//void GetCurrentCharSet(char *name, UINT size)
++//{
++//	char tmp[MAX_SIZE];
++//	TOKEN_LIST *t;
++//	// Validate arguments
++//	if (name == NULL)
++//	{
++//		return;
++//	}
++//
++//	Zero(tmp, sizeof(tmp));
++//	if (GetEnv("LANG", tmp, sizeof(tmp)) == false || IsEmptyStr(tmp))
++//	{
++//		Zero(tmp, sizeof(tmp));
++//		if (GetEnv("LOCATION", tmp, sizeof(tmp)) == false || IsEmptyStr(tmp))
++//		{
++//			StrCpy(tmp, sizeof(tmp), "C");
++//		}
++//	}
++//
++//	Trim(tmp);
++//
++//	t = ParseToken(tmp, ".");
++//	if (t->NumTokens >= 2)
++//	{
++//		StrCpy(name, size, t->Token[1]);
++//	}
++//	else
++//	{
++//		if (t->NumTokens == 1)
++//		{
++//			StrCpy(name, size, t->Token[0]);
++//		}
++//		else
++//		{
++//			StrCpy(name, size, "UTF-8");
++//		}
++//	}
++//	FreeToken(t);
++//
++//	StrUpper(name);
++//}
+ 
+ #endif	// OS_UNIX
+ 
+diff --git a/src/Mayaqua/Internat.h b/src/Mayaqua/Internat.h
+index 4f2383e..98357ed 100644
+--- a/src/Mayaqua/Internat.h
++++ b/src/Mayaqua/Internat.h
+@@ -235,7 +235,7 @@ bool UniInChar(wchar_t *string, wchar_t c);
+ UNI_TOKEN_LIST *UniGetLines(wchar_t *str);
+ 
+ #ifdef	OS_UNIX
+-void GetCurrentCharSet(char *name, UINT size);
++//void GetCurrentCharSet(char *name, UINT size);
+ UINT UnixCalcStrToUni(char *str);
+ UINT UnixStrToUni(wchar_t *s, UINT size, char *str);
+ UINT UnixCalcUniToStr(wchar_t *s);
+@@ -245,7 +245,7 @@ void *IconvStrToWide();
  int IconvFree(void *d);
  void *IconvWideToStrInternal();
  void *IconvStrToWideInternal();
@@ -371,22 +434,53 @@ diff -urN a/src/Mayaqua/Internat.h b/src/Mayaqua/Internat.h
  #endif	// OS_UNIX
  
  #endif	// INTERNAT_H
-diff -urN a/src/Mayaqua/Mayaqua.h b/src/Mayaqua/Mayaqua.h
---- a/src/Mayaqua/Mayaqua.h	2016-03-06 13:08:36.000000000 +0000
-+++ b/src/Mayaqua/Mayaqua.h	2016-03-10 16:55:10.015315650 +0000
-@@ -388,7 +388,7 @@
- #include <Mayaqua/OS.h>
+diff --git a/src/Mayaqua/Kernel.c b/src/Mayaqua/Kernel.c
+index 94c2a62..d8eacfb 100644
+--- a/src/Mayaqua/Kernel.c
++++ b/src/Mayaqua/Kernel.c
+@@ -1378,10 +1378,10 @@ void GetTimeStrEx(wchar_t *str, UINT size, SYSTEMTIME *st, LOCALE *locale)
+ 		return;
+ 	}
  
- // Code for Microsoft Windows
--#include <Mayaqua/Microsoft.h>
-+//#include <Mayaqua/Microsoft.h>
+-	if (_GETLANG() == SE_LANG_JAPANESE || _GETLANG() == SE_LANG_CHINESE_ZH)
+-	{
+-		tag = L"%2u%s%2u%s%2u%s";
+-	}
++//	if (_GETLANG() == SE_LANG_JAPANESE || _GETLANG() == SE_LANG_CHINESE_ZH)
++//	{
++//		tag = L"%2u%s%2u%s%2u%s";
++//	}
  
+ 	locale = (locale != NULL ? locale : &current_locale);
+ 	UniFormat(str, size,
+@@ -1401,10 +1401,10 @@ void GetDateStrEx(wchar_t *str, UINT size, SYSTEMTIME *st, LOCALE *locale)
+ 		return;
+ 	}
  
- // Global variables
-diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
---- a/src/Mayaqua/Table.c	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Mayaqua/Table.c	2016-03-10 17:42:37.341311656 +0000
-@@ -131,10 +131,10 @@
+-	if (_GETLANG() == SE_LANG_JAPANESE || _GETLANG() == SE_LANG_CHINESE_ZH)
+-	{
+-		tag = L"%4u%s%2u%s%2u%s(%s)";
+-	}
++//	if (_GETLANG() == SE_LANG_JAPANESE || _GETLANG() == SE_LANG_CHINESE_ZH)
++//	{
++//		tag = L"%4u%s%2u%s%2u%s(%s)";
++//	}
+ 
+ 	locale = (locale != NULL ? locale : &current_locale);
+ 	UniFormat(str, size,
+diff --git a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
+index d306059..05e9721 100644
+--- a/src/Mayaqua/Table.c
++++ b/src/Mayaqua/Table.c
+@@ -125,16 +125,16 @@
+ // List of TABLE
+ static LIST *TableList = NULL;
+ static wchar_t old_table_name[MAX_SIZE] = {0};		// Old table name
+-static LANGLIST current_lang = {0};
+-static LANGLIST current_os_lang = {0};
++//static LANGLIST current_lang = {0};
++//static LANGLIST current_os_lang = {0};
+ 
  // Initialization of string table routine
  void InitTable()
  {
@@ -401,12 +495,44 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
  	char table_name[MAX_SIZE];
  	if (MayaquaIsMinimalMode())
  	{
-@@ -142,510 +142,513 @@
+@@ -142,510 +142,513 @@ void InitTable()
  		return;
  	}
  
 -	o = LoadLangList();
 -	if (o == NULL)
+-	{
+-LABEL_FATAL_ERROR:
+-		Alert("Fatal Error: The file \"hamcore.se2\" is missing or broken.\r\nPlease check hamcore.se2.\r\n\r\n(First, reboot the computer. If this problem occurs again, please reinstall VPN software files.)", NULL);
+-		exit(-1);
+-		return;
+-	}
+-
+-	// Read the lang.config
+-	if (LoadLangConfigCurrentDir(tmp, sizeof(tmp)))
+-	{
+-		e = GetBestLangByName(o, tmp);
+-	}
+-
+-	os_lang = GetBestLangForCurrentEnvironment(o);
+-
+-	if (e == NULL)
+-	{
+-		e = os_lang;
+-	}
+-
+-	if (e == NULL)
+-	{
+-		goto LABEL_FATAL_ERROR;
+-	}
+-
+-	SaveLangConfigCurrentDir(e->Name);
+-
+-	Copy(&current_lang, e, sizeof(LANGLIST));
+-	Copy(&current_os_lang, os_lang, sizeof(LANGLIST));
+-
+-	current_lang.LangList = current_lang.LcidList = NULL;
+-	current_os_lang.LangList = current_os_lang.LcidList = NULL;
 +//	o = LoadLangList();
 +//	if (o == NULL)
 +//	{
@@ -441,48 +567,13 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
 +//
 +//	current_lang.LangList = current_lang.LcidList = NULL;
 +//	current_os_lang.LangList = current_os_lang.LcidList = NULL;
-+//
-+//	// Read the corresponding string table
+ 
+ 	// Read the corresponding string table
+-	Format(table_name, sizeof(table_name), "|strtable_%s.stb", current_lang.Name);
 +//	Format(table_name, sizeof(table_name), "|strtable_%s.stb", current_lang.Name);
 +	Format(table_name, sizeof(table_name), "|strtable_en.stb");
-+	if (LoadTable(table_name) == false)
+ 	if (LoadTable(table_name) == false)
  	{
--LABEL_FATAL_ERROR:
- 		Alert("Fatal Error: The file \"hamcore.se2\" is missing or broken.\r\nPlease check hamcore.se2.\r\n\r\n(First, reboot the computer. If this problem occurs again, please reinstall VPN software files.)", NULL);
- 		exit(-1);
--		return;
--	}
--
--	// Read the lang.config
--	if (LoadLangConfigCurrentDir(tmp, sizeof(tmp)))
--	{
--		e = GetBestLangByName(o, tmp);
--	}
--
--	os_lang = GetBestLangForCurrentEnvironment(o);
--
--	if (e == NULL)
--	{
--		e = os_lang;
--	}
--
--	if (e == NULL)
--	{
--		goto LABEL_FATAL_ERROR;
--	}
--
--	SaveLangConfigCurrentDir(e->Name);
--
--	Copy(&current_lang, e, sizeof(LANGLIST));
--	Copy(&current_os_lang, os_lang, sizeof(LANGLIST));
--
--	current_lang.LangList = current_lang.LcidList = NULL;
--	current_os_lang.LangList = current_os_lang.LcidList = NULL;
--
--	// Read the corresponding string table
--	Format(table_name, sizeof(table_name), "|strtable_%s.stb", current_lang.Name);
--	if (LoadTable(table_name) == false)
--	{
 -		goto LABEL_FATAL_ERROR;
 -	}
 -
@@ -496,8 +587,7 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
 -	if (e == NULL)
 -	{
 -		return;
-+//		goto LABEL_FATAL_ERROR;
- 	}
+-	}
 -
 -	Copy(e, &current_os_lang, sizeof(LANGLIST));
 -}
@@ -536,10 +626,8 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
 -	GetCurrentLang(&e);
 -
 -	return e.Id;
-+//
-+//	FreeLangList(o);
- }
- 
+-}
+-
 -// Write to the lang.config file in the current directory
 -bool SaveLangConfigCurrentDir(char *str)
 -{
@@ -855,11 +943,15 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
 -		ReleaseIntList(e->LcidList);
 -
 -		Free(e);
--	}
--
++//		goto LABEL_FATAL_ERROR;
++		Alert("Fatal Error: The file \"hamcore.se2\" is missing or broken.\r\nPlease check hamcore.se2.\r\n\r\n(First, reboot the computer. If this problem occurs again, please reinstall VPN software files.)", NULL);
++		exit(-1);
+ 	}
+ 
 -	ReleaseList(o);
--}
--
++//	FreeLangList(o);
+ }
+ 
 -// Read the language list
 -LIST *LoadLangList()
 -{
@@ -1413,7 +1505,7 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
  
  // Get an error string in Unicode
  wchar_t *GetUniErrorStr(UINT err)
-@@ -1177,204 +1180,204 @@
+@@ -1177,204 +1180,204 @@ bool LoadTableFromBuf(BUF *b)
  	return true;
  }
  
@@ -1816,7 +1908,7 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
  
  // Read the string table
  bool LoadTableMain(wchar_t *filename)
-@@ -1414,22 +1417,22 @@
+@@ -1414,22 +1417,22 @@ bool LoadTableMain(wchar_t *filename)
  
  	Hash(hash, b->Buf, b->Size, false);
  
@@ -1849,10 +1941,96 @@ diff -urN a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
  
  	FreeBuf(b);
  
-diff -urN a/src/Mayaqua/Table.h b/src/Mayaqua/Table.h
---- a/src/Mayaqua/Table.h	2016-03-06 13:08:37.000000000 +0000
-+++ b/src/Mayaqua/Table.h	2016-03-10 16:56:08.073315569 +0000
-@@ -181,9 +181,9 @@
+diff --git a/src/Mayaqua/Table.h b/src/Mayaqua/Table.h
+index fa7e6f8..f0f23d0 100644
+--- a/src/Mayaqua/Table.h
++++ b/src/Mayaqua/Table.h
+@@ -114,16 +114,16 @@
+ #ifndef	TABLE_H
+ #define	TABLE_H
+ 
+-#define	UNICODE_CACHE_FILE		L".unicode_cache_%s.dat"
+-
+-#define	LANGLIST_FILENAME		"|languages.txt"
+-#define	LANG_CONFIG_FILENAME	L"@lang.config"
+-#define	LANG_CONFIG_TEMPLETE	"|lang.config"
+-
+-// Language constant
+-#define SE_LANG_JAPANESE			0	// Japanese
+-#define SE_LANG_ENGLISH				1	// English
+-#define SE_LANG_CHINESE_ZH			2	// Simplified Chinese
++//#define	UNICODE_CACHE_FILE		L".unicode_cache_%s.dat"
++//
++//#define	LANGLIST_FILENAME		"|languages.txt"
++//#define	LANG_CONFIG_FILENAME	L"@lang.config"
++//#define	LANG_CONFIG_TEMPLETE	"|lang.config"
++//
++//// Language constant
++//#define SE_LANG_JAPANESE			0	// Japanese
++//#define SE_LANG_ENGLISH				1	// English
++//#define SE_LANG_CHINESE_ZH			2	// Simplified Chinese
+ 
+ 
+ // String table
+@@ -134,16 +134,16 @@ struct TABLE
+ 	wchar_t *unistr;
+ };
+ 
+-// Unicode cache structure
+-typedef struct UNICODE_CACHE
+-{
+-	char StrFileName[256];	// String file name
+-	UINT StrFileSize;		// String file size
+-	char MachineName[256];	// Machine name
+-	UINT OsType;			// OS type
+-	UCHAR hash[MD5_SIZE];	// Hash
+-	UCHAR CharSet[64];		// Type of character code
+-} UNICODE_CACHE;
++//// Unicode cache structure
++//typedef struct UNICODE_CACHE
++//{
++//	char StrFileName[256];	// String file name
++//	UINT StrFileSize;		// String file size
++//	char MachineName[256];	// Machine name
++//	UINT OsType;			// OS type
++//	UCHAR hash[MD5_SIZE];	// Hash
++//	UCHAR CharSet[64];		// Type of character code
++//} UNICODE_CACHE;
+ 
+ // Macro
+ #define	_SS(name)		(GetTableStr((char *)(name)))
+@@ -151,18 +151,18 @@ typedef struct UNICODE_CACHE
+ #define	_II(name)		(GetTableInt((char *)(name)))
+ #define	_E(name)		(GetUniErrorStr((UINT)(name)))
+ #define	_EA(name)		(GetErrorStr((UINT)(name)))
+-#define _GETLANG()		(_II("LANG"))
+-
+-// Language list
+-struct LANGLIST
+-{
+-	UINT Id;						// Number
+-	char Name[32];					// Identifier
+-	wchar_t TitleEnglish[128];		// English notation
+-	wchar_t TitleLocal[128];		// Local notation
+-	LIST *LcidList;					// Windows LCID list
+-	LIST *LangList;					// UNIX LANG environment variable list
+-};
++//#define _GETLANG()		(_II("LANG"))
++//
++//// Language list
++//struct LANGLIST
++//{
++//	UINT Id;						// Number
++//	char Name[32];					// Identifier
++//	wchar_t TitleEnglish[128];		// English notation
++//	wchar_t TitleLocal[128];		// Local notation
++//	LIST *LcidList;					// Windows LCID list
++//	LIST *LangList;					// UNIX LANG environment variable list
++//};
+ 
+ 
+ // Function prototype
+@@ -181,30 +181,30 @@ wchar_t *GetTableUniStr(char *name);
  char *GetErrorStr(UINT err);
  wchar_t *GetUniErrorStr(UINT err);
  UINT GetTableInt(char *name);
@@ -1864,4 +2042,110 @@ diff -urN a/src/Mayaqua/Table.h b/src/Mayaqua/Table.h
 +//bool LoadUnicodeCache(wchar_t *strfilename, UINT strfilesize, UCHAR *hash);
  void InitTable();
  
- LIST *LoadLangList();
+-LIST *LoadLangList();
+-void FreeLangList(LIST *o);
+-
+-LANGLIST *GetBestLangByName(LIST *o, char *name);
+-LANGLIST *GetBestLangByLcid(LIST *o, UINT lcid);
+-LANGLIST *GetBestLangByLangStr(LIST *o, char *str);
+-LANGLIST *GetBestLangForCurrentEnvironment(LIST *o);
+-LANGLIST *GetLangById(LIST *o, UINT id);
+-
+-bool LoadLangConfig(wchar_t *filename, char *str, UINT str_size);
+-bool LoadLangConfigCurrentDir(char *str, UINT str_size);
+-bool SaveLangConfig(wchar_t *filename, char *str);
+-bool SaveLangConfigCurrentDir(char *str);
+-
+-void GetCurrentLang(LANGLIST *e);
+-UINT GetCurrentLangId();
+-
+-void GetCurrentOsLang(LANGLIST *e);
+-UINT GetCurrentOsLangId();
++//LIST *LoadLangList();
++//void FreeLangList(LIST *o);
++//
++//LANGLIST *GetBestLangByName(LIST *o, char *name);
++//LANGLIST *GetBestLangByLcid(LIST *o, UINT lcid);
++//LANGLIST *GetBestLangByLangStr(LIST *o, char *str);
++//LANGLIST *GetBestLangForCurrentEnvironment(LIST *o);
++//LANGLIST *GetLangById(LIST *o, UINT id);
++//
++//bool LoadLangConfig(wchar_t *filename, char *str, UINT str_size);
++//bool LoadLangConfigCurrentDir(char *str, UINT str_size);
++//bool SaveLangConfig(wchar_t *filename, char *str);
++//bool SaveLangConfigCurrentDir(char *str);
++//
++//void GetCurrentLang(LANGLIST *e);
++//UINT GetCurrentLangId();
++//
++//void GetCurrentOsLang(LANGLIST *e);
++//UINT GetCurrentOsLangId();
+ 
+ #endif	// TABLE_H
+ 
+diff --git a/src/makefiles/linux_32bit.mak b/src/makefiles/linux_32bit.mak
+index 159da16..05cee4b 100644
+--- a/src/makefiles/linux_32bit.mak
++++ b/src/makefiles/linux_32bit.mak
+@@ -49,10 +49,10 @@ endif
+ 
+ # Files
+ HEADERS_MAYAQUA=src/Mayaqua/Cfg.h src/Mayaqua/cryptoki.h src/Mayaqua/Encrypt.h src/Mayaqua/FileIO.h src/Mayaqua/intelaes/iaesni.h src/Mayaqua/Internat.h src/Mayaqua/Kernel.h src/Mayaqua/Mayaqua.h src/Mayaqua/MayaType.h src/Mayaqua/Memory.h src/Mayaqua/Network.h src/Mayaqua/Object.h src/Mayaqua/OS.h src/Mayaqua/Pack.h src/Mayaqua/pkcs11.h src/Mayaqua/pkcs11f.h src/Mayaqua/pkcs11t.h src/Mayaqua/Secure.h src/Mayaqua/Str.h src/Mayaqua/Table.h src/Mayaqua/TcpIp.h src/Mayaqua/Tick64.h src/Mayaqua/Tracking.h src/Mayaqua/TunTap.h src/Mayaqua/Unix.h src/Mayaqua/zlib/zconf.h src/Mayaqua/zlib/zlib.h
+-HEADERS_CEDAR=src/Cedar/Account.h src/Cedar/Admin.h src/Cedar/AzureClient.h src/Cedar/AzureServer.h src/Cedar/Bridge.h src/Cedar/BridgeUnix.h src/Cedar/Cedar.h src/Cedar/CedarPch.h src/Cedar/CedarType.h src/Cedar/Client.h src/Cedar/Command.h src/Cedar/Connection.h src/Cedar/Console.h src/Cedar/Database.h src/Cedar/DDNS.h src/Cedar/EtherLog.h src/Cedar/Hub.h src/Cedar/Interop_OpenVPN.h src/Cedar/Interop_SSTP.h src/Cedar/IPsec.h src/Cedar/IPsec_EtherIP.h src/Cedar/IPsec_IKE.h src/Cedar/IPsec_IkePacket.h src/Cedar/IPsec_IPC.h src/Cedar/IPsec_L2TP.h src/Cedar/IPsec_PPP.h src/Cedar/Layer3.h src/Cedar/Link.h src/Cedar/Listener.h src/Cedar/Logging.h src/Cedar/Nat.h src/Cedar/NativeStack.h src/Cedar/netcfgn.h src/Cedar/netcfgx.h src/Cedar/NullLan.h src/Cedar/Protocol.h src/Cedar/Radius.h src/Cedar/Remote.h src/Cedar/Sam.h src/Cedar/SecureInfo.h src/Cedar/SecureNAT.h src/Cedar/SeLowUser.h src/Cedar/Server.h src/Cedar/Session.h src/Cedar/UdpAccel.h src/Cedar/VG.h src/Cedar/Virtual.h src/Cedar/VLan.h src/Cedar/VLanUnix.h src/Cedar/WaterMark.h src/Cedar/WebUI.h src/Cedar/winpcap/bittypes.h src/Cedar/winpcap/bucket_lookup.h src/Cedar/winpcap/count_packets.h src/Cedar/winpcap/Devioctl.h src/Cedar/winpcap/Gnuc.h src/Cedar/winpcap/ip6_misc.h src/Cedar/winpcap/memory_t.h src/Cedar/winpcap/normal_lookup.h src/Cedar/winpcap/Ntddndis.h src/Cedar/winpcap/Ntddpack.h src/Cedar/winpcap/Packet32.h src/Cedar/winpcap/pcap.h src/Cedar/winpcap/pcap-bpf.h src/Cedar/winpcap/pcap-int.h src/Cedar/winpcap/pcap-stdinc.h src/Cedar/winpcap/pthread.h src/Cedar/winpcap/remote-ext.h src/Cedar/winpcap/sched.h src/Cedar/winpcap/semaphore.h src/Cedar/winpcap/tcp_session.h src/Cedar/winpcap/time_calls.h src/Cedar/winpcap/tme.h src/Cedar/winpcap/Win32-Extensions.h src/Cedar/Wpc.h
++HEADERS_CEDAR=src/Cedar/Account.h src/Cedar/Admin.h src/Cedar/AzureClient.h src/Cedar/AzureServer.h src/Cedar/Bridge.h src/Cedar/BridgeUnix.h src/Cedar/Cedar.h src/Cedar/CedarPch.h src/Cedar/CedarType.h src/Cedar/Client.h src/Cedar/Command.h src/Cedar/Connection.h src/Cedar/Console.h src/Cedar/Database.h src/Cedar/DDNS.h src/Cedar/EtherLog.h src/Cedar/Hub.h src/Cedar/Interop_OpenVPN.h src/Cedar/Interop_SSTP.h src/Cedar/IPsec.h src/Cedar/IPsec_EtherIP.h src/Cedar/IPsec_IKE.h src/Cedar/IPsec_IkePacket.h src/Cedar/IPsec_IPC.h src/Cedar/IPsec_L2TP.h src/Cedar/IPsec_PPP.h src/Cedar/Layer3.h src/Cedar/Link.h src/Cedar/Listener.h src/Cedar/Logging.h src/Cedar/Nat.h src/Cedar/NativeStack.h src/Cedar/netcfgn.h src/Cedar/netcfgx.h src/Cedar/NullLan.h src/Cedar/Protocol.h src/Cedar/Radius.h src/Cedar/Remote.h src/Cedar/Sam.h src/Cedar/SecureInfo.h src/Cedar/SecureNAT.h src/Cedar/SeLowUser.h src/Cedar/Server.h src/Cedar/Session.h src/Cedar/UdpAccel.h src/Cedar/VG.h src/Cedar/Virtual.h src/Cedar/VLan.h src/Cedar/VLanUnix.h src/Cedar/WaterMark.h src/Cedar/winpcap/bittypes.h src/Cedar/winpcap/bucket_lookup.h src/Cedar/winpcap/count_packets.h src/Cedar/winpcap/Devioctl.h src/Cedar/winpcap/Gnuc.h src/Cedar/winpcap/ip6_misc.h src/Cedar/winpcap/memory_t.h src/Cedar/winpcap/normal_lookup.h src/Cedar/winpcap/Ntddndis.h src/Cedar/winpcap/Ntddpack.h src/Cedar/winpcap/Packet32.h src/Cedar/winpcap/pcap.h src/Cedar/winpcap/pcap-bpf.h src/Cedar/winpcap/pcap-int.h src/Cedar/winpcap/pcap-stdinc.h src/Cedar/winpcap/pthread.h src/Cedar/winpcap/remote-ext.h src/Cedar/winpcap/sched.h src/Cedar/winpcap/semaphore.h src/Cedar/winpcap/tcp_session.h src/Cedar/winpcap/time_calls.h src/Cedar/winpcap/tme.h src/Cedar/winpcap/Win32-Extensions.h src/Cedar/Wpc.h
+ OBJECTS_MAYAQUA=tmp/objs/Mayaqua/Cfg.o tmp/objs/Mayaqua/Encrypt.o tmp/objs/Mayaqua/FileIO.o tmp/objs/Mayaqua/Internat.o tmp/objs/Mayaqua/Kernel.o tmp/objs/Mayaqua/Mayaqua.o tmp/objs/Mayaqua/Memory.o tmp/objs/Mayaqua/Network.o tmp/objs/Mayaqua/Object.o tmp/objs/Mayaqua/OS.o tmp/objs/Mayaqua/Pack.o tmp/objs/Mayaqua/Secure.o tmp/objs/Mayaqua/Str.o tmp/objs/Mayaqua/Table.o tmp/objs/Mayaqua/TcpIp.o tmp/objs/Mayaqua/Tick64.o tmp/objs/Mayaqua/Tracking.o tmp/objs/Mayaqua/Unix.o
+-OBJECTS_CEDAR=tmp/objs/Cedar/Account.o tmp/objs/Cedar/Admin.o tmp/objs/Cedar/AzureClient.o tmp/objs/Cedar/AzureServer.o tmp/objs/Cedar/Bridge.o tmp/objs/Cedar/BridgeUnix.o tmp/objs/Cedar/Cedar.o tmp/objs/Cedar/CedarPch.o tmp/objs/Cedar/Client.o tmp/objs/Cedar/Command.o tmp/objs/Cedar/Connection.o tmp/objs/Cedar/Console.o tmp/objs/Cedar/Database.o tmp/objs/Cedar/DDNS.o tmp/objs/Cedar/EtherLog.o tmp/objs/Cedar/Hub.o tmp/objs/Cedar/Interop_OpenVPN.o tmp/objs/Cedar/Interop_SSTP.o tmp/objs/Cedar/IPsec.o tmp/objs/Cedar/IPsec_EtherIP.o tmp/objs/Cedar/IPsec_IKE.o tmp/objs/Cedar/IPsec_IkePacket.o tmp/objs/Cedar/IPsec_IPC.o tmp/objs/Cedar/IPsec_L2TP.o tmp/objs/Cedar/IPsec_PPP.o tmp/objs/Cedar/Layer3.o tmp/objs/Cedar/Link.o tmp/objs/Cedar/Listener.o tmp/objs/Cedar/Logging.o tmp/objs/Cedar/Nat.o tmp/objs/Cedar/NativeStack.o tmp/objs/Cedar/NullLan.o tmp/objs/Cedar/Protocol.o tmp/objs/Cedar/Radius.o tmp/objs/Cedar/Remote.o tmp/objs/Cedar/Sam.o tmp/objs/Cedar/SecureInfo.o tmp/objs/Cedar/SecureNAT.o tmp/objs/Cedar/SeLowUser.o tmp/objs/Cedar/Server.o tmp/objs/Cedar/Session.o tmp/objs/Cedar/UdpAccel.o tmp/objs/Cedar/VG.o tmp/objs/Cedar/Virtual.o tmp/objs/Cedar/VLan.o tmp/objs/Cedar/VLanUnix.o tmp/objs/Cedar/WaterMark.o tmp/objs/Cedar/WebUI.o tmp/objs/Cedar/Wpc.o
+-HAMCORE_FILES=src/bin/hamcore/authors.txt src/bin/hamcore/backup_dir_readme.txt src/bin/hamcore/empty.config src/bin/hamcore/empty_sevpnclient.config src/bin/hamcore/eula.txt src/bin/hamcore/install_src.dat src/bin/hamcore/lang.config src/bin/hamcore/languages.txt src/bin/hamcore/legal.txt src/bin/hamcore/openvpn_readme.pdf src/bin/hamcore/openvpn_readme.txt src/bin/hamcore/openvpn_sample.ovpn src/bin/hamcore/root_certs.dat src/bin/hamcore/SOURCES_OF_BINARY_FILES.TXT src/bin/hamcore/strtable_cn.stb src/bin/hamcore/strtable_en.stb src/bin/hamcore/strtable_ja.stb src/bin/hamcore/vpnweb_sample_cn.htm src/bin/hamcore/vpnweb_sample_en.htm src/bin/hamcore/vpnweb_sample_ja.htm src/bin/hamcore/warning_cn.txt src/bin/hamcore/warning_en.txt src/bin/hamcore/warning_ja.txt src/bin/hamcore/webui/cryptcom.cgi src/bin/hamcore/webui/edituser.cgi src/bin/hamcore/webui/error.cgi src/bin/hamcore/webui/hub.cgi src/bin/hamcore/webui/license.cgi src/bin/hamcore/webui/listener.cgi src/bin/hamcore/webui/localbridge.cgi src/bin/hamcore/webui/login.cgi src/bin/hamcore/webui/newhub.cgi src/bin/hamcore/webui/redirect.cgi src/bin/hamcore/webui/securenat.cgi src/bin/hamcore/webui/server.cgi src/bin/hamcore/webui/session.cgi src/bin/hamcore/webui/user.cgi src/bin/hamcore/webui/webui.css
++OBJECTS_CEDAR=tmp/objs/Cedar/Account.o tmp/objs/Cedar/Admin.o tmp/objs/Cedar/AzureClient.o tmp/objs/Cedar/AzureServer.o tmp/objs/Cedar/Bridge.o tmp/objs/Cedar/BridgeUnix.o tmp/objs/Cedar/Cedar.o tmp/objs/Cedar/CedarPch.o tmp/objs/Cedar/Client.o tmp/objs/Cedar/Command.o tmp/objs/Cedar/Connection.o tmp/objs/Cedar/Console.o tmp/objs/Cedar/Database.o tmp/objs/Cedar/DDNS.o tmp/objs/Cedar/EtherLog.o tmp/objs/Cedar/Hub.o tmp/objs/Cedar/Interop_OpenVPN.o tmp/objs/Cedar/Interop_SSTP.o tmp/objs/Cedar/IPsec.o tmp/objs/Cedar/IPsec_EtherIP.o tmp/objs/Cedar/IPsec_IKE.o tmp/objs/Cedar/IPsec_IkePacket.o tmp/objs/Cedar/IPsec_IPC.o tmp/objs/Cedar/IPsec_L2TP.o tmp/objs/Cedar/IPsec_PPP.o tmp/objs/Cedar/Layer3.o tmp/objs/Cedar/Link.o tmp/objs/Cedar/Listener.o tmp/objs/Cedar/Logging.o tmp/objs/Cedar/Nat.o tmp/objs/Cedar/NativeStack.o tmp/objs/Cedar/NullLan.o tmp/objs/Cedar/Protocol.o tmp/objs/Cedar/Radius.o tmp/objs/Cedar/Remote.o tmp/objs/Cedar/Sam.o tmp/objs/Cedar/SecureInfo.o tmp/objs/Cedar/SecureNAT.o tmp/objs/Cedar/SeLowUser.o tmp/objs/Cedar/Server.o tmp/objs/Cedar/Session.o tmp/objs/Cedar/UdpAccel.o tmp/objs/Cedar/Virtual.o tmp/objs/Cedar/VLan.o tmp/objs/Cedar/VLanUnix.o tmp/objs/Cedar/WaterMark.o tmp/objs/Cedar/Wpc.o
++HAMCORE_FILES=src/bin/hamcore/legal.txt src/bin/hamcore/openvpn_sample.ovpn src/bin/hamcore/root_certs.dat src/bin/hamcore/strtable_en.stb
+ 
+ # Build Action
+ default:	build
+@@ -251,8 +251,8 @@ tmp/objs/Cedar/Session.o: src/Cedar/Session.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR
+ tmp/objs/Cedar/UdpAccel.o: src/Cedar/UdpAccel.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+ 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/UdpAccel.c -o tmp/objs/Cedar/UdpAccel.o
+ 
+-tmp/objs/Cedar/VG.o: src/Cedar/VG.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VG.c -o tmp/objs/Cedar/VG.o
++#tmp/objs/Cedar/VG.o: src/Cedar/VG.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
++#	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/VG.c -o tmp/objs/Cedar/VG.o
+ 
+ tmp/objs/Cedar/Virtual.o: src/Cedar/Virtual.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+ 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Virtual.c -o tmp/objs/Cedar/Virtual.o
+@@ -266,8 +266,8 @@ tmp/objs/Cedar/VLanUnix.o: src/Cedar/VLanUnix.c $(HEADERS_MAYAQUA) $(HEADERS_CED
+ tmp/objs/Cedar/WaterMark.o: src/Cedar/WaterMark.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+ 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WaterMark.c -o tmp/objs/Cedar/WaterMark.o
+ 
+-tmp/objs/Cedar/WebUI.o: src/Cedar/WebUI.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+-	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WebUI.c -o tmp/objs/Cedar/WebUI.o
++#tmp/objs/Cedar/WebUI.o: src/Cedar/WebUI.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
++#	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/WebUI.c -o tmp/objs/Cedar/WebUI.o
+ 
+ tmp/objs/Cedar/Wpc.o: src/Cedar/Wpc.c $(HEADERS_MAYAQUA) $(HEADERS_CEDAR)
+ 	$(CC) $(OPTIONS_COMPILE) -c src/Cedar/Wpc.c -o tmp/objs/Cedar/Wpc.o
+diff --git a/src/vpnbridge/vpnbridge.c b/src/vpnbridge/vpnbridge.c
+index 345ea92..4f0cddc 100644
+--- a/src/vpnbridge/vpnbridge.c
++++ b/src/vpnbridge/vpnbridge.c
+@@ -155,7 +155,7 @@ void StopProcess()
+ // WinMain function
+ int main(int argc, char *argv[])
+ {
+-	VgUseStaticLink();
++//	VgUseStaticLink();
+ 
+ #ifdef	OS_WIN32
+ 	return MsService(GC_SVC_NAME_VPNBRIDGE, StartProcess, StopProcess, ICO_BRIDGE, argv[0]);
+diff --git a/src/vpnserver/vpnserver.c b/src/vpnserver/vpnserver.c
+index 22b31a6..214c4f3 100644
+--- a/src/vpnserver/vpnserver.c
++++ b/src/vpnserver/vpnserver.c
+@@ -155,7 +155,7 @@ void StopProcess()
+ // WinMain function
+ int main(int argc, char *argv[])
+ {
+-	VgUseStaticLink();
++//	VgUseStaticLink();
+ 
+ #ifdef	OS_WIN32
+ 
