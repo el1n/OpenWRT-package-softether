@@ -86,7 +86,7 @@ index 00ff67e..6477c83 100644
  #ifdef	ALPHA_VERSION
  	beta_str = "Alpha";
 diff --git a/src/Cedar/Cedar.h b/src/Cedar/Cedar.h
-index 73a3047..c837d77 100644
+index 221337b..742812f 100644
 --- a/src/Cedar/Cedar.h
 +++ b/src/Cedar/Cedar.h
 @@ -1033,7 +1033,7 @@ typedef struct CEDAR
@@ -469,7 +469,7 @@ index 94c2a62..d8eacfb 100644
  	locale = (locale != NULL ? locale : &current_locale);
  	UniFormat(str, size,
 diff --git a/src/Mayaqua/Table.c b/src/Mayaqua/Table.c
-index d306059..05e9721 100644
+index 0b22766..afd7fa7 100644
 --- a/src/Mayaqua/Table.c
 +++ b/src/Mayaqua/Table.c
 @@ -125,16 +125,16 @@
@@ -495,7 +495,7 @@ index d306059..05e9721 100644
  	char table_name[MAX_SIZE];
  	if (MayaquaIsMinimalMode())
  	{
-@@ -142,510 +142,513 @@ void InitTable()
+@@ -142,517 +142,520 @@ void InitTable()
  		return;
  	}
  
@@ -959,6 +959,13 @@ index d306059..05e9721 100644
 -	char *filename = LANGLIST_FILENAME;
 -	BUF *b;
 -
+-#ifdef	OS_WIN32
+-	if (MsIsWine())
+-	{
+-		filename = LANGLIST_FILENAME_WINE;
+-	}
+-#endif	// OS_WIN32
+-
 -	b = ReadDump(filename);
 -	if (b == NULL)
 -	{
@@ -1418,6 +1425,13 @@ index d306059..05e9721 100644
 +//	char *filename = LANGLIST_FILENAME;
 +//	BUF *b;
 +//
++//#ifdef	OS_WIN32
++//	if (MsIsWine())
++//	{
++//		filename = LANGLIST_FILENAME_WINE;
++//	}
++//#endif	// OS_WIN32
++//
 +//	b = ReadDump(filename);
 +//	if (b == NULL)
 +//	{
@@ -1505,7 +1519,7 @@ index d306059..05e9721 100644
  
  // Get an error string in Unicode
  wchar_t *GetUniErrorStr(UINT err)
-@@ -1177,204 +1180,204 @@ bool LoadTableFromBuf(BUF *b)
+@@ -1184,204 +1187,204 @@ bool LoadTableFromBuf(BUF *b)
  	return true;
  }
  
@@ -1908,7 +1922,7 @@ index d306059..05e9721 100644
  
  // Read the string table
  bool LoadTableMain(wchar_t *filename)
-@@ -1414,22 +1417,22 @@ bool LoadTableMain(wchar_t *filename)
+@@ -1421,22 +1424,22 @@ bool LoadTableMain(wchar_t *filename)
  
  	Hash(hash, b->Buf, b->Size, false);
  
@@ -1942,16 +1956,18 @@ index d306059..05e9721 100644
  	FreeBuf(b);
  
 diff --git a/src/Mayaqua/Table.h b/src/Mayaqua/Table.h
-index fa7e6f8..f0f23d0 100644
+index 9de294a..05f5362 100644
 --- a/src/Mayaqua/Table.h
 +++ b/src/Mayaqua/Table.h
-@@ -114,16 +114,16 @@
+@@ -114,18 +114,18 @@
  #ifndef	TABLE_H
  #define	TABLE_H
  
 -#define	UNICODE_CACHE_FILE		L".unicode_cache_%s.dat"
 -
 -#define	LANGLIST_FILENAME		"|languages.txt"
+-#define	LANGLIST_FILENAME_WINE	"|languages_wine.txt"
+-
 -#define	LANG_CONFIG_FILENAME	L"@lang.config"
 -#define	LANG_CONFIG_TEMPLETE	"|lang.config"
 -
@@ -1962,6 +1978,8 @@ index fa7e6f8..f0f23d0 100644
 +//#define	UNICODE_CACHE_FILE		L".unicode_cache_%s.dat"
 +//
 +//#define	LANGLIST_FILENAME		"|languages.txt"
++//#define	LANGLIST_FILENAME_WINE	"|languages_wine.txt"
++//
 +//#define	LANG_CONFIG_FILENAME	L"@lang.config"
 +//#define	LANG_CONFIG_TEMPLETE	"|lang.config"
 +//
@@ -1972,7 +1990,7 @@ index fa7e6f8..f0f23d0 100644
  
  
  // String table
-@@ -134,16 +134,16 @@ struct TABLE
+@@ -136,16 +136,16 @@ struct TABLE
  	wchar_t *unistr;
  };
  
@@ -1999,7 +2017,7 @@ index fa7e6f8..f0f23d0 100644
  
  // Macro
  #define	_SS(name)		(GetTableStr((char *)(name)))
-@@ -151,18 +151,18 @@ typedef struct UNICODE_CACHE
+@@ -153,18 +153,18 @@ typedef struct UNICODE_CACHE
  #define	_II(name)		(GetTableInt((char *)(name)))
  #define	_E(name)		(GetUniErrorStr((UINT)(name)))
  #define	_EA(name)		(GetErrorStr((UINT)(name)))
@@ -2030,7 +2048,7 @@ index fa7e6f8..f0f23d0 100644
  
  
  // Function prototype
-@@ -181,30 +181,30 @@ wchar_t *GetTableUniStr(char *name);
+@@ -183,30 +183,30 @@ wchar_t *GetTableUniStr(char *name);
  char *GetErrorStr(UINT err);
  wchar_t *GetUniErrorStr(UINT err);
  UINT GetTableInt(char *name);
@@ -2084,7 +2102,7 @@ index fa7e6f8..f0f23d0 100644
  #endif	// TABLE_H
  
 diff --git a/src/makefiles/linux_32bit.mak b/src/makefiles/linux_32bit.mak
-index 159da16..05cee4b 100644
+index 2863d4f..05cee4b 100644
 --- a/src/makefiles/linux_32bit.mak
 +++ b/src/makefiles/linux_32bit.mak
 @@ -49,10 +49,10 @@ endif
@@ -2095,7 +2113,7 @@ index 159da16..05cee4b 100644
 +HEADERS_CEDAR=src/Cedar/Account.h src/Cedar/Admin.h src/Cedar/AzureClient.h src/Cedar/AzureServer.h src/Cedar/Bridge.h src/Cedar/BridgeUnix.h src/Cedar/Cedar.h src/Cedar/CedarPch.h src/Cedar/CedarType.h src/Cedar/Client.h src/Cedar/Command.h src/Cedar/Connection.h src/Cedar/Console.h src/Cedar/Database.h src/Cedar/DDNS.h src/Cedar/EtherLog.h src/Cedar/Hub.h src/Cedar/Interop_OpenVPN.h src/Cedar/Interop_SSTP.h src/Cedar/IPsec.h src/Cedar/IPsec_EtherIP.h src/Cedar/IPsec_IKE.h src/Cedar/IPsec_IkePacket.h src/Cedar/IPsec_IPC.h src/Cedar/IPsec_L2TP.h src/Cedar/IPsec_PPP.h src/Cedar/Layer3.h src/Cedar/Link.h src/Cedar/Listener.h src/Cedar/Logging.h src/Cedar/Nat.h src/Cedar/NativeStack.h src/Cedar/netcfgn.h src/Cedar/netcfgx.h src/Cedar/NullLan.h src/Cedar/Protocol.h src/Cedar/Radius.h src/Cedar/Remote.h src/Cedar/Sam.h src/Cedar/SecureInfo.h src/Cedar/SecureNAT.h src/Cedar/SeLowUser.h src/Cedar/Server.h src/Cedar/Session.h src/Cedar/UdpAccel.h src/Cedar/VG.h src/Cedar/Virtual.h src/Cedar/VLan.h src/Cedar/VLanUnix.h src/Cedar/WaterMark.h src/Cedar/winpcap/bittypes.h src/Cedar/winpcap/bucket_lookup.h src/Cedar/winpcap/count_packets.h src/Cedar/winpcap/Devioctl.h src/Cedar/winpcap/Gnuc.h src/Cedar/winpcap/ip6_misc.h src/Cedar/winpcap/memory_t.h src/Cedar/winpcap/normal_lookup.h src/Cedar/winpcap/Ntddndis.h src/Cedar/winpcap/Ntddpack.h src/Cedar/winpcap/Packet32.h src/Cedar/winpcap/pcap.h src/Cedar/winpcap/pcap-bpf.h src/Cedar/winpcap/pcap-int.h src/Cedar/winpcap/pcap-stdinc.h src/Cedar/winpcap/pthread.h src/Cedar/winpcap/remote-ext.h src/Cedar/winpcap/sched.h src/Cedar/winpcap/semaphore.h src/Cedar/winpcap/tcp_session.h src/Cedar/winpcap/time_calls.h src/Cedar/winpcap/tme.h src/Cedar/winpcap/Win32-Extensions.h src/Cedar/Wpc.h
  OBJECTS_MAYAQUA=tmp/objs/Mayaqua/Cfg.o tmp/objs/Mayaqua/Encrypt.o tmp/objs/Mayaqua/FileIO.o tmp/objs/Mayaqua/Internat.o tmp/objs/Mayaqua/Kernel.o tmp/objs/Mayaqua/Mayaqua.o tmp/objs/Mayaqua/Memory.o tmp/objs/Mayaqua/Network.o tmp/objs/Mayaqua/Object.o tmp/objs/Mayaqua/OS.o tmp/objs/Mayaqua/Pack.o tmp/objs/Mayaqua/Secure.o tmp/objs/Mayaqua/Str.o tmp/objs/Mayaqua/Table.o tmp/objs/Mayaqua/TcpIp.o tmp/objs/Mayaqua/Tick64.o tmp/objs/Mayaqua/Tracking.o tmp/objs/Mayaqua/Unix.o
 -OBJECTS_CEDAR=tmp/objs/Cedar/Account.o tmp/objs/Cedar/Admin.o tmp/objs/Cedar/AzureClient.o tmp/objs/Cedar/AzureServer.o tmp/objs/Cedar/Bridge.o tmp/objs/Cedar/BridgeUnix.o tmp/objs/Cedar/Cedar.o tmp/objs/Cedar/CedarPch.o tmp/objs/Cedar/Client.o tmp/objs/Cedar/Command.o tmp/objs/Cedar/Connection.o tmp/objs/Cedar/Console.o tmp/objs/Cedar/Database.o tmp/objs/Cedar/DDNS.o tmp/objs/Cedar/EtherLog.o tmp/objs/Cedar/Hub.o tmp/objs/Cedar/Interop_OpenVPN.o tmp/objs/Cedar/Interop_SSTP.o tmp/objs/Cedar/IPsec.o tmp/objs/Cedar/IPsec_EtherIP.o tmp/objs/Cedar/IPsec_IKE.o tmp/objs/Cedar/IPsec_IkePacket.o tmp/objs/Cedar/IPsec_IPC.o tmp/objs/Cedar/IPsec_L2TP.o tmp/objs/Cedar/IPsec_PPP.o tmp/objs/Cedar/Layer3.o tmp/objs/Cedar/Link.o tmp/objs/Cedar/Listener.o tmp/objs/Cedar/Logging.o tmp/objs/Cedar/Nat.o tmp/objs/Cedar/NativeStack.o tmp/objs/Cedar/NullLan.o tmp/objs/Cedar/Protocol.o tmp/objs/Cedar/Radius.o tmp/objs/Cedar/Remote.o tmp/objs/Cedar/Sam.o tmp/objs/Cedar/SecureInfo.o tmp/objs/Cedar/SecureNAT.o tmp/objs/Cedar/SeLowUser.o tmp/objs/Cedar/Server.o tmp/objs/Cedar/Session.o tmp/objs/Cedar/UdpAccel.o tmp/objs/Cedar/VG.o tmp/objs/Cedar/Virtual.o tmp/objs/Cedar/VLan.o tmp/objs/Cedar/VLanUnix.o tmp/objs/Cedar/WaterMark.o tmp/objs/Cedar/WebUI.o tmp/objs/Cedar/Wpc.o
--HAMCORE_FILES=src/bin/hamcore/authors.txt src/bin/hamcore/backup_dir_readme.txt src/bin/hamcore/empty.config src/bin/hamcore/empty_sevpnclient.config src/bin/hamcore/eula.txt src/bin/hamcore/install_src.dat src/bin/hamcore/lang.config src/bin/hamcore/languages.txt src/bin/hamcore/legal.txt src/bin/hamcore/openvpn_readme.pdf src/bin/hamcore/openvpn_readme.txt src/bin/hamcore/openvpn_sample.ovpn src/bin/hamcore/root_certs.dat src/bin/hamcore/SOURCES_OF_BINARY_FILES.TXT src/bin/hamcore/strtable_cn.stb src/bin/hamcore/strtable_en.stb src/bin/hamcore/strtable_ja.stb src/bin/hamcore/vpnweb_sample_cn.htm src/bin/hamcore/vpnweb_sample_en.htm src/bin/hamcore/vpnweb_sample_ja.htm src/bin/hamcore/warning_cn.txt src/bin/hamcore/warning_en.txt src/bin/hamcore/warning_ja.txt src/bin/hamcore/webui/cryptcom.cgi src/bin/hamcore/webui/edituser.cgi src/bin/hamcore/webui/error.cgi src/bin/hamcore/webui/hub.cgi src/bin/hamcore/webui/license.cgi src/bin/hamcore/webui/listener.cgi src/bin/hamcore/webui/localbridge.cgi src/bin/hamcore/webui/login.cgi src/bin/hamcore/webui/newhub.cgi src/bin/hamcore/webui/redirect.cgi src/bin/hamcore/webui/securenat.cgi src/bin/hamcore/webui/server.cgi src/bin/hamcore/webui/session.cgi src/bin/hamcore/webui/user.cgi src/bin/hamcore/webui/webui.css
+-HAMCORE_FILES=src/bin/hamcore/authors.txt src/bin/hamcore/backup_dir_readme.txt src/bin/hamcore/empty.config src/bin/hamcore/empty_sevpnclient.config src/bin/hamcore/eula.txt src/bin/hamcore/install_src.dat src/bin/hamcore/lang.config src/bin/hamcore/languages.txt src/bin/hamcore/languages_wine.txt src/bin/hamcore/legal.txt src/bin/hamcore/openvpn_readme.pdf src/bin/hamcore/openvpn_readme.txt src/bin/hamcore/openvpn_sample.ovpn src/bin/hamcore/root_certs.dat src/bin/hamcore/SOURCES_OF_BINARY_FILES.TXT src/bin/hamcore/strtable_cn.stb src/bin/hamcore/strtable_en.stb src/bin/hamcore/strtable_ja.stb src/bin/hamcore/vpnweb_sample_cn.htm src/bin/hamcore/vpnweb_sample_en.htm src/bin/hamcore/vpnweb_sample_ja.htm src/bin/hamcore/warning_cn.txt src/bin/hamcore/warning_en.txt src/bin/hamcore/warning_ja.txt src/bin/hamcore/webui/cryptcom.cgi src/bin/hamcore/webui/edituser.cgi src/bin/hamcore/webui/error.cgi src/bin/hamcore/webui/hub.cgi src/bin/hamcore/webui/license.cgi src/bin/hamcore/webui/listener.cgi src/bin/hamcore/webui/localbridge.cgi src/bin/hamcore/webui/login.cgi src/bin/hamcore/webui/newhub.cgi src/bin/hamcore/webui/redirect.cgi src/bin/hamcore/webui/securenat.cgi src/bin/hamcore/webui/server.cgi src/bin/hamcore/webui/session.cgi src/bin/hamcore/webui/user.cgi src/bin/hamcore/webui/webui.css
 +OBJECTS_CEDAR=tmp/objs/Cedar/Account.o tmp/objs/Cedar/Admin.o tmp/objs/Cedar/AzureClient.o tmp/objs/Cedar/AzureServer.o tmp/objs/Cedar/Bridge.o tmp/objs/Cedar/BridgeUnix.o tmp/objs/Cedar/Cedar.o tmp/objs/Cedar/CedarPch.o tmp/objs/Cedar/Client.o tmp/objs/Cedar/Command.o tmp/objs/Cedar/Connection.o tmp/objs/Cedar/Console.o tmp/objs/Cedar/Database.o tmp/objs/Cedar/DDNS.o tmp/objs/Cedar/EtherLog.o tmp/objs/Cedar/Hub.o tmp/objs/Cedar/Interop_OpenVPN.o tmp/objs/Cedar/Interop_SSTP.o tmp/objs/Cedar/IPsec.o tmp/objs/Cedar/IPsec_EtherIP.o tmp/objs/Cedar/IPsec_IKE.o tmp/objs/Cedar/IPsec_IkePacket.o tmp/objs/Cedar/IPsec_IPC.o tmp/objs/Cedar/IPsec_L2TP.o tmp/objs/Cedar/IPsec_PPP.o tmp/objs/Cedar/Layer3.o tmp/objs/Cedar/Link.o tmp/objs/Cedar/Listener.o tmp/objs/Cedar/Logging.o tmp/objs/Cedar/Nat.o tmp/objs/Cedar/NativeStack.o tmp/objs/Cedar/NullLan.o tmp/objs/Cedar/Protocol.o tmp/objs/Cedar/Radius.o tmp/objs/Cedar/Remote.o tmp/objs/Cedar/Sam.o tmp/objs/Cedar/SecureInfo.o tmp/objs/Cedar/SecureNAT.o tmp/objs/Cedar/SeLowUser.o tmp/objs/Cedar/Server.o tmp/objs/Cedar/Session.o tmp/objs/Cedar/UdpAccel.o tmp/objs/Cedar/Virtual.o tmp/objs/Cedar/VLan.o tmp/objs/Cedar/VLanUnix.o tmp/objs/Cedar/WaterMark.o tmp/objs/Cedar/Wpc.o
 +HAMCORE_FILES=src/bin/hamcore/legal.txt src/bin/hamcore/openvpn_sample.ovpn src/bin/hamcore/root_certs.dat src/bin/hamcore/strtable_en.stb
  
