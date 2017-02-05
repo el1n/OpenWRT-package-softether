@@ -1,5 +1,9 @@
 SoftEther VPN for OpenWrt
 =
+This project is merged to OpenWRT main tree on Dec 7, 2016 by [fededim](https://github.com/fededim), Thanks Federico !  
+If you do not need own binary, install from the OpenWRT package repository is recommended.  
+
+=
 Your router is if ar71xx or brcm47xx, You do not need build steps.  
 You can get binary package from http://b.mikomoe.jp/.
 
@@ -94,3 +98,4 @@ Compile and Install
 Thanks
 -
 + [Alberts00](https://github.com/Alberts00)
++ [fededim](https://github.com/fededim)
