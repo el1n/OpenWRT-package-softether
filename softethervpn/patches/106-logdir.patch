@@ -1,0 +1,67 @@
+diff --git a/src/Cedar/Cedar.c b/src/Cedar/Cedar.c
+index 790e801..dfe5243 100644
+--- a/src/Cedar/Cedar.c
++++ b/src/Cedar/Cedar.c
+@@ -349,7 +349,7 @@ TINY_LOG *NewTinyLog()
+ 
+ 	LocalTime(&st);
+ 
+-	MakeDir(TINY_LOG_DIRNAME);
++//	MakeDir(TINY_LOG_DIRNAME);
+ 
+ 	Format(name, sizeof(name), TINY_LOG_FILENAME,
+ 		st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
+diff --git a/src/Cedar/Client.c b/src/Cedar/Client.c
+index d4dd39b..fe8d2e5 100644
+--- a/src/Cedar/Client.c
++++ b/src/Cedar/Client.c
+@@ -10628,7 +10628,7 @@ CLIENT *CiNewClient()
+ 	// Log Settings
+ 	if(c->NoSaveLog == false)
+ 	{
+-		MakeDir(CLIENT_LOG_DIR_NAME);
++//		MakeDir(CLIENT_LOG_DIR_NAME);
+ 		c->Logger = NewLog(CLIENT_LOG_DIR_NAME, CLIENT_LOG_PREFIX, LOG_SWITCH_DAY);
+ 	}
+ 
+diff --git a/src/Cedar/Hub.c b/src/Cedar/Hub.c
+index 1f827a9..f4d0abb 100644
+--- a/src/Cedar/Hub.c
++++ b/src/Cedar/Hub.c
+@@ -7207,8 +7207,8 @@ HUB *NewHub(CEDAR *cedar, char *HubName, HUB_OPTION *option)
+ 	h->LogSetting.SecurityLogSwitchType = LOG_SWITCH_DAY;
+ 	h->LogSetting.PacketLogSwitchType = LOG_SWITCH_DAY;
+ 
+-	MakeDir(HUB_SECURITY_LOG_DIR_NAME);
+-	MakeDir(HUB_PACKET_LOG_DIR_NAME);
++//	MakeDir(HUB_SECURITY_LOG_DIR_NAME);
++//	MakeDir(HUB_PACKET_LOG_DIR_NAME);
+ 
+ 	// Start the packet logger
+ 	Format(packet_logger_name, sizeof(packet_logger_name), HUB_PACKET_LOG_FILE_NAME, h->Name);
+diff --git a/src/Cedar/Server.c b/src/Cedar/Server.c
+index dcac885..5fe6cac 100644
+--- a/src/Cedar/Server.c
++++ b/src/Cedar/Server.c
+@@ -10947,7 +10947,7 @@ SERVER *SiNewServerEx(bool bridge, bool in_client_inner_server, bool relay_serve
+ 	s->Keep = StartKeep();
+ 
+ 	// Log related
+-	MakeDir(bridge == false ? SERVER_LOG_DIR_NAME : BRIDGE_LOG_DIR_NAME);
++//	MakeDir(bridge == false ? SERVER_LOG_DIR_NAME : BRIDGE_LOG_DIR_NAME);
+ 	s->Logger = NewLog(bridge == false ? SERVER_LOG_DIR_NAME : BRIDGE_LOG_DIR_NAME, SERVER_LOG_PERFIX, LOG_SWITCH_DAY);
+ 
+ 	SLog(s->Cedar, "L_LINE");
+diff --git a/src/Mayaqua/Mayaqua.c b/src/Mayaqua/Mayaqua.c
+index 220d4f8..861d63e 100644
+--- a/src/Mayaqua/Mayaqua.c
++++ b/src/Mayaqua/Mayaqua.c
+@@ -306,7 +306,7 @@ void FreeProbe()
+ 		char filename[MAX_SIZE];
+ 
+ 		// Write all to the file
+-		MakeDirEx("@probe_log");
++//		MakeDirEx("@probe_log");
+ 
+ 		LocalTime(&st);
+ 
